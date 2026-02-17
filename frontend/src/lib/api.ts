@@ -1,18 +1,20 @@
 /**
  * API Client for TodoFlow Backend
- * 
+ *
  * Handles all HTTP requests to the FastAPI backend with:
  * - Automatic JWT token attachment
  * - Error handling and 401 redirection
  * - Request/response typing
  * - Base URL configuration
+ * - Retry logic with exponential backoff
  */
 
-import type { 
-  Task, 
-  Project, 
-  Label, 
-  Subtask, 
+import Cookies from 'js-cookie';
+import type {
+  Task,
+  Project,
+  Label,
+  Subtask,
   User,
   DashboardStats,
   PomodoroStats,
@@ -20,6 +22,7 @@ import type {
   SignupData,
   SigninData,
 } from '@/types';
+import { toast } from 'sonner';
 
 // =============================================================================
 // Configuration
@@ -27,12 +30,21 @@ import type {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+// Cookie options for JWT
+const COOKIE_OPTIONS = {
+  expires: 7, // 7 days
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  path: '/',
+};
+
 // =============================================================================
 // Types
 // =============================================================================
 
 interface RequestOptions extends RequestInit {
   requiresAuth?: boolean;
+  showToast?: boolean;
 }
 
 interface ApiError {
@@ -44,46 +56,94 @@ interface ApiError {
     message: string;
     type: string;
   }>;
+  code?: string;
+  status?: number;
 }
 
 // =============================================================================
-// Token Management
+// Token Management (using js-cookie for better cookie handling)
 // =============================================================================
 
 /**
- * Get JWT token from secure storage
- * In production, this should read from httpOnly cookies
+ * Get JWT token from cookies
+ * Falls back to localStorage for development
  */
 function getToken(): string | null {
+  // Try cookies first (for SSR and production)
+  const cookieToken = Cookies.get('jwt_token');
+  if (cookieToken) return cookieToken;
+
+  // Fallback to localStorage for client-side only
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('jwt_token');
 }
 
 /**
- * Store JWT token
+ * Store JWT token in both cookies and localStorage
  */
 function setToken(token: string): void {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem('jwt_token', token);
+  // Store in cookies (for SSR)
+  Cookies.set('jwt_token', token, COOKIE_OPTIONS);
+
+  // Also store in localStorage (for client-side fallback)
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('jwt_token', token);
+  }
 }
 
 /**
  * Remove JWT token
  */
 function removeToken(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem('jwt_token');
+  // Remove from cookies
+  Cookies.remove('jwt_token');
+
+  // Also remove from localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('auth_user');
+  }
 }
 
 // =============================================================================
-// API Client
+// Error Handling
+// =============================================================================
+
+function handleApiError(error: unknown, endpoint: string, showToast = true) {
+  console.error(`API Error [${endpoint}]:`, error);
+
+  if (error instanceof Error) {
+    if (error.message === 'Unauthorized') {
+      // 401 errors are handled by redirect
+      return;
+    }
+
+    if (error.message.includes('Network') || error.message.includes('fetch')) {
+      if (showToast) {
+        toast.error('Connection Error', {
+          description: 'Unable to connect to the server. Please check your connection.',
+        });
+      }
+      return;
+    }
+
+    if (showToast) {
+      toast.error('Error', {
+        description: error.message,
+      });
+    }
+  }
+}
+
+// =============================================================================
+// API Client with Retry Logic
 // =============================================================================
 
 async function request<T>(
   endpoint: string,
   options: RequestOptions = {}
 ): Promise<T> {
-  const { requiresAuth = true, ...fetchOptions } = options;
+  const { requiresAuth = true, showToast = true, ...fetchOptions } = options;
 
   const url = `${API_BASE_URL}${endpoint}`;
 
@@ -100,37 +160,80 @@ async function request<T>(
     }
   }
 
-  try {
-    const response = await fetch(url, {
-      ...fetchOptions,
-      headers,
-    });
+  // Retry logic with exponential backoff
+  const maxRetries = 3;
+  let lastError: Error | null = null;
 
-    // Handle 401 Unauthorized
-    if (response.status === 401) {
-      removeToken();
-      if (typeof window !== 'undefined') {
-        window.location.href = '/signin';
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        ...fetchOptions,
+        headers,
+      });
+
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        removeToken();
+        if (typeof window !== 'undefined') {
+          // Don't redirect on auth endpoints
+          if (!endpoint.includes('/auth/')) {
+            window.location.href = '/signin';
+          }
+        }
+        const error: ApiError = {
+          success: false,
+          error: 'Unauthorized',
+          code: 'UNAUTHORIZED',
+          status: 401,
+        };
+        throw error;
       }
-      throw new Error('Unauthorized');
-    }
 
-    // Handle errors
-    if (!response.ok) {
-      const errorData: ApiError = await response.json().catch(() => ({
-        success: false,
-        error: 'Request failed',
-      }));
-      throw new Error(errorData.message || errorData.error);
-    }
+      // Handle other errors
+      if (!response.ok) {
+        const errorData: ApiError = await response.json().catch(() => ({
+          success: false,
+          error: 'Request failed',
+          message: `HTTP ${response.status}`,
+        }));
 
-    // Parse response
-    const data = await response.json();
-    return data as T;
-  } catch (error) {
-    console.error(`API Error [${endpoint}]:`, error);
-    throw error;
+        const error: ApiError = {
+          success: false,
+          error: errorData.error || 'Request failed',
+          message: errorData.message,
+          code: errorData.code,
+          status: response.status,
+        };
+        throw error;
+      }
+
+      // Parse response
+      const data = await response.json();
+      return data as T;
+    } catch (error) {
+      lastError = error as Error;
+
+      // Don't retry on auth errors
+      if ((error as ApiError).code === 'UNAUTHORIZED') {
+        throw error;
+      }
+
+      // Don't retry on client errors (4xx)
+      if ((error as ApiError).status && (error as ApiError).status! < 500) {
+        throw error;
+      }
+
+      // Wait before retry (exponential backoff)
+      if (attempt < maxRetries - 1) {
+        const delay = Math.min(1000 * 2 ** attempt, 10000);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
   }
+
+  // All retries failed
+  handleApiError(lastError, endpoint, showToast);
+  throw lastError;
 }
 
 // =============================================================================
@@ -143,6 +246,7 @@ export const auth = {
       method: 'POST',
       body: JSON.stringify(data),
       requiresAuth: false,
+      showToast: false, // Handle errors in the form
     });
   },
 
@@ -151,13 +255,14 @@ export const auth = {
       method: 'POST',
       body: JSON.stringify(data),
       requiresAuth: false,
+      showToast: false, // Handle errors in the form
     });
-    
+
     // Store token on successful signin
     if (response.token) {
       setToken(response.token);
     }
-    
+
     return response;
   },
 
@@ -165,6 +270,7 @@ export const auth = {
     try {
       await request('/api/auth/signout', {
         method: 'POST',
+        showToast: false,
       });
     } finally {
       removeToken();
@@ -172,18 +278,21 @@ export const auth = {
   },
 
   me: async (): Promise<{ user: User }> => {
-    return request<{ user: User }>('/api/auth/me');
+    return request<{ user: User }>('/api/auth/me', {
+      method: 'GET',
+    });
   },
 
   refreshToken: async (): Promise<{ token: string }> => {
     const response = await request<{ token: string }>('/api/auth/refresh', {
       method: 'POST',
+      showToast: false,
     });
-    
+
     if (response.token) {
       setToken(response.token);
     }
-    
+
     return response;
   },
 };
@@ -213,11 +322,15 @@ export const tasks = {
       });
     }
     const query = searchParams.toString();
-    return request<Task[]>(`/api/tasks${query ? `?${query}` : ''}`);
+    return request<Task[]>(`/api/tasks${query ? `?${query}` : ''}`, {
+      method: 'GET',
+    });
   },
 
   get: async (id: string): Promise<Task> => {
-    return request<Task>(`/api/tasks/${id}`);
+    return request<Task>(`/api/tasks/${id}`, {
+      method: 'GET',
+    });
   },
 
   create: async (data: Partial<Task>): Promise<Task> => {
@@ -278,11 +391,15 @@ export const subtasks = {
 
 export const projects = {
   list: async (): Promise<Project[]> => {
-    return request<Project[]>('/api/projects');
+    return request<Project[]>('/api/projects', {
+      method: 'GET',
+    });
   },
 
   get: async (id: string): Promise<Project> => {
-    return request<Project>(`/api/projects/${id}`);
+    return request<Project>(`/api/projects/${id}`, {
+      method: 'GET',
+    });
   },
 
   create: async (data: Partial<Project>): Promise<Project> => {
@@ -306,7 +423,9 @@ export const projects = {
   },
 
   stats: async (id: string): Promise<{ totalTasks: number; completedTasks: number; completionRate: number }> => {
-    return request(`/api/projects/${id}/stats`);
+    return request(`/api/projects/${id}/stats`, {
+      method: 'GET',
+    });
   },
 };
 
@@ -316,7 +435,9 @@ export const projects = {
 
 export const labels = {
   list: async (): Promise<Label[]> => {
-    return request<Label[]>('/api/labels');
+    return request<Label[]>('/api/labels', {
+      method: 'GET',
+    });
   },
 
   create: async (data: Partial<Label>): Promise<Label> => {
@@ -346,15 +467,21 @@ export const labels = {
 
 export const dashboard = {
   stats: async (): Promise<DashboardStats> => {
-    return request<DashboardStats>('/api/dashboard/stats');
+    return request<DashboardStats>('/api/dashboard/stats', {
+      method: 'GET',
+    });
   },
 
   weeklyActivity: async (): Promise<{ days: Array<{ date: string; completed: number; created: number }> }> => {
-    return request('/api/dashboard/weekly-activity');
+    return request('/api/dashboard/weekly-activity', {
+      method: 'GET',
+    });
   },
 
   streak: async (): Promise<{ currentStreak: number; longestStreak: number; lastCompletedDate: string }> => {
-    return request('/api/dashboard/streak');
+    return request('/api/dashboard/streak', {
+      method: 'GET',
+    });
   },
 };
 
@@ -372,7 +499,9 @@ export const pomodoro = {
 
   stats: async (range?: 'day' | 'week' | 'month'): Promise<PomodoroStats> => {
     const query = range ? `?range=${range}` : '';
-    return request<PomodoroStats>(`/api/pomodoro/stats${query}`);
+    return request<PomodoroStats>(`/api/pomodoro/stats${query}`, {
+      method: 'GET',
+    });
   },
 };
 

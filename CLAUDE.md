@@ -1,8 +1,10 @@
 # TodoFlow - Phase 2 Full-Stack Application
 
-**Constitution Version:** 1.0.0
-**Current Phase:** Phase 1 - Setup & Project Initialization (Complete)
-**Project Status:** Monorepo with Next.js 16.1.6 Frontend + FastAPI Backend
+**Constitution Version:** 1.0.6
+**Current Phase:** Phase 4 - Frontend Authentication UI (Complete)
+**Current Version:** 1.4.1
+**Project Status:** Full-stack application with working authentication
+**Build Status:** ✅ Deployment Ready (0 warnings)
 
 ---
 
@@ -233,16 +235,18 @@ NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
 
 ---
 
-## Phase 1 Completion Checklist
+## Phase 4 Completion Checklist
 
-- [x] T001: Project structure (backend/ + frontend/)
-- [x] T002: Backend requirements.txt
-- [x] T003: Next.js 16.1.6 initialization
-- [x] T004: Backend dependencies documented
-- [x] T005: Frontend dependencies documented
-- [x] T006: docker-compose.yml created
-- [x] T007: .env.example files created
-- [x] T008: CLAUDE.md files created
+### Phase 1-3 (Complete)
+- [x] T001-T008: Project structure & setup
+- [x] T009-T023: Database schema & migrations
+- [x] T024-T063: Backend APIs with JWT auth
+
+### Phase 4 (Complete)
+- [x] T064-T069: Next.js configuration (shadcn/ui, Framer Motion, TanStack Query)
+- [x] T070-T076: Authentication UI (signup, signin, signout)
+- [x] T077-T083: Layout & Navigation (sidebar, top nav, dark mode)
+- [x] T084-T088: API Client Setup (JWT attachment, error handling, optimistic updates)
 
 ---
 

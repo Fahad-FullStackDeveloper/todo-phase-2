@@ -36,7 +36,7 @@ Tasks are organized by constitution-mandated categories:
 | 1 | Setup & Project Initialization | 8 | - |
 | 2 | Database Schema & Models | 15 | neon-db-architect |
 | 3 | Backend Auth & Core APIs | 35 | fastapi-backend-master |
-| 4 | Frontend Setup & Auth UI | 20 | frontend-visionary |
+| 4 | Frontend Setup & Auth UI | 25 | frontend-visionary |
 | 5 | Task Views & Editor | 25 | frontend-visionary |
 | 6 | Advanced Features | 40 | frontend-visionary |
 | 7 | Premium UX & Polish | 20 | frontend-visionary, qa-polish-sentinel |
@@ -182,42 +182,44 @@ Tasks are organized by constitution-mandated categories:
 
 **Independent Test Criteria:** Can signup, signin, signout, and see protected dashboard
 
+**Status:** ✅ COMPLETE (25/25 tasks)
+
 ### Next.js Configuration
 
-- [ ] T064 [P] [US-AUTH-FE] Configure Next.js 16.1.6 with App Router in frontend/src/app/
-- [ ] T065 [P] [US-AUTH-FE] Set up TypeScript config (tsconfig.json with strict mode)
-- [ ] T066 [P] [US-AUTH-FE] Configure Tailwind CSS (tailwind.config.js with custom theme colors)
-- [ ] T067 [P] [US-AUTH-FE] Install and configure shadcn/ui (components.json, base components)
-- [ ] T068 [P] [US-AUTH-FE] Set up Framer Motion (framer-motion.config.js)
-- [ ] T069 [P] [US-AUTH-FE] Install and configure TanStack Query (QueryClientProvider)
+- [X] T064 [P] [US-AUTH-FE] Configure Next.js 16.1.6 with App Router in frontend/src/app/
+- [X] T065 [P] [US-AUTH-FE] Set up TypeScript config (tsconfig.json with strict mode)
+- [X] T066 [P] [US-AUTH-FE] Configure Tailwind CSS (tailwind.config.js with custom theme colors)
+- [X] T067 [P] [US-AUTH-FE] Install and configure shadcn/ui (components.json, base components)
+- [X] T068 [P] [US-AUTH-FE] Set up Framer Motion (framer-motion.config.js)
+- [X] T069 [P] [US-AUTH-FE] Install and configure TanStack Query (QueryClientProvider)
 
 ### Authentication UI
 
-- [ ] T070 [P] [US-AUTH-FE] Create signup page in frontend/src/app/signup/page.tsx (email, password, name form)
-- [ ] T071 [P] [US-AUTH-FE] Create signin page in frontend/src/app/signin/page.tsx (email, password form)
-- [ ] T072 [P] [US-AUTH-FE] Integrate Better Auth in frontend (useBetterAuth hook for signup/signin)
-- [ ] T073 [P] [US-AUTH-FE] Store JWT in httpOnly cookie (next-cookies or similar)
-- [ ] T074 [P] [US-AUTH-FE] Create API client in frontend/src/lib/api.ts (attach JWT to all requests)
-- [ ] T075 [P] [US-AUTH-FE] Implement protected route wrapper in frontend/src/middleware/auth.ts (redirect if no auth)
-- [ ] T076 [P] [US-AUTH-FE] Create signout functionality (clear cookie, redirect to signin)
+- [X] T070 [P] [US-AUTH-FE] Create signup page in frontend/src/app/signup/page.tsx (email, password, name form)
+- [X] T071 [P] [US-AUTH-FE] Create signin page in frontend/src/app/signin/page.tsx (email, password form)
+- [X] T072 [P] [US-AUTH-FE] Integrate Better Auth in frontend (useBetterAuth hook for signup/signin)
+- [X] T073 [P] [US-AUTH-FE] Store JWT in httpOnly cookie (next-cookies or similar)
+- [X] T074 [P] [US-AUTH-FE] Create API client in frontend/src/lib/api.ts (attach JWT to all requests)
+- [X] T075 [P] [US-AUTH-FE] Implement protected route wrapper in frontend/src/middleware/auth.ts (redirect if no auth)
+- [X] T076 [P] [US-AUTH-FE] Create signout functionality (clear cookie, redirect to signin)
 
 ### Layout & Navigation
 
-- [ ] T077 [P] [US-AUTH-FE] Create root layout in frontend/src/app/layout.tsx (sidebar, top nav structure)
-- [ ] T078 [P] [US-AUTH-FE] Create sidebar component in frontend/src/components/layout/Sidebar.tsx (projects, labels, filters)
-- [ ] T079 [P] [US-AUTH-FE] Create top navigation in frontend/src/components/layout/TopNav.tsx (search, theme toggle, user menu)
-- [ ] T080 [P] [US-AUTH-FE] Implement responsive mobile menu (hamburger menu for mobile)
-- [ ] T081 [P] [US-AUTH-FE] Create dark mode toggle in frontend/src/components/theme/ThemeToggle.tsx (Light/Dark/System)
-- [ ] T082 [P] [US-AUTH-FE] Implement smooth theme transitions (300ms CSS transitions)
-- [ ] T083 [P] [US-AUTH-FE] Store theme preference in localStorage (persist across sessions)
+- [X] T077 [P] [US-AUTH-FE] Create root layout in frontend/src/app/layout.tsx (sidebar, top nav structure)
+- [X] T078 [P] [US-AUTH-FE] Create sidebar component in frontend/src/components/layout/Sidebar.tsx (projects, labels, filters)
+- [X] T079 [P] [US-AUTH-FE] Create top navigation in frontend/src/components/layout/TopNav.tsx (search, theme toggle, user menu)
+- [X] T080 [P] [US-AUTH-FE] Implement responsive mobile menu (hamburger menu for mobile)
+- [X] T081 [P] [US-AUTH-FE] Create dark mode toggle in frontend/src/components/theme/ThemeToggle.tsx (Light/Dark/System)
+- [X] T082 [P] [US-AUTH-FE] Implement smooth theme transitions (300ms CSS transitions)
+- [X] T083 [P] [US-AUTH-FE] Store theme preference in localStorage (persist across sessions)
 
 ### API Client Setup
 
-- [ ] T084 [P] [US-AUTH-FE] Create centralized API client in frontend/src/lib/api.ts (axios/fetch wrapper)
-- [ ] T085 [P] [US-AUTH-FE] Implement JWT token attachment to all requests (Authorization: Bearer <token>)
-- [ ] T086 [P] [US-AUTH-FE] Add error handling (401 redirect to signin, network error toast)
-- [ ] T087 [P] [US-AUTH-FE] Configure optimistic updates in TanStack Query
-- [ ] T088 [P] [US-AUTH-FE] Set up TanStack Query with retry logic and stale time
+- [X] T084 [P] [US-AUTH-FE] Create centralized API client in frontend/src/lib/api.ts (axios/fetch wrapper)
+- [X] T085 [P] [US-AUTH-FE] Implement JWT token attachment to all requests (Authorization: Bearer <token>)
+- [X] T086 [P] [US-AUTH-FE] Add error handling (401 redirect to signin, network error toast)
+- [X] T087 [P] [US-AUTH-FE] Configure optimistic updates in TanStack Query
+- [X] T088 [P] [US-AUTH-FE] Set up TanStack Query with retry logic and stale time
 
 ---
 
@@ -587,15 +589,15 @@ graph TD
 
 | Phase | Name | Total Tasks | Completed | In Progress | Pending | % Complete |
 |-------|------|-------------|-----------|-------------|---------|------------|
-| 1 | Setup | 8 | 0 | 0 | 8 | 0% |
-| 2 | Database | 15 | 0 | 0 | 15 | 0% |
-| 3 | Backend APIs | 35 | 0 | 0 | 35 | 0% |
-| 4 | Frontend Auth | 20 | 0 | 0 | 20 | 0% |
+| 1 | Setup | 8 | 8 | 0 | 0 | 100% |
+| 2 | Database | 15 | 15 | 0 | 0 | 100% |
+| 3 | Backend APIs | 35 | 35 | 0 | 0 | 100% |
+| 4 | Frontend Auth | 25 | 25 | 0 | 0 | 100% |
 | 5 | Task Views | 25 | 0 | 0 | 25 | 0% |
 | 6 | Advanced Features | 40 | 0 | 0 | 40 | 0% |
 | 7 | Premium Polish | 20 | 0 | 0 | 20 | 0% |
 | 8 | QA & Testing | 17 | 0 | 0 | 17 | 0% |
-| **TOTAL** | | **180** | **0** | **0** | **180** | **0%** |
+| **TOTAL** | | **185** | **83** | **0** | **102** | **44.9%** |
 
 ---
 
