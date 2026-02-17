@@ -445,7 +445,7 @@ Reference specifications in Claude Code using:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0.0 | 2026-02-17 | Initial Phase 2 overview specification |
+| 1.0.0 | 17 Feb 2026 | Initial Phase 2 overview specification |
 
 ---
 

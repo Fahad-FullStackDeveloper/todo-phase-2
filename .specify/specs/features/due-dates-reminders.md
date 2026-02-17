@@ -44,7 +44,7 @@ The implementation must deliver an intuitive, flexible date management experienc
 - [ ] Time picker shows hour/minute selection (12h or 24h based on locale)
 - [ ] "No due date" option clears existing due date
 - [ ] Quick select options: Today, Tomorrow, Next Week, Next Month
-- [ ] Selected date/time displays in readable format: "Feb 17, 2026 at 3:00 PM"
+- [ ] Selected date/time displays in readable format: "17 Feb 2026 at 3:00 PM"
 - [ ] Changes save on selection or explicit save button
 - [ ] Due date reflects immediately in task list and calendar views
 
@@ -56,7 +56,7 @@ The implementation must deliver an intuitive, flexible date management experienc
   - "next week", "next month", "next year"
   - "in 2 days", "in 3 weeks"
   - "monday", "next monday", "this friday"
-  - "jan 15", "february 20", "mar 1"
+  - "15 feb", "20 february", "1 mar"
   - "today at 3pm", "tomorrow at 9:00"
   - "next week at 2pm", "friday at 5"
   - "eod" (end of day = 5pm today)
@@ -93,7 +93,7 @@ The implementation must deliver an intuitive, flexible date management experienc
 - [ ] Reminder options per task: None, 15 min before, 1 hour before, 1 day before, 1 week before, Custom
 - [ ] Multiple reminders can be set per task
 - [ ] Default reminder setting in user preferences
-- [ ] Reminder time displays relative to due date: "Reminds 1 hour before - Feb 17, 2:00 PM"
+- [ ] Reminder time displays relative to due date: "Reminds 1 hour before - 17 Feb 2026, 2:00 PM"
 - [ ] Reminders can be disabled per task
 - [ ] Reminder changes save immediately
 - [ ] Past reminders (setting reminder after due date passed) show warning
@@ -121,7 +121,7 @@ The implementation must deliver an intuitive, flexible date management experienc
   - 2 days before
   - 1 week before
 - [ ] Custom timing: X minutes/hours/days before
-- [ ] Reminder time displayed clearly: "Reminds you at 2:00 PM on Feb 17"
+- [ ] Reminder time displayed clearly: "Reminds you at 2:00 PM on 17 Feb 2026"
 - [ ] Multiple reminders supported: "Reminds 1 day before and 1 hour before"
 - [ ] Reminder delivered even if app is closed (via service worker push)
 
@@ -189,7 +189,7 @@ The implementation must deliver an intuitive, flexible date management experienc
 {
   "id": "uuid",
   "due_date": "2026-02-17T15:00:00Z",
-  "due_date_display": "Feb 17, 2026 at 3:00 PM EST",
+  "due_date_display": "17 Feb 2026 at 3:00 PM EST",
   "is_overdue": false,
   "updated_at": "2026-02-17T10:30:00Z"
 }
@@ -409,7 +409,7 @@ def send_reminder(reminder_id: UUID):
 │  Due Date                               │
 ├─────────────────────────────────────────┤
 │  ┌─────────────────────────────────┐   │
-│  │ Feb 2026                        │   │
+│  │ Feb-2026                        │   │
 │  │  Su  Mo  Tu  We  Th  Fr  Sa     │   │
 │  │                      1   2      │   │
 │  │   3   4   5   6   7   8   9     │   │
@@ -422,7 +422,7 @@ def send_reminder(reminder_id: UUID):
 │                                         │
 │  Quick: [Today] [Tomorrow] [Next Week] │
 │                                         │
-│  Natural: "tomorrow at 3pm" → Feb 18   │
+│  Natural: "tomorrow at 3pm" → 18 Feb 2026   │
 │                                         │
 │  [Remove Due Date]          [Save]     │
 └─────────────────────────────────────────┘
@@ -437,7 +437,7 @@ def send_reminder(reminder_id: UUID):
 │  │ tomorrow at 3pm                 │   │
 │  └─────────────────────────────────┘   │
 │                                         │
-│  Preview: 📅 Wednesday, Feb 18 at 3:00 PM
+│  Preview: 📅 Wednesday, 18 Feb 2026 at 3:00 PM
 │                                         │
 │  Or pick a date: [Calendar Icon]        │
 └─────────────────────────────────────────┘
@@ -449,13 +449,13 @@ def send_reminder(reminder_id: UUID):
 Normal Task:
 ┌─────────────────────────────────────────┐
 │  ☐ Task Title                           │
-│     Due: Feb 17 at 3:00 PM              │
+│     Due: 17 Feb 2026 at 3:00 PM              │
 └─────────────────────────────────────────┘
 
 Overdue Task:
 ┌─────────────────────────────────────────┐
 │  ☐ Task Title                    ⚠️    │
-│     Due: Feb 10 at 3:00 PM (7 days)     │
+│     Due: 10 Feb 2026 at 3:00 PM (7 days)     │
 │     ███████████████████████████  OVERDUE
 └─────────────────────────────────────────┘
 ```

@@ -116,7 +116,7 @@ This specification ensures a premium calendar experience comparable to Google Ca
 - [ ] Keyboard shortcuts: Left/Right arrows navigate, Up/Down change view
 - [ ] Date picker in header allows jumping to specific date
 - [ ] Mini-calendar in sidebar for quick date selection
-- [ ] Breadcrumb shows current view range (e.g., "February 2026", "Week 8", "Tuesday, Feb 17")
+- [ ] Breadcrumb shows current view range (e.g., "Feb 2026", "Week 8", "Tuesday, 17 Feb 2026")
 - [ ] Navigation updates URL query params for shareable links
 - [ ] Browser back/forward navigates calendar history
 
@@ -260,7 +260,7 @@ def get_day_tasks(user_id: UUID, year: int, month: int, day: int) -> list:
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  [<]  February 2026  [>]    [Today]  [Month▼]  [Filter▼]   │
+│  [<]  Feb 2026  [>]    [Today]  [Month▼]  [Filter▼]   │
 ├────────────────────────────────────────────────────────────┤
 │  Sun   Mon   Tue   Wed   Thu   Fri   Sat                   │
 ├───────┬───────┬───────┬───────┬───────┬───────┬───────┤
@@ -297,7 +297,7 @@ def get_day_tasks(user_id: UUID, year: int, month: int, day: int) -> list:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  [<]  Week 8 (Feb 16-22, 2026)  [>]    [This Week]  [View▼]    │
+│  [<]  Week 8 (16-22 Feb 2026)  [>]    [This Week]  [View▼]    │
 ├──────┬─────────┬─────────┬─────────┬─────────┬─────────┬───────┤
 │ Time │   Sun   │   Mon   │   Tue   │   Wed   │   Thu   │ ...   │
 ├──────┼─────────┼─────────┼─────────┼─────────┼─────────┼───────┤
@@ -315,7 +315,7 @@ def get_day_tasks(user_id: UUID, year: int, month: int, day: int) -> list:
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  [<]  Tuesday, February 17, 2026  [>]    [Today]  [View▼]  │
+│  [<]  Tuesday, 17 Feb 2026  [>]    [Today]  [View▼]  │
 ├──────────────┬─────────────────────────────────────────────┤
 │    Time      │            Tasks                            │
 ├──────────────┼─────────────────────────────────────────────┤

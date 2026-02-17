@@ -361,8 +361,8 @@ def build_task_query(user_id: UUID, filters: dict) -> str:
 │  ☑ Important (3)                        │
 ├─────────────────────────────────────────┤
 │  Due Date                               │
-│  From: [Feb 17, 2026]                   │
-│  To:   [Feb 24, 2026]                   │
+│  From: [17 Feb 2026]                   │
+│  To:   [24 Feb 2026]                   │
 │                                         │
 │  Quick: [Today] [This Week] [Overdue]  │
 ├─────────────────────────────────────────┤
@@ -400,7 +400,7 @@ Active Filters:
 │  Priority: Urgent, High  ✕              │
 │  Project: Work  ✕                       │
 │  Labels: Urgent  ✕                      │
-│  Due: Feb 17-24, 2026  ✕                │
+│  Due: 17-24 Feb 2026  ✕                │
 │                                         │
 │  Showing 12 tasks  [Clear All]          │
 └─────────────────────────────────────────┘

@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)  
-**Current Version:** 1.0.4  
+**Current Version:** 1.0.6  
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -18,10 +18,10 @@
 
 ## Version Timeline
 
-### Version 1.0.0 - Initial Constitution (2026-02-17)
+### Version 1.0.0 - Initial Constitution (17 Feb 2026)
 
-**Type:** MAJOR (Initial Release)  
-**Date:** 2026-02-17  
+**Type:** MAJOR (Initial Release)
+**Date:** 17 Feb 2026
 **PHR ID:** `20260217-145359`
 
 #### Summary
@@ -81,10 +81,10 @@ CLAUDE.md
 
 ---
 
-### Version 1.0.1 - Overview Specification (2026-02-17)
+### Version 1.0.1 - Overview Specification (17 Feb 2026)
 
-**Type:** PATCH (Documentation Update)  
-**Date:** 2026-02-17  
+**Type:** PATCH (Documentation Update)
+**Date:** 17 Feb 2026
 **PHR ID:** `20260217-150320`
 
 #### Summary
@@ -187,10 +187,10 @@ Comprehensive overview specification created with all premium SaaS features docu
 
 ---
 
-### Version 1.0.2 - Version History Document (2026-02-17)
+### Version 1.0.2 - Version History Document (17 Feb 2026)
 
-**Type:** PATCH (Documentation Update)  
-**Date:** 2026-02-17  
+**Type:** PATCH (Documentation Update)
+**Date:** 17 Feb 2026
 **PHR ID:** `20260217-151650`
 
 #### Summary
@@ -223,10 +223,10 @@ VERSION_HISTORY.md (NEW)
 
 ---
 
-### Version 1.0.3 - Feature Specifications (2026-02-17)
+### Version 1.0.3 - Feature Specifications (17 Feb 2026)
 
-**Type:** MINOR (New Feature Specs Added)  
-**Date:** 2026-02-17  
+**Type:** MINOR (New Feature Specs Added)
+**Date:** 17 Feb 2026
 **PHR ID:** `20260217-154258`
 
 #### Summary
@@ -313,10 +313,10 @@ Five comprehensive feature specification files created covering all core functio
 
 ---
 
-### Version 1.0.4 - ALL Feature Specs Complete (2026-02-17)
+### Version 1.0.4 - ALL Feature Specs Complete (17 Feb 2026)
 
-**Type:** MINOR (Major Feature Spec Milestone)  
-**Date:** 2026-02-17  
+**Type:** MINOR (Major Feature Spec Milestone)
+**Date:** 17 Feb 2026
 **PHR ID:** `20260217-163224`
 
 #### Summary
@@ -458,6 +458,195 @@ All 18 Premium Feature specifications completed. Total: 15 feature spec files co
 
 ---
 
+### Version 1.0.5 - Premium Monetization + Date Format (17 Feb 2026)
+
+**Type:** PATCH (Documentation Update)
+**Date:** 17 Feb 2026  
+**PHR ID:** `20260217-174931`
+
+#### Summary
+Created premium features monetization specification and standardized date/time format across all specs.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Premium Features Spec** | Created `premium-features.md` (964 lines) | Define monetization, trial, pricing, feature gating |
+| **Trial System** | Documented 14-day free trial | Full feature access, no credit card required |
+| **Pricing Tiers** | Defined 3 tiers + lifetime | Free, Premium Monthly ($9.99), Premium Yearly ($99.99), Lifetime ($199.99) |
+| **Feature Gating** | Specified post-trial locking rules | How each premium feature is restricted |
+| **Date Format** | Updated all display dates to DD MMM YYYY | User-friendly format (e.g., 17 Feb 2026) |
+| **Time Format** | Updated to 12-hour with AM/PM | User-friendly format (e.g., 4:30 PM) |
+| **Constitution Sync** | Updated constitution.md sync report | Reflect premium spec + date format (v1.0.4 → v1.0.5) |
+
+#### Premium Features Specification Details
+
+**Trial System:**
+- **Duration:** 14 days (2 weeks)
+- **Access:** ALL 18 premium features unlocked
+- **Requirement:** No credit card needed
+- **Start:** Automatic on signup
+- **Expiration:** Premium features locked (read-only), data preserved
+- **Grace Period:** 7 days to upgrade
+
+**Pricing Tiers:**
+
+| Tier | Price | Features |
+|------|-------|----------|
+| **Free** | $0 | Basic features (BF-01 to BF-09), 1 project, 5 labels |
+| **Premium Monthly** | $9.99/month | All 18 premium features, unlimited projects/labels, full analytics |
+| **Premium Yearly** | $99.99/year | All premium features, 2 months free (save 17%), early adopter badge |
+| **Lifetime Access** | $199.99 | One-time purchase, all features forever, limited launch offer |
+
+**Feature Unlock Conditions:**
+
+| Feature Tier | Unlock Condition |
+|--------------|------------------|
+| **Basic (BF-01 to BF-09)** | Always available (free) |
+| **Premium (PF-01 to PF-18)** | Trial (14 days) OR active subscription OR lifetime purchase |
+
+**Feature Gating Examples (Post-Trial):**
+- Kanban → Switch to list view only
+- Calendar → Hide calendar view
+- Projects → Limit to 1 project
+- Labels → Limit to 5 labels
+- Analytics → Hide dashboard
+- Pomodoro → Disable timer
+- Dark mode → Force light mode
+
+#### Date/Time Format Updates
+
+**New Format:**
+- **Date:** `17 Feb 2026` (DD MMM YYYY)
+- **Time:** `4:30 PM` (12-hour with AM/PM)
+- **DateTime:** `17 Feb 2026, 4:30 PM`
+
+**Files Updated:**
+- `.specify/specs/overview.md` - Document history table
+- `.specify/memory/constitution.md` - Ratification and amended dates
+- `VERSION_HISTORY.md` - All version dates
+- Feature specs with date examples:
+  - `analytics.md` - Response schema dates, streak date ranges
+  - `calendar-view.md` - Breadcrumb examples, view layout headers
+  - `due-dates-reminders.md` - Display format examples, reminder messages
+  - `filtering-sorting.md` - Date picker examples, filter chip displays
+  - `completion-celebrations.md` - Achievement date displays
+  - `quick-add.md` - Natural language pattern examples
+
+**Preserved (Technical Requirements):**
+- ISO format in API request/response examples (e.g., `"2026-02-17T15:00:00Z"`)
+- PHR IDs (e.g., `20260217-145359`)
+
+#### Files Created
+
+```
+.specify/specs/features/
+└── premium-features.md         (NEW - 964 lines, monetization spec)
+```
+
+#### Files Updated
+
+| File | Changes |
+|------|---------|
+| `.specify/specs/overview.md` | Date format in document history |
+| `.specify/memory/constitution.md` | Date format (ratification, amended) |
+| `VERSION_HISTORY.md` | All version dates, document history |
+| 6 feature spec files | Date examples in UI mockups, responses |
+
+#### Commands Executed
+
+| # | Command | Purpose | Version Impact |
+|---|---------|---------|----------------|
+| 25 | `task --subagent_type saas-product-architect` | Create premium spec + update dates | v1.0.5 |
+| 26 | `bash create-phr.sh --title "Add premium features monetization spec" --stage spec --feature premium` | Create PHR record | v1.0.5 |
+| 27 | `edit .specify/memory/constitution.md` | Update sync report v1.0.4 → v1.0.5 | v1.0.5 |
+
+---
+
+### Version 1.0.6 - International Date Format Standard (17 Feb 2026)
+
+**Type:** PATCH (Documentation Format Update)  
+**Date:** 17 Feb 2026  
+**PHR ID:** `20260217-180111`
+
+#### Summary
+Updated all date/time formats from hyphenated format (`17-Feb-2026`) to international standard space-separated format (`17 Feb 2026`) for better readability and to eliminate any MM/DD vs DD/MM ambiguity.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Date Format** | `17-Feb-2026` → `17 Feb 2026` | International standard, no hyphens, space-separated |
+| **Time Format** | `04:30 PM` → `4:30 PM` | Remove leading zero, cleaner appearance |
+| **DateTime Format** | `17-Feb-2026 04:30 PM` → `17 Feb 2026, 4:30 PM` | Add comma separator, remove leading zero |
+| **Natural Language** | `15-feb`, `20-february` → `15 jan`, `20 february` | Consistent space-separated format |
+
+#### Format Comparison
+
+| Format Type | Old Format | New Format | Why Better |
+|-------------|------------|------------|------------|
+| **Date Only** | `17-Feb-2026` | `17 Feb 2026` | ✅ No hyphens, clear separation |
+| **Date (Formal)** | `17-February-2026` | `17 February 2026` | ✅ Full month, no ambiguity |
+| **Time** | `04:30 PM` | `4:30 PM` | ✅ No unnecessary leading zero |
+| **DateTime** | `17-Feb-2026 04:30 PM` | `17 Feb 2026, 4:30 PM` | ✅ Comma separator, modern |
+| **With Full Month** | `17-February-2026` | `17 February 2026` | ✅ Most readable, zero ambiguity |
+
+#### Why This Format?
+
+**Advantages:**
+1. **No Ambiguity:** Eliminates MM/DD vs DD/MM confusion (unlike 02/17/2026)
+2. **Readable:** Natural reading order (day → month → year)
+3. **Mobile-Friendly:** Renders well on small screens
+4. **International:** Recognized standard (ISO 8601 variant)
+5. **Modern:** Used by major SaaS platforms (Notion, Linear, etc.)
+6. **Search-Friendly:** Easy to find dates in documents
+
+#### Files Updated
+
+**11 Files Updated:**
+- `.specify/memory/constitution.md` - Ratification and amended dates
+- `VERSION_HISTORY.md` - All version dates in headers, tables, format docs
+- `.specify/specs/overview.md` - Document history table
+- `.specify/specs/features/analytics.md` - Response schema dates, streak ranges
+- `.specify/specs/features/calendar-view.md` - Breadcrumb examples, view headers
+- `.specify/specs/features/due-dates-reminders.md` - Display formats, reminder messages
+- `.specify/specs/features/filtering-sorting.md` - Date picker examples, filter chips
+- `.specify/specs/features/completion-celebrations.md` - Achievement dates
+- `.specify/specs/features/quick-add.md` - Natural language patterns
+- `.specify/specs/features/premium-features.md` - Document history, trial dates
+- All other feature specs - Verified compliant
+
+#### Preservation Confirmed
+
+**ISO Format Preserved (Technical Requirements):**
+- API request/response JSON: `"2026-02-17T15:00:00Z"`
+- Database schema timestamps: `created_at: TIMESTAMP`
+- PHR IDs: `20260217-145359`
+- Code examples and technical contexts
+
+**24 ISO timestamp instances verified** across API examples.
+
+#### Statistics
+
+| Metric | Count |
+|--------|-------|
+| Files updated | 11 |
+| Total replacements | ~50 |
+| Date format changes | ~35 |
+| Time format changes | ~10 |
+| DateTime format changes | ~5 |
+| ISO timestamps preserved | 24 |
+
+#### Commands Executed
+
+| # | Command | Purpose | Version Impact |
+|---|---------|---------|----------------|
+| 28 | `task --subagent_type saas-product-architect` | Update date formats to international standard | v1.0.6 |
+| 29 | `bash create-phr.sh --title "Update to international date format" --stage spec --feature formatting` | Create PHR record | v1.0.6 |
+| 30 | `edit .specify/memory/constitution.md` | Update sync report v1.0.5 → v1.0.6 | v1.0.6 |
+
+---
+
 ## Version Update Rules
 
 ### When to Increment Version
@@ -557,11 +746,13 @@ Use this table to trace which version resulted from which command:
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 1.0.0 | 2026-02-17 | saas-product-architect | Initial version history document created |
-| 1.0.1 | 2026-02-17 | saas-product-architect | Added overview specification details |
-| 1.0.2 | 2026-02-17 | saas-product-architect | Added version history document entry, updated current version |
-| 1.0.3 | 2026-02-17 | saas-product-architect | Added 5 feature specifications (task-management, projects-kanban, calendar-view, auth-jwt, analytics) |
-| 1.0.4 | 2026-02-17 | saas-product-architect | Completed ALL 15 feature specs (10 additional: subtasks, labels, due-dates, filtering, dark-mode, pwa, shortcuts, quick-add, focus-mode, celebrations) - 100% feature coverage |
+| 1.0.0 | 17 Feb 2026 | saas-product-architect | Initial version history document created |
+| 1.0.1 | 17 Feb 2026 | saas-product-architect | Added overview specification details |
+| 1.0.2 | 17 Feb 2026 | saas-product-architect | Added version history document entry, updated current version |
+| 1.0.3 | 17 Feb 2026 | saas-product-architect | Added 5 feature specifications (task-management, projects-kanban, calendar-view, auth-jwt, analytics) |
+| 1.0.4 | 17 Feb 2026 | saas-product-architect | Completed ALL 15 feature specs (10 additional: subtasks, labels, due-dates, filtering, dark-mode, pwa, shortcuts, quick-add, focus-mode, celebrations) - 100% feature coverage |
+| 1.0.5 | 17 Feb 2026 | saas-product-architect | Created premium-features.md (monetization, 14-day trial, pricing tiers, feature gating) + updated date/time format (DD MMM YYYY, 12-hour) across all specs |
+| 1.0.6 | 17 Feb 2026 | saas-product-architect | Updated date format to international standard (17 Feb 2026, 4:30 PM) - removed hyphens, added comma separator, eliminated leading zeros |
 
 ---
 

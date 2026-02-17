@@ -536,7 +536,7 @@ Complete:
 │  Recent:                                │
 │  🏆 Month Master                        │
 │     30-day streak                       │
-│     Feb 17, 2026                        │
+│     17 Feb 2026                        │
 │                                         │
 │  In Progress:                           │
 │  👑 Quarterly Champion    ████████░░    │

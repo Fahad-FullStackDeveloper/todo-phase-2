@@ -65,7 +65,7 @@ The implementation must deliver a seamless, fast task capture experience that ri
   - "tomorrow", "next week", "next month"
   - "today at 3pm", "tomorrow at 9am"
   - "friday at 5", "monday at 2pm"
-  - "jan 15", "february 20"
+  - "15 jan", "20 february"
   - "in 2 days", "in 3 weeks"
   - "eod" (end of day)
 - [ ] Parsed date shown as preview below input

@@ -87,7 +87,7 @@ The dashboard includes overview statistics, completion metrics, streak tracking,
 ### Longest Streak Record (US-AN-05)
 
 - [ ] Display user's all-time longest streak
-- [ ] Show date range of longest streak (e.g., "Jan 5 - Feb 14, 2026")
+- [ ] Show date range of longest streak (e.g., "05 Jan 2026 - 14 Feb 2026")
 - [ ] Display streak length in days
 - [ ] Highlight if current streak is approaching record
 - [ ] Click shows detailed streak history
@@ -185,7 +185,7 @@ The dashboard includes overview statistics, completion metrics, streak tracking,
   "completionRate": 73.5,
   "currentStreak": 12,
   "longestStreak": 45,
-  "lastCompletedDate": "2026-02-17",
+  "lastCompletedDate": "17 Feb 2026",
   "period": "all_time",
   "updatedAt": "2026-02-17T14:30:00Z"
 }
@@ -198,43 +198,43 @@ The dashboard includes overview statistics, completion metrics, streak tracking,
 {
   "days": [
     {
-      "date": "2026-02-11",
+      "date": "11 Feb 2026",
       "dayName": "Wednesday",
       "created": 5,
       "completed": 3
     },
     {
-      "date": "2026-02-12",
+      "date": "12 Feb 2026",
       "dayName": "Thursday",
       "created": 8,
       "completed": 6
     },
     {
-      "date": "2026-02-13",
+      "date": "13 Feb 2026",
       "dayName": "Friday",
       "created": 4,
       "completed": 5
     },
     {
-      "date": "2026-02-14",
+      "date": "14 Feb 2026",
       "dayName": "Saturday",
       "created": 2,
       "completed": 4
     },
     {
-      "date": "2026-02-15",
+      "date": "15 Feb 2026",
       "dayName": "Sunday",
       "created": 3,
       "completed": 2
     },
     {
-      "date": "2026-02-16",
+      "date": "16 Feb 2026",
       "dayName": "Monday",
       "created": 7,
       "completed": 5
     },
     {
-      "date": "2026-02-17",
+      "date": "17 Feb 2026",
       "dayName": "Tuesday",
       "created": 6,
       "completed": 8
@@ -250,17 +250,17 @@ The dashboard includes overview statistics, completion metrics, streak tracking,
 {
   "currentStreak": 12,
   "longestStreak": 45,
-  "lastCompletedDate": "2026-02-17",
+  "lastCompletedDate": "17 Feb 2026",
   "streakHistory": [
     {
-      "startDate": "2026-02-06",
-      "endDate": "2026-02-17",
+      "startDate": "06 Feb 2026",
+      "endDate": "17 Feb 2026",
       "days": 12,
       "isCurrent": true
     },
     {
-      "startDate": "2025-12-01",
-      "endDate": "2026-01-14",
+      "startDate": "01 Dec 2025",
+      "endDate": "14 Jan 2026",
       "days": 45,
       "isCurrent": false
     }
@@ -436,7 +436,7 @@ ORDER BY date;
 │  ┌─────────────────────────┐ ┌─────────────────────────┐       │
 │  │   Pomodoro Stats        │ │   Longest Streak        │       │
 │  │   142 sessions          │ │   45 days               │       │
-│  │   3550 minutes (59h)    │ │   Jan 5 - Feb 14, 2026  │       │
+│  │   3550 minutes (59h)    │ │   05 Jan 2026 - 14 Feb 2026  │       │
 │  │   25 min avg            │ │                         │       │
 │  └─────────────────────────┘ └─────────────────────────┘       │
 │                                                                 │
