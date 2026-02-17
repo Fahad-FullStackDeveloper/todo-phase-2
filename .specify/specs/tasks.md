@@ -105,70 +105,70 @@ Tasks are organized by constitution-mandated categories:
 
 ### JWT Authentication Setup
 
-- [ ] T024 [P] [US-AUTH] Configure Better Auth JWT plugin in frontend (better-auth.config.ts)
-- [ ] T025 [P] [US-AUTH] Set BETTER_AUTH_SECRET environment variable (shared secret between frontend/backend)
-- [ ] T026 [US-AUTH] Create JWT verification middleware in backend/middleware/auth.py (extract token from Authorization header)
-- [ ] T027 [US-AUTH] Implement get_current_user dependency (decode JWT, extract user_id, return user info)
-- [ ] T028 [US-AUTH] Add 401 Unauthorized response for invalid/missing tokens
-- [ ] T029 [US-AUTH] Configure token expiry: 15min access token, 7-day refresh token (30-day with remember me)
+- [x] T024 [P] [US-AUTH] Configure Better Auth JWT plugin in frontend (better-auth.config.ts)
+- [x] T025 [P] [US-AUTH] Set BETTER_AUTH_SECRET environment variable (shared secret between frontend/backend)
+- [x] T026 [US-AUTH] Create JWT verification middleware in backend/middleware/auth.py (extract token from Authorization header)
+- [x] T027 [US-AUTH] Implement get_current_user dependency (decode JWT, extract user_id, return user info)
+- [x] T028 [US-AUTH] Add 401 Unauthorized response for invalid/missing tokens
+- [x] T029 [US-AUTH] Configure token expiry: 15min access token, 7-day refresh token (30-day with remember me)
 
 ### Auth Endpoints
 
-- [ ] T030 [P] [US-AUTH] Implement POST /api/auth/signup in backend/routes/auth.py (create user, hash password, issue JWT)
-- [ ] T031 [P] [US-AUTH] Implement POST /api/auth/signin in backend/routes/auth.py (authenticate, issue JWT)
-- [ ] T032 [P] [US-AUTH] Implement POST /api/auth/signout in backend/routes/auth.py (invalidate token)
-- [ ] T033 [P] [US-AUTH] Implement GET /api/auth/me in backend/routes/auth.py (get current user from JWT)
-- [ ] T034 [P] [US-AUTH] Implement POST /api/auth/refresh in backend/routes/auth.py (refresh JWT token)
+- [x] T030 [P] [US-AUTH] Implement POST /api/auth/signup in backend/routes/auth.py (create user, hash password, issue JWT)
+- [x] T031 [P] [US-AUTH] Implement POST /api/auth/signin in backend/routes/auth.py (authenticate, issue JWT)
+- [x] T032 [P] [US-AUTH] Implement POST /api/auth/signout in backend/routes/auth.py (invalidate token)
+- [x] T033 [P] [US-AUTH] Implement GET /api/auth/me in backend/routes/auth.py (get current user from JWT)
+- [x] T034 [P] [US-AUTH] Implement POST /api/auth/refresh in backend/routes/auth.py (refresh JWT token)
 
 ### Task CRUD Endpoints (User Isolation Enforced)
 
-- [ ] T035 [P] [US-TASK] Implement GET /api/tasks in backend/routes/tasks.py (list all user tasks with filters: status, priority, project, labels, date range)
-- [ ] T036 [P] [US-TASK] Implement POST /api/tasks in backend/routes/tasks.py (create task, title required 1-200 chars, validate user_id from JWT)
-- [ ] T037 [P] [US-TASK] Implement GET /api/tasks/:id in backend/routes/tasks.py (get single task, verify ownership)
-- [ ] T038 [P] [US-TASK] Implement PUT /api/tasks/:id in backend/routes/tasks.py (update task, verify ownership)
-- [ ] T039 [P] [US-TASK] Implement PATCH /api/tasks/:id/complete in backend/routes/tasks.py (toggle completion, update completed_at)
-- [ ] T040 [P] [US-TASK] Implement DELETE /api/tasks/:id in backend/routes/tasks.py (delete task, verify ownership)
+- [x] T035 [P] [US-TASK] Implement GET /api/tasks in backend/routes/tasks.py (list all user tasks with filters: status, priority, project, labels, date range)
+- [x] T036 [P] [US-TASK] Implement POST /api/tasks in backend/routes/tasks.py (create task, title required 1-200 chars, validate user_id from JWT)
+- [x] T037 [P] [US-TASK] Implement GET /api/tasks/:id in backend/routes/tasks.py (get single task, verify ownership)
+- [x] T038 [P] [US-TASK] Implement PUT /api/tasks/:id in backend/routes/tasks.py (update task, verify ownership)
+- [x] T039 [P] [US-TASK] Implement PATCH /api/tasks/:id/complete in backend/routes/tasks.py (toggle completion, update completed_at)
+- [x] T040 [P] [US-TASK] Implement DELETE /api/tasks/:id in backend/routes/tasks.py (delete task, verify ownership)
 
 ### Subtask Endpoints
 
-- [ ] T041 [P] [US-TASK] Implement POST /api/tasks/:id/subtasks in backend/routes/subtasks.py (add subtask to task)
-- [ ] T042 [P] [US-TASK] Implement PATCH /api/tasks/:id/subtasks/:subtaskId in backend/routes/subtasks.py (toggle subtask completion)
-- [ ] T043 [P] [US-TASK] Implement DELETE /api/tasks/:id/subtasks/:subtaskId in backend/routes/subtasks.py (delete subtask)
+- [x] T041 [P] [US-TASK] Implement POST /api/tasks/:id/subtasks in backend/routes/subtasks.py (add subtask to task)
+- [x] T042 [P] [US-TASK] Implement PATCH /api/tasks/:id/subtasks/:subtaskId in backend/routes/subtasks.py (toggle subtask completion)
+- [x] T043 [P] [US-TASK] Implement DELETE /api/tasks/:id/subtasks/:subtaskId in backend/routes/subtasks.py (delete subtask)
 
 ### Project Endpoints
 
-- [ ] T044 [P] [US-PROJ] Implement GET /api/projects in backend/routes/projects.py (list all user projects)
-- [ ] T045 [P] [US-PROJ] Implement POST /api/projects in backend/routes/projects.py (create project, name required, color optional hex)
-- [ ] T046 [P] [US-PROJ] Implement GET /api/projects/:id in backend/routes/projects.py (get project with tasks, verify ownership)
-- [ ] T047 [P] [US-PROJ] Implement PUT /api/projects/:id in backend/routes/projects.py (update project, verify ownership)
-- [ ] T048 [P] [US-PROJ] Implement DELETE /api/projects/:id in backend/routes/projects.py (delete project, verify ownership)
-- [ ] T049 [P] [US-PROJ] Implement GET /api/projects/:id/stats in backend/routes/projects.py (project statistics: total, completed, completion rate)
+- [x] T044 [P] [US-PROJ] Implement GET /api/projects in backend/routes/projects.py (list all user projects)
+- [x] T045 [P] [US-PROJ] Implement POST /api/projects in backend/routes/projects.py (create project, name required, color optional hex)
+- [x] T046 [P] [US-PROJ] Implement GET /api/projects/:id in backend/routes/projects.py (get project with tasks, verify ownership)
+- [x] T047 [P] [US-PROJ] Implement PUT /api/projects/:id in backend/routes/projects.py (update project, verify ownership)
+- [x] T048 [P] [US-PROJ] Implement DELETE /api/projects/:id in backend/routes/projects.py (delete project, verify ownership)
+- [x] T049 [P] [US-PROJ] Implement GET /api/projects/:id/stats in backend/routes/projects.py (project statistics: total, completed, completion rate)
 
 ### Label Endpoints
 
-- [ ] T050 [P] [US-LABEL] Implement GET /api/labels in backend/routes/labels.py (list all user labels)
-- [ ] T051 [P] [US-LABEL] Implement POST /api/labels in backend/routes/labels.py (create label, name required, color hex required)
-- [ ] T052 [P] [US-LABEL] Implement PUT /api/labels/:id in backend/routes/labels.py (update label, verify ownership)
-- [ ] T053 [P] [US-LABEL] Implement DELETE /api/labels/:id in backend/routes/labels.py (delete label, verify ownership)
+- [x] T050 [P] [US-LABEL] Implement GET /api/labels in backend/routes/labels.py (list all user labels)
+- [x] T051 [P] [US-LABEL] Implement POST /api/labels in backend/routes/labels.py (create label, name required, color hex required)
+- [x] T052 [P] [US-LABEL] Implement PUT /api/labels/:id in backend/routes/labels.py (update label, verify ownership)
+- [x] T053 [P] [US-LABEL] Implement DELETE /api/labels/:id in backend/routes/labels.py (delete label, verify ownership)
 
 ### Dashboard/Analytics Endpoints
 
-- [ ] T054 [P] [US-ANALYTICS] Implement GET /api/dashboard/stats in backend/routes/dashboard.py (total tasks, completed today, completion rate, current streak)
-- [ ] T055 [P] [US-ANALYTICS] Implement GET /api/dashboard/weekly-activity in backend/routes/dashboard.py (last 7 days activity data)
-- [ ] T056 [P] [US-ANALYTICS] Implement GET /api/dashboard/streak in backend/routes/dashboard.py (current streak, longest streak, last completed date)
+- [x] T054 [P] [US-ANALYTICS] Implement GET /api/dashboard/stats in backend/routes/dashboard.py (total tasks, completed today, completion rate, current streak)
+- [x] T055 [P] [US-ANALYTICS] Implement GET /api/dashboard/weekly-activity in backend/routes/dashboard.py (last 7 days activity data)
+- [x] T056 [P] [US-ANALYTICS] Implement GET /api/dashboard/streak in backend/routes/dashboard.py (current streak, longest streak, last completed date)
 
 ### Pomodoro Endpoints
 
-- [ ] T057 [P] [US-ANALYTICS] Implement POST /api/pomodoro/sessions in backend/routes/pomodoro.py (log pomodoro session)
-- [ ] T058 [P] [US-ANALYTICS] Implement GET /api/pomodoro/stats in backend/routes/pomodoro.py (total sessions, total minutes, avg session length)
+- [x] T057 [P] [US-ANALYTICS] Implement POST /api/pomodoro/sessions in backend/routes/pomodoro.py (log pomodoro session)
+- [x] T058 [P] [US-ANALYTICS] Implement GET /api/pomodoro/stats in backend/routes/pomodoro.py (total sessions, total minutes, avg session length)
 
 ### Backend Tests
 
-- [ ] T059 [US-AUTH] Write tests for auth endpoints (signup, signin, signout, me, refresh)
-- [ ] T060 [US-TASK] Write tests for task CRUD endpoints (all operations, user isolation verification)
-- [ ] T061 [US-PROJ] Write tests for project endpoints (CRUD, stats, ownership verification)
-- [ ] T062 [US-LABEL] Write tests for label endpoints (CRUD, ownership verification)
-- [ ] T063 [US-ANALYTICS] Write tests for dashboard and pomodoro endpoints
+- [x] T059 [US-AUTH] Write tests for auth endpoints (signup, signin, signout, me, refresh)
+- [x] T060 [US-TASK] Write tests for task CRUD endpoints (all operations, user isolation verification)
+- [x] T061 [US-PROJ] Write tests for project endpoints (CRUD, stats, ownership verification)
+- [x] T062 [US-LABEL] Write tests for label endpoints (CRUD, ownership verification)
+- [x] T063 [US-ANALYTICS] Write tests for dashboard and pomodoro endpoints
 
 ---
 

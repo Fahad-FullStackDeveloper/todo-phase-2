@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)  
-**Current Version:** 1.1.0  
+**Current Version:** 1.2.0  
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -1003,6 +1003,136 @@ backend/
 
 ---
 
+| 43 | `edit .specify/memory/constitution.md` | Update sync report v1.0.9 → v1.1.0 | v1.1.0 |
+
+---
+
+### Version 1.2.0 - Phase 3 Backend APIs Complete (17 Feb 2026)
+
+**Type:** MAJOR (Backend API Layer Complete)  
+**Date:** 17 Feb 2026  
+**PHR ID:** `20260217-215227`
+
+#### Summary
+Successfully implemented Phase 3: Backend Authentication & Core APIs with all 29 endpoints, JWT middleware, user isolation enforcement, and comprehensive test suite (100+ tests).
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **FastAPI App** | Created backend/main.py | App entry point with CORS, middleware, route registration |
+| **Project Routes** | Created backend/routes/projects.py | 6 project CRUD endpoints with stats |
+| **Label Routes** | Created backend/routes/labels.py | 4 label CRUD endpoints |
+| **Dashboard Routes** | Created backend/routes/dashboard.py | 3 analytics endpoints (stats, weekly-activity, streak) |
+| **Pomodoro Routes** | Created backend/routes/pomodoro.py | 2 pomodoro session endpoints |
+| **Test Suite** | Created backend/tests/ (5 files) | 100+ tests covering all endpoints |
+| **Environment** | Updated .env and .env.example | BETTER_AUTH_SECRET, FRONTEND_URL for CORS |
+| **Constitution Update** | Updated constitution.md sync report | Reflect Phase 3 completion (v1.1.0 → v1.2.0) |
+| **Tasks Update** | Marked T024-T063 complete in tasks.md | Track implementation progress |
+
+#### Endpoints Implemented (29 Total)
+
+| Category | Endpoints | Count |
+|----------|-----------|-------|
+| Authentication | signup, signin, signout, me, refresh | 5 |
+| Tasks | list, create, get, update, complete, delete | 6 |
+| Subtasks | add, toggle, delete | 3 |
+| Projects | list, create, get, update, delete, stats | 6 |
+| Labels | list, create, update, delete | 4 |
+| Dashboard | stats, weekly-activity, streak | 3 |
+| Pomodoro | sessions, stats | 2 |
+| **TOTAL** | | **29** |
+
+#### Files Created
+
+```
+backend/
+├── main.py                        (NEW - FastAPI app)
+├── routes/
+│   ├── projects.py                (NEW - 6 endpoints)
+│   ├── labels.py                  (NEW - 4 endpoints)
+│   ├── dashboard.py               (NEW - 3 endpoints)
+│   └── pomodoro.py                (NEW - 2 endpoints)
+├── tests/
+│   ├── __init__.py                (NEW)
+│   ├── conftest.py                (NEW - pytest fixtures)
+│   ├── test_auth.py               (NEW - 20+ tests)
+│   ├── test_tasks.py              (NEW - 25+ tests)
+│   ├── test_projects.py           (NEW - 20+ tests)
+│   ├── test_labels.py             (NEW - 20+ tests)
+│   └── test_dashboard.py          (NEW - 20+ tests)
+├── .env                           (UPDATED)
+└── .env.example                   (UPDATED)
+```
+
+**Total:** 12 new files
+
+#### JWT Middleware Implementation
+
+| Feature | Configuration |
+|---------|--------------|
+| Access Token | 15 minutes (900 seconds) |
+| Refresh Token | 7 days (604,800 seconds) or 30 days with remember_me |
+| Algorithm | HS256 |
+| Secret | BETTER_AUTH_SECRET environment variable |
+| Functions | create_access_token, create_refresh_token, decode_token, get_current_user, hash_password, verify_password |
+
+#### User Isolation Enforcement
+
+**ALL endpoints enforce user isolation:**
+- ✅ Query filtering: `WHERE user_id = current_user.id`
+- ✅ Ownership verification: All update/delete operations verify ownership
+- ✅ Foreign key validation: Task-project/label associations verified
+- ✅ Test coverage: TestUserIsolation class in every test file
+
+#### Test Suite
+
+| Test File | Tests | Coverage |
+|-----------|-------|----------|
+| test_auth.py | 20+ | Auth endpoints + user isolation |
+| test_tasks.py | 25+ | Task CRUD + user isolation |
+| test_projects.py | 20+ | Project CRUD + stats + user isolation |
+| test_labels.py | 20+ | Label CRUD + user isolation |
+| test_dashboard.py | 20+ | Dashboard + Pomodoro + user isolation |
+| **TOTAL** | **100+** | All endpoints + user isolation |
+
+#### Key Achievements
+
+- ✅ All 29 API endpoints implemented and tested
+- ✅ JWT authentication with 15min/7day token expiry
+- ✅ User isolation enforced on ALL endpoints
+- ✅ Ownership verification for all update/delete operations
+- ✅ 100+ tests with pytest fixtures
+- ✅ CORS configured for frontend origin
+- ✅ Environment variables documented
+
+#### Tasks Completed
+
+**Phase 3: Backend Auth & Core APIs (40/40 tasks)**
+- T024-T029: JWT Authentication Setup (6 tasks) ✅
+- T030-T034: Auth Endpoints (5 tasks) ✅
+- T035-T040: Task CRUD Endpoints (6 tasks) ✅
+- T041-T043: Subtask Endpoints (3 tasks) ✅
+- T044-T049: Project Endpoints (6 tasks) ✅
+- T050-T053: Label Endpoints (4 tasks) ✅
+- T054-T056: Dashboard Endpoints (3 tasks) ✅
+- T057-T058: Pomodoro Endpoints (2 tasks) ✅
+- T059-T063: Backend Tests (5 tasks) ✅
+
+**Overall Progress:** 55/225 tasks complete (24.4%)
+- Phase 2: 15 tasks ✅
+- Phase 3: 40 tasks ✅
+
+#### Commands Executed
+
+| # | Command | Purpose | Version Impact |
+|---|---------|---------|----------------|
+| 44 | `task --subagent_type fastapi-backend-master` | Implement Phase 3 backend APIs | v1.2.0 |
+| 45 | `bash create-phr.sh --title "Implement Phase 3 backend APIs" --stage green --feature backend` | Create PHR record | v1.2.0 |
+| 46 | `edit .specify/memory/constitution.md` | Update sync report v1.1.0 → v1.2.0 | v1.2.0 |
+
+---
+
 ## Version Update Rules
 
 ### When to Increment Version
@@ -1113,6 +1243,7 @@ Use this table to trace which version resulted from which command:
 | 1.0.8 | 17 Feb 2026 | saas-product-architect | Generated tasks.md (225 actionable tasks, 8 phases, MVP scope T001-T088, parallel execution groups) - ready for agent implementation |
 | 1.0.9 | 17 Feb 2026 | saas-product-architect | Created tasks-refinement.md checklist (60 items validating file path specificity, identified 14 gaps, 4 ambiguities) - quality assurance for tasks |
 | 1.1.0 | 17 Feb 2026 | neon-db-architect | Implemented Phase 2 database schema (7 SQLModel models, relationships, indexes, Alembic migration) - first implementation milestone |
+| 1.2.0 | 17 Feb 2026 | fastapi-backend-master | Implemented Phase 3 backend APIs (29 endpoints, JWT middleware, user isolation, 100+ tests) - backend API layer complete |
 
 ---
 
