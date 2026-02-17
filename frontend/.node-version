@@ -1,0 +1,4 @@
+# Node.js Version for Tools
+# Used by various Node.js tools to determine the required version
+
+20.11.0

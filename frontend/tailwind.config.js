@@ -9,8 +9,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary brand colors (TodoFlow Blue)
+        // CSS Custom Property mappings for shadcn/ui compatibility
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+          // Also keep numeric variants
           50: '#eff6ff',
           100: '#dbeafe',
           200: '#bfdbfe',
@@ -23,7 +31,31 @@ module.exports = {
           900: '#1e3a8a',
           950: '#172554',
         },
-        // Semantic colors
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        // Additional semantic colors
         success: {
           50: '#f0fdf4',
           500: '#22c55e',

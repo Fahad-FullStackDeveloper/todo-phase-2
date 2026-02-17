@@ -1,0 +1,6 @@
+# Node.js Version Configuration
+# This file is used by nvm (Node Version Manager) to automatically switch to the correct Node.js version
+
+# Required Node.js version for TodoFlow Frontend
+# Matches the engines.node version in package.json
+v20.11.0

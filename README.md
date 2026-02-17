@@ -1,84 +1,108 @@
-# TodoFlow
+# TodoFlow - Phase 2 Setup Guide
 
-**Premium SaaS Todo Application** | Phase 2 - Full-Stack Web Application
-
-[![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?logo=next.js)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+**Version:** 2.0.0  
+**Last Updated:** 18 Feb 2026
 
 ---
 
-## 📋 Overview
-
-TodoFlow is a premium SaaS todo/task management application with 27 features (9 basic + 18 premium). This monorepo contains:
-
-- **Frontend:** Next.js 16.1.6 (App Router, Server Components, TypeScript)
-- **Backend:** Python FastAPI with SQLModel ORM
-- **Database:** Neon Serverless PostgreSQL (local: PostgreSQL 15)
-- **Authentication:** Better Auth + JWT with user isolation
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- **Docker & Docker Compose** (recommended)
-- **Node.js 18+** (for local frontend development)
-- **Python 3.11+** (for local backend development)
-
-### Option 1: Docker (Recommended)
+## Quick Start
 
 ```bash
-# 1. Clone the repository
-git clone <repository-url>
+# Prerequisites
+- Node.js >= 20.0.0
+- Python >= 3.11
+- Docker & Docker Compose (optional)
+- Git
+
+# Clone and setup
 cd phase-2
 
-# 2. Copy environment files
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-
-# 3. Generate secure secret for JWT
-python -c "import secrets; print(secrets.token_urlsafe(32))"
-# Copy the output and update BETTER_AUTH_SECRET in .env
-
-# 4. Start all services
+# Option 1: Using Docker (Recommended)
 docker-compose up --build
 
-# 5. Access the application
+# Option 2: Manual Setup
+# See detailed instructions below
+```
+
+---
+
+## Prerequisites
+
+### Required Software
+
+| Software | Version | Purpose | Install Link |
+|----------|---------|---------|--------------|
+| **Node.js** | >= 20.0.0 | Frontend (Next.js) | https://nodejs.org/ |
+| **Python** | >= 3.11 | Backend (FastAPI) | https://python.org/ |
+| **Git** | Latest | Version control | https://git-scm.com/ |
+| **Docker** (optional) | Latest | Containerization | https://docker.com/ |
+
+### Verify Installation
+
+```bash
+# Check Node.js version (must be >= 20.0.0)
+node --version
+
+# Check npm version (must be >= 10.0.0)
+npm --version
+
+# Check Python version (must be >= 3.11)
+python --version
+
+# Check Git
+git --version
+```
+
+---
+
+## Project Structure
+
+```
+phase-2/
+├── frontend/              # Next.js 16.1.6 Application
+│   ├── src/
+│   │   ├── app/          # App Router pages
+│   │   ├── components/   # React components
+│   │   ├── lib/          # Utilities, API client
+│   │   └── types/        # TypeScript types
+│   ├── package.json
+│   └── .nvmrc           # Node version (20.11.0)
+│
+├── backend/              # FastAPI Application
+│   ├── models/          # SQLModel database models
+│   ├── routes/          # API endpoints
+│   ├── tests/           # Pytest tests
+│   ├── requirements.txt # Python dependencies
+│   └── .venv/          # Python virtual environment
+│
+├── .specify/            # Spec-Kit Plus specifications
+├── docker-compose.yml   # Docker orchestration
+└── README.md           # This file
+```
+
+---
+
+## Setup Instructions
+
+### Option 1: Docker Setup (Recommended)
+
+**Advantages:**
+- ✅ All dependencies included
+- ✅ Consistent environment across team
+- ✅ Database included
+- ✅ One command to start everything
+
+```bash
+# Start all services
+docker-compose up --build
+
+# Access applications
 # Frontend: http://localhost:3000
 # Backend API: http://localhost:8000
 # API Docs: http://localhost:8000/docs
 ```
 
-### Option 2: Local Development
-
-#### Backend Setup
-
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv .venv
-
-# Activate (Windows)
-.venv\Scripts\activate
-
-# Activate (Unix/Mac)
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Copy and configure environment
-cp .env.example .env
-# Edit .env with your DATABASE_URL and BETTER_AUTH_SECRET
-
-# Run with hot-reload
-uvicorn main:app --reload --port 8000
-```
+### Option 2: Manual Setup
 
 #### Frontend Setup
 
@@ -88,244 +112,247 @@ cd frontend
 # Install dependencies
 npm install
 
-# Copy and configure environment
+# Copy environment file
 cp .env.example .env
 
-# Run development server
+# Edit .env and set:
+# NEXT_PUBLIC_API_URL=http://localhost:8000
+# NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+# Start development server
+npm run dev
+
+# Access: http://localhost:3000
+```
+
+#### Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# Windows:
+.venv\Scripts\activate
+# Mac/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy environment file
+cp .env.example .env
+
+# Edit .env and set:
+# DATABASE_URL=postgresql://user:password@localhost:5432/todoflow
+# BETTER_AUTH_SECRET=your-secret-key-here
+
+# Start development server
+uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+
+# Access API docs: http://localhost:8000/docs
+```
+
+---
+
+## Environment Variables
+
+### Frontend (.env)
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+# Optional: Production URLs
+# NEXT_PUBLIC_API_URL=https://api.todoflow.com
+# NEXT_PUBLIC_BETTER_AUTH_URL=https://todoflow.com
+```
+
+### Backend (.env)
+
+```env
+# Database
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/todoflow
+
+# Authentication (MUST be same as frontend)
+BETTER_AUTH_SECRET=your-secure-secret-key-min-32-characters
+
+# JWT Configuration
+JWT_ALGORITHM=HS256
+JWT_EXPIRATION=15m
+REFRESH_TOKEN_EXPIRATION=7d
+
+# Frontend URL (for CORS)
+FRONTEND_URL=http://localhost:3000
+
+# Optional: SQL debug (set to false in production)
+SQL_ECHO=false
+```
+
+---
+
+## Development Workflow
+
+### 1. Start Backend
+
+```bash
+cd backend
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+uvicorn backend.main:app --reload
+```
+
+### 2. Start Frontend (in new terminal)
+
+```bash
+cd frontend
 npm run dev
 ```
 
----
+### 3. Access Applications
 
-## 📁 Project Structure
-
-```
-phase-2/
-├── .specify/                    # Spec-Kit Plus specifications
-│   ├── memory/constitution.md   # Project constitution
-│   ├── specs/                   # All specifications
-│   ├── templates/               # Templates
-│   └── scripts/                 # Automation scripts
-├── backend/                     # FastAPI Backend
-│   ├── main.py                  # App entry point
-│   ├── db.py                    # Database config
-│   ├── models/                  # SQLModel models (7)
-│   ├── routes/                  # API routes
-│   ├── middleware/              # JWT middleware
-│   ├── tests/                   # Test suite
-│   └── alembic/                 # Migrations
-├── frontend/                    # Next.js Frontend
-│   ├── src/
-│   │   ├── app/                 # App Router pages
-│   │   ├── components/          # React components
-│   │   ├── lib/api.ts           # API client
-│   │   ├── hooks/               # Custom hooks
-│   │   └── types/               # TypeScript types
-│   └── public/                  # Static assets
-├── docker-compose.yml           # Container orchestration
-├── .env.example                 # Environment template
-├── CLAUDE.md                    # Project guidelines
-└── README.md                    # This file
-```
+- **Frontend:** http://localhost:3000
+- **Backend API:** http://localhost:8000
+- **API Documentation:** http://localhost:8000/docs
+- **Alternative API Docs:** http://localhost:8000/redoc
 
 ---
 
-## 🔧 Technology Stack
-
-### Frontend
-| Technology | Purpose |
-|------------|---------|
-| Next.js 16.1.6 | React framework with App Router |
-| TypeScript | Type-safe development |
-| Tailwind CSS | Utility-first styling |
-| Framer Motion | Animations |
-| TanStack Query | Server state management |
-| Better Auth | JWT authentication |
-| @dnd-kit | Drag-and-drop |
-| date-fns | Date formatting |
-
-### Backend
-| Technology | Purpose |
-|------------|---------|
-| FastAPI | High-performance API |
-| SQLModel | Type-safe ORM |
-| PostgreSQL | Database |
-| Alembic | Migrations |
-| python-jose | JWT handling |
-| passlib | Password hashing |
-
----
-
-## 🔐 Environment Variables
-
-### Root `.env`
-```bash
-# Database
-DB_USER=todoflow
-DB_PASSWORD=todoflow_secret
-DB_NAME=todoflow
-DB_PORT=5432
-
-# Authentication (MUST be 32+ characters)
-BETTER_AUTH_SECRET=your-secure-random-secret-key
-
-# Ports
-BACKEND_PORT=8000
-FRONTEND_PORT=3000
-```
-
-### Backend `.env`
-```bash
-DATABASE_URL=postgresql://todoflow:todoflow_secret@localhost:5432/todoflow
-BETTER_AUTH_SECRET=your-secure-random-secret-key
-FRONTEND_URL=http://localhost:3000
-```
-
-### Frontend `.env`
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
-```
-
----
-
-## 📡 API Endpoints
-
-### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/signup` | Create account |
-| POST | `/api/auth/signin` | Login |
-| POST | `/api/auth/signout` | Logout |
-| GET | `/api/auth/me` | Get current user |
-| POST | `/api/auth/refresh` | Refresh token |
-
-### Tasks
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/tasks` | List tasks |
-| POST | `/api/tasks` | Create task |
-| GET | `/api/tasks/:id` | Get task |
-| PUT | `/api/tasks/:id` | Update task |
-| PATCH | `/api/tasks/:id/complete` | Toggle complete |
-| DELETE | `/api/tasks/:id` | Delete task |
-
-### Projects, Labels, Dashboard, Pomodoro
-See full API documentation at `http://localhost:8000/docs`
-
----
-
-## 🧪 Testing
-
-### Backend Tests
-```bash
-cd backend
-pytest tests/ -v
-pytest tests/ -v --cov=backend
-```
+## Testing
 
 ### Frontend Tests
+
 ```bash
 cd frontend
+
+# Run tests
 npm test
+
+# Run tests with UI
+npm run test:ui
 ```
 
----
+### Backend Tests
 
-## 📚 Documentation
-
-- **[CLAUDE.md](CLAUDE.md)** - Project guidelines and workflow
-- **[Backend CLAUDE.md](backend/CLAUDE.md)** - Backend-specific guidelines
-- **[Frontend CLAUDE.md](frontend/CLAUDE.md)** - Frontend-specific guidelines
-- **[Specs](.specify/specs/)** - Feature specifications
-- **[Constitution](.specify/memory/constitution.md)** - Project constitution
-
----
-
-## 🛠️ Development Commands
-
-### Docker
 ```bash
-docker-compose up              # Start all services
-docker-compose up --build      # Rebuild and start
-docker-compose down            # Stop all services
-docker-compose logs -f         # View logs
-docker-compose exec backend bash    # Access backend
-docker-compose exec frontend bash   # Access frontend
+cd backend
+source .venv/bin/activate
+
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=backend
+
+# Run specific test file
+pytest backend/tests/test_auth.py
 ```
 
-### Backend
+---
+
+## Troubleshooting
+
+### Node Version Issues
+
+**Error:** "Unsupported engine" or "Node version mismatch"
+
+**Solution:**
 ```bash
-uvicorn main:app --reload      # Run with hot-reload
-alembic upgrade head           # Run migrations
-alembic revision --autogenerate -m "msg"  # Create migration
-pytest                         # Run tests
+# Check current Node version
+node --version
+
+# Should be >= 20.0.0
+# If not, install correct version from https://nodejs.org/
+
+# Or use nvm (Node Version Manager)
+nvm install 20
+nvm use 20
 ```
 
-### Frontend
+### Python Version Issues
+
+**Error:** "Python 3.11 or higher required"
+
+**Solution:**
 ```bash
-npm run dev                    # Development server
-npm run build                  # Production build
-npm run start                  # Start production
-npm run lint                   # Run linter
+# Check Python version
+python --version
+
+# Should be >= 3.11
+# If not, install from https://python.org/
+```
+
+### Port Already in Use
+
+**Error:** "Port 3000 already in use" or "Port 8000 already in use"
+
+**Solution:**
+```bash
+# Windows - Kill process on port 3000
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# Mac/Linux - Kill process on port 3000
+lsof -ti:3000 | xargs kill -9
+```
+
+### Database Connection Issues
+
+**Error:** "Could not connect to database"
+
+**Solution:**
+1. Check DATABASE_URL in backend/.env
+2. Ensure PostgreSQL is running
+3. Verify database exists: `createdb todoflow`
+4. Check credentials match
+
+---
+
+## Build for Production
+
+### Frontend Build
+
+```bash
+cd frontend
+
+# Create production build
+npm run build
+
+# Start production server
+npm start
+```
+
+### Backend Build
+
+```bash
+cd backend
+
+# No build needed for Python
+# Just run with production settings
+uvicorn backend.main:app --host 0.0.0.0 --port 8000 --workers 4
 ```
 
 ---
 
-## 🔒 Security
+## Next Steps
 
-- JWT tokens with configurable expiration
-- Password hashing with bcrypt
-- CORS configuration for allowed origins
-- SQL injection prevention via SQLModel
-- XSS prevention via React escaping
-
-### Important: Shared Secret
-The `BETTER_AUTH_SECRET` environment variable MUST be identical in both frontend and backend for JWT verification to work.
+1. ✅ Complete Phase 1: Setup (This file)
+2. ✅ Complete Phase 2: Database Schema
+3. ✅ Complete Phase 3: Backend APIs
+4. 🔄 Next: Phase 4 - Frontend Authentication UI
 
 ---
 
-## 📝 Phase 1 Completion
+## Resources
 
-Phase 1: Setup & Project Initialization is **COMPLETE**:
-
-- [x] T001: Project structure created
-- [x] T002: Backend requirements.txt configured
-- [x] T003: Next.js 16.1.6 initialized
-- [x] T004: Backend dependencies documented
-- [x] T005: Frontend dependencies documented
-- [x] T006: docker-compose.yml created
-- [x] T007: .env.example files created
-- [x] T008: CLAUDE.md files created
+- **Next.js Docs:** https://nextjs.org/docs
+- **FastAPI Docs:** https://fastapi.tiangolo.com
+- **SQLModel Docs:** https://sqlmodel.tiangolo.com
+- **Tailwind CSS:** https://tailwindcss.com
+- **TypeScript:** https://typescriptlang.org
 
 ---
 
-## 🤝 Contributing
-
-1. Read relevant specs in `.specify/specs/`
-2. Create feature branch
-3. Implement with spec references
-4. Test thoroughly
-5. Submit pull request
-
----
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [Next.js](https://nextjs.org/)
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [SQLModel](https://sqlmodel.tiangolo.com/)
-- [Better Auth](https://better-auth.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-
----
-
-*Built with ❤️ for the Q4 Hackathon*
+**Need Help?** Check the `.specify/specs/` directory for detailed specifications.
