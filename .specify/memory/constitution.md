@@ -1,10 +1,15 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.1 → 1.0.2 (Version history document created)
+Version change: 1.0.2 → 1.0.3 (5 feature specifications created)
 Modified principles: None
 Added sections:
   - .specify/specs/overview.md (comprehensive project specification)
+  - .specify/specs/features/task-management.md (core task CRUD)
+  - .specify/specs/features/projects-kanban.md (projects + Kanban board)
+  - .specify/specs/features/calendar-view.md (calendar visualization)
+  - .specify/specs/features/auth-jwt.md (JWT authentication)
+  - .specify/specs/features/analytics.md (dashboard + Pomodoro stats)
   - VERSION_HISTORY.md (command-to-version tracking)
 Removed sections: None
 Templates requiring updates:
@@ -12,7 +17,9 @@ Templates requiring updates:
   - .specify/templates/spec-template.md ✅ aligned
   - .specify/templates/tasks-template.md ✅ aligned
 Follow-up TODOs:
-  - None (all templates created and aligned)
+  - TODO(CREATE_API_SPEC): Create rest-endpoints.md combining all API endpoints
+  - TODO(CREATE_DB_SPEC): Create schema.md with SQLModel definitions
+  - TODO(CREATE_UI_SPEC): Create components.md and pages.md
 -->
 
 # Project Constitution
