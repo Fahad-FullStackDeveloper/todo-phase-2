@@ -50,14 +50,16 @@ Tasks are organized by constitution-mandated categories:
 
 **Dependencies:** None (starting point)
 
-- [ ] T001 Create root project structure (phase-2/) with frontend/ and backend/ directories
-- [ ] T002 Initialize backend/ with Python virtual environment and requirements.txt
-- [ ] T003 Initialize frontend/ with Next.js 16.1.6 (create-next-app with App Router, TypeScript, src/ folder)
-- [ ] T004 Install backend dependencies: fastapi, uvicorn, sqlmodel, psycopg2-binary, alembic, python-jose, passlib
-- [ ] T005 Install frontend dependencies: next, react, typescript, tailwindcss, framer-motion, @tanstack/react-query, @dnd-kit
-- [ ] T006 Create docker-compose.yml with PostgreSQL (Neon-compatible) and services
-- [ ] T007 Create .env.example files for both frontend and backend with all required variables
-- [ ] T008 Create CLAUDE.md files in root, frontend/, and backend/ with project context
+**Status:** ✅ COMPLETE
+
+- [x] T001 Create root project structure (phase-2/) with frontend/ and backend/ directories
+- [x] T002 Initialize backend/ with Python virtual environment and requirements.txt
+- [x] T003 Initialize frontend/ with Next.js 16.1.6 (create-next-app with App Router, TypeScript, src/ folder)
+- [x] T004 Install backend dependencies: fastapi, uvicorn, sqlmodel, psycopg2-binary, alembic, python-jose, passlib
+- [x] T005 Install frontend dependencies: next, react, typescript, tailwindcss, framer-motion, @tanstack/react-query, @dnd-kit
+- [x] T006 Create docker-compose.yml with PostgreSQL (Neon-compatible) and services
+- [x] T007 Create .env.example files for both frontend and backend with all required variables
+- [x] T008 Create CLAUDE.md files in root, frontend/, and backend/ with project context
 
 ---
 

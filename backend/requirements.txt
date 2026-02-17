@@ -1,9 +1,14 @@
 # TodoFlow Backend Dependencies
+# Phase 1: Setup & Project Initialization
+# All dependencies for FastAPI + SQLModel + JWT Authentication
 
 # Core Framework
 fastapi>=0.109.0
 uvicorn[standard]>=0.27.0
 python-multipart>=0.0.6
+
+# Environment Variables
+python-dotenv>=1.0.0
 
 # Database & ORM
 sqlmodel>=0.0.14
