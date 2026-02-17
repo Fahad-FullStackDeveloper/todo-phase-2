@@ -71,27 +71,27 @@ Tasks are organized by constitution-mandated categories:
 
 ### SQLModel Models
 
-- [ ] T009 [DB] [P] Create User model in backend/models/user.py (id, email, name, password_hash, created_at, updated_at)
-- [ ] T010 [DB] [P] Create Task model in backend/models/task.py (id, user_id, title, description, priority, status, due_date, project_id, completed, completed_at, created_at, updated_at)
-- [ ] T011 [DB] [P] Create Project model in backend/models/project.py (id, user_id, name, description, color, created_at, updated_at)
-- [ ] T012 [DB] [P] Create Subtask model in backend/models/subtask.py (id, task_id, title, completed, position, created_at)
-- [ ] T013 [DB] [P] Create Label model in backend/models/label.py (id, user_id, name, color, created_at)
-- [ ] T014 [DB] [P] Create TaskLabel junction model in backend/models/task_label.py (task_id, label_id, composite primary key)
-- [ ] T015 [DB] [P] Create PomodoroSession model in backend/models/pomodoro_session.py (id, user_id, task_id, duration_minutes, completed, session_date, created_at)
+- [X] T009 [DB] [P] Create User model in backend/models/user.py (id, email, name, password_hash, created_at, updated_at)
+- [X] T010 [DB] [P] Create Task model in backend/models/task.py (id, user_id, title, description, priority, status, due_date, project_id, completed, completed_at, created_at, updated_at)
+- [X] T011 [DB] [P] Create Project model in backend/models/project.py (id, user_id, name, description, color, created_at, updated_at)
+- [X] T012 [DB] [P] Create Subtask model in backend/models/subtask.py (id, task_id, title, completed, position, created_at)
+- [X] T013 [DB] [P] Create Label model in backend/models/label.py (id, user_id, name, color, created_at)
+- [X] T014 [DB] [P] Create TaskLabel junction model in backend/models/task_label.py (task_id, label_id, composite primary key)
+- [X] T015 [DB] [P] Create PomodoroSession model in backend/models/pomodoro_session.py (id, user_id, task_id, duration_minutes, completed, session_date, created_at)
 
 ### Relationships & Configuration
 
-- [ ] T016 [DB] Define all relationships in models (User→Tasks, User→Projects, Task→Subtasks, Task↔Labels, Project→Tasks)
-- [ ] T017 [DB] Configure SQLModel metadata and create SQLModelConfig class
-- [ ] T018 [DB] Create database.py with engine, session factory, and get_db dependency
+- [X] T016 [DB] Define all relationships in models (User→Tasks, User→Projects, Task→Subtasks, Task↔Labels, Project→Tasks)
+- [X] T017 [DB] Configure SQLModel metadata and create SQLModelConfig class
+- [X] T018 [DB] Create database.py with engine, session factory, and get_db dependency
 
 ### Alembic Migrations
 
-- [ ] T019 [DB] Initialize Alembic in backend/alembic/
-- [ ] T020 [DB] Create initial migration with all 7 tables
-- [ ] T021 [DB] Add indexes: user_id (tasks, projects, labels), status (tasks), priority (tasks), due_date (tasks), project_id (tasks), completed (tasks)
-- [ ] T022 [DB] Test migration: alembic upgrade head (verify all tables created)
-- [ ] T023 [DB] Test migration rollback: alembic downgrade -1 (verify clean rollback)
+- [X] T019 [DB] Initialize Alembic in backend/alembic/
+- [X] T020 [DB] Create initial migration with all 7 tables
+- [X] T021 [DB] Add indexes: user_id (tasks, projects, labels), status (tasks), priority (tasks), due_date (tasks), project_id (tasks), completed (tasks)
+- [X] T022 [DB] Test migration: alembic upgrade head (verify all tables created)
+- [X] T023 [DB] Test migration rollback: alembic downgrade -1 (verify clean rollback)
 
 ---
 
