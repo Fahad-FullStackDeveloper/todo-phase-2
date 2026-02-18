@@ -1,5 +1,5 @@
 /**
- * Next.js Proxy for Authentication
+ * Next.js Middleware for Authentication
  *
  * Protects routes by checking for valid JWT token
  * Redirects unauthenticated users to signin page
