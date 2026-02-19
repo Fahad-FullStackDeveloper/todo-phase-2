@@ -1,6 +1,6 @@
 {
   "name": "todoflow-frontend",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "private": true,
   "packageManager": "npm@10.2.0",
   "scripts": {

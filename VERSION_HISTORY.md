@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)
-**Current Version:** 1.7.4
+**Current Version:** 1.7.5
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -17,6 +17,63 @@
 ---
 
 ## Version Timeline
+
+### Version 1.7.5 - Backend-Frontend Integration Fixed (20 Feb 2026)
+
+**Type:** PATCH (Critical Bug Fix)
+**Date:** 20 Feb 2026
+**PHR ID:** `20260220-API-INTEGRATION`
+
+#### Summary
+Fixed critical backend-frontend data format mismatches that caused "Unable to connect to server" errors.
+
+#### Issues Fixed
+
+**1. Priority Field Mismatch**
+- **Frontend:** Sent priority as string (`"low"`, `"medium"`, `"high"`, `"urgent"`)
+- **Backend:** Expected priority as integer (`1=Urgent, 2=High, 3=Medium, 4=Low`)
+- **Fix:** Added priority conversion mapping in API client
+
+**2. Labels Field Name Mismatch**
+- **Frontend:** Sent `labels` array
+- **Backend:** Expected `label_ids` array
+- **Fix:** Renamed field in API client
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Tasks API** | Added priority string→int conversion | Match backend enum |
+| **Tasks API** | Renamed `labels` to `label_ids` | Match backend field name |
+| **Task Create** | Added default status `"todo"` | Backend requires status |
+| **Task Update** | Added priority conversion | Consistent with create |
+
+#### Files Modified
+
+| File | Changes |
+|------|---------|
+| `frontend/src/lib/api.ts` | Priority conversion, label_ids mapping |
+
+#### Build Verification
+
+```
+✓ Compiled successfully in 29.5s
+✓ TypeScript compilation passed
+✓ Generating static pages (11/11) in 2.0s
+
+Build Status: ✅ SUCCESS (0 errors, 0 warnings)
+```
+
+#### Priority Mapping Reference
+
+| Frontend | Backend | Meaning |
+|----------|---------|---------|
+| `"urgent"` | `1` | Most urgent |
+| `"high"` | `2` | High priority |
+| `"medium"` | `3` | Default |
+| `"low"` | `4` | Least urgent |
+
+---
 
 ### Version 1.7.4 - Pomodoro Settings Modal Centered (20 Feb 2026)
 

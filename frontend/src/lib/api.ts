@@ -337,16 +337,57 @@ export const tasks = {
   },
 
   create: async (data: CreateTaskData): Promise<Task> => {
+    // Convert frontend priority string to backend priority integer
+    const priorityMap: Record<string, number> = {
+      'urgent': 1,
+      'high': 2,
+      'medium': 3,
+      'low': 4,
+    };
+    
+    const backendData: Record<string, any> = {
+      title: data.title,
+      description: data.description,
+      status: 'todo', // Default status for new tasks
+      priority: data.priority ? priorityMap[data.priority] : 3, // Default to Medium (3)
+      due_date: data.due_date,
+      project_id: data.project_id,
+      position: 0,
+    };
+    
+    // Convert labels to label_ids
+    if (data.labels && data.labels.length > 0) {
+      backendData.label_ids = data.labels;
+    }
+    
     return request<Task>('/api/tasks', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(backendData),
     });
   },
 
   update: async (id: string, data: UpdateTaskData): Promise<Task> => {
+    // Convert frontend priority string to backend priority integer
+    const priorityMap: Record<string, number> = {
+      'urgent': 1,
+      'high': 2,
+      'medium': 3,
+      'low': 4,
+    };
+    
+    const backendData: Record<string, any> = {};
+    
+    if (data.title !== undefined) backendData.title = data.title;
+    if (data.description !== undefined) backendData.description = data.description;
+    if (data.status !== undefined) backendData.status = data.status;
+    if (data.priority !== undefined) backendData.priority = priorityMap[data.priority];
+    if (data.due_date !== undefined) backendData.due_date = data.due_date;
+    if (data.project_id !== undefined) backendData.project_id = data.project_id;
+    if (data.completed !== undefined) backendData.completed = data.completed;
+    
     return request<Task>(`/api/tasks/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(data),
+      body: JSON.stringify(backendData),
     });
   },
 
