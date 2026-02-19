@@ -21,12 +21,12 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.project import Project
-from ..models.task import Task
-from ..models.user import User
-from ..schemas.project import (
+from db import get_db
+from middleware.auth import get_current_user
+from models.project import Project
+from models.task import Task
+from models.user import User
+from schemas.project import (
     ProjectCreate,
     ProjectListResponse,
     ProjectOut,
@@ -309,3 +309,4 @@ async def get_project_stats(
         completion_rate=completion_rate,
         overdue_tasks=overdue_tasks,
     )
+

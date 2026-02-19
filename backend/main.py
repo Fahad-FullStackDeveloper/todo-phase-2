@@ -19,17 +19,21 @@ import os
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .db import engine, create_db_and_tables
-from .routes.auth import router as auth_router
-from .routes.tasks import router as tasks_router
-from .routes.subtasks import router as subtasks_router
-from .routes.projects import router as projects_router
-from .routes.labels import router as labels_router
-from .routes.dashboard import router as dashboard_router
-from .routes.pomodoro import router as pomodoro_router
+# Load environment variables from .env file
+load_dotenv()
+
+from db import engine, create_db_and_tables
+from routes.auth import router as auth_router
+from routes.tasks import router as tasks_router
+from routes.subtasks import router as subtasks_router
+from routes.projects import router as projects_router
+from routes.labels import router as labels_router
+from routes.dashboard import router as dashboard_router
+from routes.pomodoro import router as pomodoro_router
 
 
 # =============================================================================
@@ -67,20 +71,20 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     - Shutdown: Cleanup resources
     """
     # Startup
-    print("🚀 Starting TodoFlow Backend...")
-    print(f"📊 Database URL: {'postgresql://***' if os.getenv('DATABASE_URL') else 'NOT SET'}")
-    print(f"🔐 Auth Secret: {'***' if os.getenv('BETTER_AUTH_SECRET') else 'NOT SET'}")
-    print(f"🌐 Allowed Origins: {get_allowed_origins()}")
+    print("[INFO] Starting TodoFlow Backend...")
+    print(f"[INFO] Database URL: {'postgresql://***' if os.getenv('DATABASE_URL') else 'NOT SET'}")
+    print(f"[INFO] Auth Secret: {'***' if os.getenv('BETTER_AUTH_SECRET') else 'NOT SET'}")
+    print(f"[INFO] Allowed Origins: {get_allowed_origins()}")
 
     # Create tables if they don't exist (development only)
     # In production, use Alembic migrations
     create_db_and_tables()
-    print("✅ Database tables ready")
+    print("[INFO] Database tables ready")
 
     yield
 
     # Shutdown
-    print("👋 Shutting down TodoFlow Backend...")
+    print("[INFO] Shutting down TodoFlow Backend...")
     engine.dispose()
 
 

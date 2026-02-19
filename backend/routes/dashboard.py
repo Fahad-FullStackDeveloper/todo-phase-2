@@ -17,12 +17,12 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy import and_, func, select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.pomodoro_session import PomodoroSession
-from ..models.task import Task
-from ..models.user import User
-from ..schemas.dashboard import (
+from db import get_db
+from middleware.auth import get_current_user
+from models.pomodoro_session import PomodoroSession
+from models.task import Task
+from models.user import User
+from schemas.dashboard import (
     ActivityDay,
     DashboardStats,
     StreakData,
@@ -355,3 +355,4 @@ def _calculate_longest_streak(db: Session, user_id: str) -> int:
             current_streak = 1
 
     return longest_streak
+

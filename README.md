@@ -1,3 +1,4 @@
+"## Quick Reference\n\n| Task | Command/URL |\n|------|-------------|\n| **Frontend** | http://localhost:3000 |\n| **Backend API** | http://localhost:8000 |\n| **API Docs** | http://localhost:8000/docs |\n| **Delete User** | See [USER-DELETE-INSTRUCTIONS.md](./USER-DELETE-INSTRUCTIONS.md) |\n| **Auth Debug** | See [AUTHENTICATION-DEBUG-REPORT.md](./AUTHENTICATION-DEBUG-REPORT.md) |\n\n---"  
 # TodoFlow - Phase 2 Setup Guide
 
 **Version:** 2.0.0

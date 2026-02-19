@@ -17,12 +17,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.subtask import Subtask
-from ..models.task import Task
-from ..models.user import User
-from ..schemas.task import SubtaskCreate, SubtaskOut, SubtaskUpdate
+from db import get_db
+from middleware.auth import get_current_user
+from models.subtask import Subtask
+from models.task import Task
+from models.user import User
+from schemas.task import SubtaskCreate, SubtaskOut, SubtaskUpdate
 
 
 router = APIRouter(prefix="/api/tasks", tags=["Subtasks"])
@@ -212,3 +212,4 @@ async def delete_subtask(
     db.commit()
 
     return None
+

@@ -59,21 +59,45 @@ const sampleTodayTasks = [
 ];
 
 export default function DashboardPage() {
-  const { user, isLoading } = useRequireAuth('/signin');
+  const { user, isLoading, isAuthenticated } = useRequireAuth('/signin');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
-  // Don't render during auth check
-  if (isLoading) {
+  // Also check for token directly to avoid being stuck in loading state
+  const hasToken = typeof window !== 'undefined' 
+    ? (localStorage.getItem('jwt_token') || document.cookie.includes('jwt_token='))
+    : false;
+
+  // Show loading only if:
+  // 1. Still loading AND no token found
+  // 2. Timeout for max 2 seconds
+  const showLoading = isLoading && !hasToken;
+
+  if (showLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="mt-4 text-muted-foreground">Loading...</p>
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+          <p className="text-lg font-medium text-foreground">Loading your dashboard...</p>
+          <p className="mt-2 text-sm text-muted-foreground">Just a moment</p>
+        </motion.div>
       </div>
     );
   }
+
+  // Safety check - if not authenticated after loading, don't render
+  // (useRequireAuth should have redirected already)
+  const actuallyAuthenticated = isAuthenticated || hasToken;
+  if (!actuallyAuthenticated) {
+    return null;
+  }
+
+  // Use user from auth state or fallback to null (will use guest name)
+  const displayUser = user;
 
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,7 +145,7 @@ export default function DashboardPage() {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h1 className="text-3xl font-bold">
-                    Good morning, {user?.name || 'User'}! 👋
+                    Good morning, {user?.name?.split(' ')[0] || 'User'}! 👋
                   </h1>
                   <p className="mt-1 text-muted-foreground">
                     Here&apos;s what&apos;s happening with your tasks today.

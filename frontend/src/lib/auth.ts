@@ -3,42 +3,70 @@
  *
  * Client-side authentication utilities using Better Auth
  * Integrates with backend JWT authentication
+ *
+ * IMPORTANT: This module uses js-cookie for token management
+ * to match the api.ts implementation exactly.
+ * Both cookies AND localStorage are used for maximum compatibility.
  */
 
+import Cookies from 'js-cookie';
 import type { User, AuthResponse, SignupData, SigninData } from '@/types';
 import type { AuthState, AuthError, AUTH_ERROR_CODES } from '@/types/auth';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+// Cookie options for JWT - MUST match api.ts
+const COOKIE_OPTIONS = {
+  expires: 7, // 7 days
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  path: '/',
+};
+
 // =============================================================================
-// Token Management
+// Token Management (using js-cookie for consistency with api.ts)
 // =============================================================================
 
 /**
- * Get JWT token from localStorage
- * Note: In production, tokens should be stored in httpOnly cookies
- * This is a client-side fallback for development
+ * Get JWT token from cookies (primary) with localStorage fallback
+ * This matches the implementation in api.ts exactly
  */
 export function getToken(): string | null {
+  // Try cookies first (for SSR and production)
+  const cookieToken = Cookies.get('jwt_token');
+  if (cookieToken) return cookieToken;
+
+  // Fallback to localStorage for client-side only
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('jwt_token');
 }
 
 /**
- * Store JWT token
+ * Store JWT token in BOTH cookies and localStorage
+ * This ensures consistency across all auth modules
  */
 export function setToken(token: string): void {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem('jwt_token', token);
+  // Store in cookies (for SSR)
+  Cookies.set('jwt_token', token, COOKIE_OPTIONS);
+
+  // Also store in localStorage (for client-side fallback)
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('jwt_token', token);
+  }
 }
 
 /**
- * Remove JWT token
+ * Remove JWT token from BOTH cookies and localStorage
  */
 export function removeToken(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem('jwt_token');
-  localStorage.removeItem('auth_user');
+  // Remove from cookies
+  Cookies.remove('jwt_token');
+
+  // Also remove from localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('auth_user');
+  }
 }
 
 /**
@@ -56,7 +84,7 @@ export function getCurrentUser(): User | null {
 }
 
 /**
- * Store current user
+ * Store current user in localStorage
  */
 export function setCurrentUser(user: User): void {
   if (typeof window === 'undefined') return;
@@ -97,10 +125,11 @@ async function authRequest<T>(
     // Handle 401 Unauthorized
     if (response.status === 401) {
       removeToken();
-      if (typeof window !== 'undefined') {
-        window.location.href = '/signin';
-      }
-      throw new Error('Unauthorized') as AuthError;
+      // Don't redirect here - let the hooks handle it
+      const error = new Error('Unauthorized') as AuthError;
+      error.code = 'UNAUTHORIZED';
+      error.status = 401;
+      throw error;
     }
 
     // Handle errors
@@ -118,8 +147,14 @@ async function authRequest<T>(
 
     return response.json();
   } catch (error) {
-    if (error instanceof Error && error.name === 'AuthError') {
-      throw error;
+    // Re-throw AuthErrors as-is
+    if (error instanceof Error) {
+      if ((error as AuthError).code === 'UNAUTHORIZED') {
+        throw error;
+      }
+      if ((error as AuthError).name === 'AuthError') {
+        throw error;
+      }
     }
 
     // Network error
@@ -139,8 +174,10 @@ async function authRequest<T>(
 export async function signup(data: SignupData): Promise<AuthResponse> {
   const response = await authRequest<AuthResponse>('/api/auth/signup', data);
 
-  if (response.token) {
-    setToken(response.token);
+  // Extract access_token from nested token object
+  // Backend returns: { user, token: { access_token, refresh_token, ... } }
+  if (response.token?.access_token) {
+    setToken(response.token.access_token);
     setCurrentUser(response.user);
   }
 
@@ -153,8 +190,9 @@ export async function signup(data: SignupData): Promise<AuthResponse> {
 export async function signin(data: SigninData): Promise<AuthResponse> {
   const response = await authRequest<AuthResponse>('/api/auth/signin', data);
 
-  if (response.token) {
-    setToken(response.token);
+  // Extract access_token from nested token object
+  if (response.token?.access_token) {
+    setToken(response.token.access_token);
     setCurrentUser(response.user);
   }
 

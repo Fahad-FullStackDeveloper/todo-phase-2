@@ -27,9 +27,26 @@ export interface SigninData {
   password: string;
 }
 
+/**
+ * Backend returns a nested token object:
+ * {
+ *   user: User,
+ *   token: {
+ *     access_token: string,
+ *     refresh_token: string,
+ *     token_type: "Bearer",
+ *     expires_in: number
+ *   }
+ * }
+ */
 export interface AuthResponse {
   user: User;
-  token: string;
+  token: {
+    access_token: string;
+    refresh_token: string;
+    token_type: 'Bearer';
+    expires_in: number;
+  };
 }
 
 // =============================================================================

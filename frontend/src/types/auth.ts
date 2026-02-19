@@ -18,8 +18,8 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-  signin: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, name: string) => Promise<void>;
+  signin: (email: string, password: string) => Promise<unknown>;
+  signup: (email: string, password: string, name: string) => Promise<unknown>;
   signout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }

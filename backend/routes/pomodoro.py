@@ -17,16 +17,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import and_, func, select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.pomodoro_session import PomodoroSession
-from ..models.task import Task
-from ..models.user import User
-from ..schemas.pomodoro import (
+from db import get_db
+from middleware.auth import get_current_user
+from models.pomodoro_session import PomodoroSession
+from models.task import Task
+from models.user import User
+from schemas.pomodoro import (
     PomodoroSessionCreate,
     PomodoroSessionOut,
 )
-from ..schemas.dashboard import PomodoroStats
+from schemas.dashboard import PomodoroStats
 
 
 router = APIRouter(prefix="/api/pomodoro", tags=["Pomodoro"])
@@ -185,3 +185,4 @@ async def get_pomodoro_stats(
 def _get_start_of_day(dt: datetime) -> datetime:
     """Get the start of the day (midnight) for a given datetime."""
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
+

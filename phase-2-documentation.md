@@ -374,7 +374,7 @@ Specifications are organized in /specs:
 
 \## Project Structure
 
-\- /frontend - Next.js 14 app
+\- /frontend - Next.js 16+(latest) app
 
 \- /backend - Python FastAPI server
 
@@ -408,7 +408,7 @@ Frontend CLAUDE.md
 
 \## Stack
 
-\- Next.js 14 (App Router)
+\- Next.js 16+(latest) (App Router)
 
 \- TypeScript
 

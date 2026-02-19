@@ -118,3 +118,11 @@ class SignoutResponse(BaseModel):
 
     success: bool = Field(..., description="Whether signout was successful")
     message: str = Field(..., description="Success message")
+
+
+class UserDeleteResponse(BaseModel):
+    """Schema for user deletion response."""
+
+    success: bool = Field(..., description="Whether deletion was successful")
+    message: str = Field(..., description="Success or error message")
+    deleted_email: Optional[str] = Field(None, description="Email of deleted user")

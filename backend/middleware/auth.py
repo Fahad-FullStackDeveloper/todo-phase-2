@@ -27,8 +27,8 @@ from jose import JWTError, jwt
 from pydantic import BaseModel
 from sqlmodel import Session
 
-from ..db import get_db
-from ..models.user import User
+from db import get_db
+from models.user import User
 
 
 # =============================================================================
@@ -324,3 +324,4 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         True if password matches, False otherwise
     """
     return pwd_context.verify(plain_password, hashed_password)
+

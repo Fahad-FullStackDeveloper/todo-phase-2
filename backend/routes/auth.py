@@ -18,22 +18,23 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 
-from ..db import get_db
-from ..middleware.auth import (
+from db import get_db
+from middleware.auth import (
     create_access_token,
     create_refresh_token,
     get_current_user,
     hash_password,
     verify_password,
 )
-from ..models.user import User
-from ..schemas.auth import (
+from models.user import User
+from schemas.auth import (
     AuthResponse,
     RefreshTokenRequest,
     SignoutResponse,
     TokenRefreshResponse,
     TokenResponse,
     UserCreate,
+    UserDeleteResponse,
     UserLogin,
     UserOut,
 )
@@ -234,7 +235,7 @@ async def refresh_token(
 
     Returns new access and refresh tokens (token rotation).
     """
-    from ..middleware.auth import decode_token, JWTSettings
+    from middleware.auth import decode_token, JWTSettings
 
     try:
         # Decode and verify refresh token
@@ -274,3 +275,71 @@ async def refresh_token(
             detail="Invalid or expired refresh token",
             headers={"WWW-Authenticate": "Bearer"},
         ) from e
+
+
+@router.delete(
+    "/users/{email}",
+    response_model=UserDeleteResponse,
+    status_code=status.HTTP_200_OK,
+    summary="[DEV ONLY] Delete User by Email",
+    description="⚠️ DEVELOPMENT/TESTING ONLY - Delete a user account and all related data by email.",
+    responses={
+        200: {"description": "User and all related data deleted successfully"},
+        401: {"description": "Invalid admin password"},
+        404: {"description": "User not found"},
+    },
+)
+async def delete_user_by_email(
+    email: str,
+    admin_password: str,
+    db: Session = Depends(get_db),
+) -> UserDeleteResponse:
+    """
+    ⚠️ DEVELOPMENT/TESTING ONLY - Delete a user account by email.
+
+    **WARNING: This endpoint should be REMOVED or DISABLED in production!**
+
+    Deletes the specified user and ALL related data via cascade:
+    - Tasks
+    - Projects
+    - Labels
+    - Pomodoro Sessions
+
+    Requires admin password verification to prevent accidental deletion.
+
+    - **email**: The email address of the user to delete
+    - **admin_password**: Admin password for verification (set via ADMIN_PASSWORD env var)
+
+    Returns success message with deleted email on success.
+    """
+    import os
+
+    # Get admin password from environment variable
+    admin_password_env = os.getenv("ADMIN_PASSWORD", "admin123")  # Default for dev
+
+    # Verify admin password
+    if admin_password != admin_password_env:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid admin password",
+        )
+
+    # Find user by email
+    user = db.exec(select(User).where(User.email == email)).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with email '{email}' not found",
+        )
+
+    # Delete user (cascade will delete all related data: tasks, projects, labels, pomodoro sessions)
+    db.delete(user)
+    db.commit()
+
+    return UserDeleteResponse(
+        success=True,
+        message=f"User '{email}' and all related data deleted successfully",
+        deleted_email=email,
+    )
+

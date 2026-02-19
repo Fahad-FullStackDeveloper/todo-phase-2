@@ -15,14 +15,22 @@ Neon-Specific Configuration:
 """
 
 import os
+from pathlib import Path
 from typing import Generator
 from contextlib import contextmanager
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlmodel import Session, SQLModel
 
+# Load environment variables from .env file
+# Look for .env in the backend directory (where this file is located)
+backend_dir = Path(__file__).parent
+env_path = backend_dir / ".env"
+load_dotenv(dotenv_path=env_path)
+
 # Import all models to ensure they are registered with SQLModel metadata
-from .models import (  # noqa: F401
+from models import (  # noqa: F401
     User,
     Task,
     Project,

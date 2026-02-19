@@ -6,9 +6,9 @@ Pydantic v2 schemas for label request/response validation.
 
 import re
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 def validate_hex_color(value: str) -> str:
@@ -83,14 +83,13 @@ class LabelUpdate(BaseModel):
 class LabelOut(BaseModel):
     """Schema for label response."""
 
+    model_config = ConfigDict(from_attributes=True)
+
     id: str = Field(..., description="Label unique identifier")
     user_id: str = Field(..., description="Owner user ID")
     name: str = Field(..., description="Label name")
     color: str = Field(..., description="Label color")
     created_at: datetime = Field(..., description="Creation timestamp")
-
-    class Config:
-        from_attributes = True
 
 
 class LabelListResponse(BaseModel):
@@ -98,3 +97,7 @@ class LabelListResponse(BaseModel):
 
     labels: List[LabelOut] = Field(..., description="List of labels")
     total: int = Field(..., description="Total number of labels")
+
+
+# Rebuild models to resolve forward references
+LabelListResponse.model_rebuild()

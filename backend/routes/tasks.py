@@ -22,13 +22,13 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import and_, or_, select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.label import Label
-from ..models.task import Task, TaskLabel
-from ..models.task_label import TaskLabel as TaskLabelModel
-from ..models.user import User
-from ..schemas.task import (
+from db import get_db
+from middleware.auth import get_current_user
+from models.label import Label
+from models.task import Task
+from models.task_label import TaskLabel
+from models.user import User
+from schemas.task import (
     TaskCreate,
     TaskFilterParams,
     TaskListResponse,
@@ -70,7 +70,7 @@ async def list_tasks(
     completed: Optional[bool] = Query(None, description="Filter by completion status"),
     # Sorting parameters
     sort_by: str = Query("created_at", description="Field to sort by"),
-    order: str = Query("desc", regex="^(asc|desc)$", description="Sort order"),
+    order: str = Query("desc", pattern="^(asc|desc)$", description="Sort order"),
     # Pagination parameters
     page: int = Query(1, ge=1, description="Page number"),
     limit: int = Query(20, ge=1, le=100, description="Items per page"),
@@ -213,7 +213,7 @@ async def create_task(
     """
     # Verify project exists and belongs to user if provided
     if task_data.project_id:
-        from ..models.project import Project
+        from models.project import Project
         project = db.get(Project, task_data.project_id)
         if not project or project.user_id != current_user.id:
             raise HTTPException(
@@ -223,7 +223,7 @@ async def create_task(
 
     # Verify labels exist and belong to user if provided
     if task_data.label_ids:
-        from ..models.label import Label
+        from models.label import Label
         labels = db.exec(select(Label).where(Label.id.in_(task_data.label_ids))).all()
         if len(labels) != len(task_data.label_ids):
             raise HTTPException(
@@ -338,7 +338,7 @@ async def update_task(
 
     # Verify project if changed
     if "project_id" in update_data and update_data["project_id"] is not None:
-        from ..models.project import Project
+        from models.project import Project
         project = db.get(Project, update_data["project_id"])
         if not project or project.user_id != current_user.id:
             raise HTTPException(
@@ -528,3 +528,4 @@ async def delete_task(
     db.commit()
 
     return None
+

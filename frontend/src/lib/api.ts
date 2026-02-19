@@ -258,9 +258,10 @@ export const auth = {
       showToast: false, // Handle errors in the form
     });
 
-    // Store token on successful signin
-    if (response.token) {
-      setToken(response.token);
+    // Store the access_token from the nested token object
+    // Backend returns: { user, token: { access_token, refresh_token, ... } }
+    if (response.token?.access_token) {
+      setToken(response.token.access_token);
     }
 
     return response;

@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 def validate_hex_color(value: str) -> str:
@@ -102,6 +102,8 @@ class ProjectUpdate(BaseModel):
 class ProjectOut(BaseModel):
     """Schema for project response."""
 
+    model_config = ConfigDict(from_attributes=True)
+
     id: str = Field(..., description="Project unique identifier")
     user_id: str = Field(..., description="Owner user ID")
     name: str = Field(..., description="Project name")
@@ -110,7 +112,7 @@ class ProjectOut(BaseModel):
     position: int = Field(..., description="Position for ordering")
     created_at: datetime = Field(..., description="Creation timestamp")
     updated_at: datetime = Field(..., description="Last update timestamp")
-    
+
     # Computed fields
     task_count: Optional[int] = Field(
         default=None,
@@ -124,9 +126,6 @@ class ProjectOut(BaseModel):
         default=None,
         description="Completion rate percentage",
     )
-
-    class Config:
-        from_attributes = True
 
 
 class ProjectStats(BaseModel):
@@ -146,3 +145,7 @@ class ProjectListResponse(BaseModel):
 
     projects: List[ProjectOut] = Field(..., description="List of projects")
     total: int = Field(..., description="Total number of projects")
+
+
+# Rebuild models to resolve forward references
+ProjectListResponse.model_rebuild()

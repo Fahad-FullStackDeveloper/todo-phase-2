@@ -18,11 +18,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlmodel import Session
 
-from ..db import get_db
-from ..middleware.auth import get_current_user
-from ..models.label import Label
-from ..models.user import User
-from ..schemas.label import LabelCreate, LabelListResponse, LabelOut, LabelUpdate
+from db import get_db
+from middleware.auth import get_current_user
+from models.label import Label
+from models.user import User
+from schemas.label import LabelCreate, LabelListResponse, LabelOut, LabelUpdate
 
 
 router = APIRouter(prefix="/api/labels", tags=["Labels"])
@@ -214,3 +214,4 @@ async def delete_label(
     db.commit()
 
     return None
+

@@ -7,7 +7,7 @@ Pydantic v2 schemas for task and subtask request/response validation.
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 # =============================================================================
@@ -97,6 +97,8 @@ class SubtaskOut(BaseModel):
 class TaskCreate(BaseModel):
     """Schema for creating a task."""
 
+    model_config = ConfigDict(use_enum_values=True, arbitrary_types_allowed=True)
+
     title: str = Field(
         ...,
         min_length=1,
@@ -110,13 +112,16 @@ class TaskCreate(BaseModel):
         description="Optional task description (max 10000 characters)",
         examples=["Write a detailed proposal for the new feature..."],
     )
-    status: TaskStatusEnum = Field(
-        default=TaskStatusEnum.TODO,
+    status: str = Field(
+        default="todo",
         description="Task status",
+        examples=["todo", "in_progress", "done"],
     )
-    priority: TaskPriorityEnum = Field(
-        default=TaskPriorityEnum.MEDIUM,
+    priority: int = Field(
+        default=3,
         description="Task priority (1=Urgent, 2=High, 3=Medium, 4=Low)",
+        ge=1,
+        le=4,
     )
     due_date: Optional[datetime] = Field(
         default=None,
@@ -141,9 +146,20 @@ class TaskCreate(BaseModel):
         """Trim and validate title."""
         return v.strip()
 
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v: str) -> str:
+        """Validate status value."""
+        valid_statuses = ["todo", "in_progress", "done"]
+        if v not in valid_statuses:
+            raise ValueError(f"Status must be one of: {valid_statuses}")
+        return v
+
 
 class TaskUpdate(BaseModel):
     """Schema for updating a task (all fields optional)."""
+
+    model_config = ConfigDict(use_enum_values=True, arbitrary_types_allowed=True)
 
     title: Optional[str] = Field(
         default=None,
@@ -156,13 +172,16 @@ class TaskUpdate(BaseModel):
         max_length=10000,
         description="Task description",
     )
-    status: Optional[TaskStatusEnum] = Field(
+    status: Optional[str] = Field(
         default=None,
         description="Task status",
+        examples=["todo", "in_progress", "done"],
     )
-    priority: Optional[TaskPriorityEnum] = Field(
+    priority: Optional[int] = Field(
         default=None,
         description="Task priority",
+        ge=1,
+        le=4,
     )
     due_date: Optional[datetime] = Field(
         default=None,
@@ -184,6 +203,17 @@ class TaskUpdate(BaseModel):
         default=None,
         description="List of label IDs",
     )
+
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v: Optional[str]) -> Optional[str]:
+        """Validate status value."""
+        if v is None:
+            return v
+        valid_statuses = ["todo", "in_progress", "done"]
+        if v not in valid_statuses:
+            raise ValueError(f"Status must be one of: {valid_statuses}")
+        return v
 
 
 class TaskOut(BaseModel):
@@ -217,8 +247,7 @@ class TaskOut(BaseModel):
         description="Associated project",
     )
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TaskListResponse(BaseModel):
@@ -234,13 +263,18 @@ class TaskListResponse(BaseModel):
 class TaskFilterParams(BaseModel):
     """Schema for task filtering query parameters."""
 
-    status: Optional[TaskStatusEnum] = Field(
+    model_config = ConfigDict(use_enum_values=True, arbitrary_types_allowed=True)
+
+    status: Optional[str] = Field(
         default=None,
         description="Filter by status",
+        examples=["todo", "in_progress", "done"],
     )
-    priority: Optional[TaskPriorityEnum] = Field(
+    priority: Optional[int] = Field(
         default=None,
         description="Filter by priority",
+        ge=1,
+        le=4,
     )
     project_id: Optional[str] = Field(
         default=None,
@@ -286,6 +320,17 @@ class TaskFilterParams(BaseModel):
         description="Items per page (max 100)",
     )
 
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v: Optional[str]) -> Optional[str]:
+        """Validate status value."""
+        if v is None:
+            return v
+        valid_statuses = ["todo", "in_progress", "done"]
+        if v not in valid_statuses:
+            raise ValueError(f"Status must be one of: {valid_statuses}")
+        return v
+
 
 # Import late to avoid circular imports
 from .label import LabelOut
@@ -293,3 +338,4 @@ from .project import ProjectOut
 
 # Rebuild models to resolve forward references
 TaskOut.model_rebuild()
+TaskListResponse.model_rebuild()
