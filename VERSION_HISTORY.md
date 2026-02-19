@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)
-**Current Version:** 1.6.0
+**Current Version:** 1.7.0
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -17,6 +17,163 @@
 ---
 
 ## Version Timeline
+
+### Version 1.7.0 - Phase 6 Advanced Features Complete (19 Feb 2026)
+
+**Type:** MINOR (New Features)
+**Date:** 19 Feb 2026
+**PHR ID:** `20260219-XXXXXX`
+
+#### Summary
+Phase 6 completion: Kanban board, Calendar view, Projects dashboard, Focus mode, and Pomodoro timer.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Kanban Board** | Created `frontend/src/app/kanban/` with drag-and-drop | Visual task management (T121-T127) |
+| **Calendar View** | Created `frontend/src/app/calendar/` with Month/Week/Day views | Task scheduling (T128-T135) |
+| **Projects Dashboard** | Created `frontend/src/app/projects/` with CRUD | Project organization (T136-T141) |
+| **Focus Mode** | Created `frontend/src/app/focus/` distraction-free view | Single-task focus (T142-T147) |
+| **Pomodoro Timer** | Created timer component with session tracking | Productivity tracking (T148-T153) |
+| **Dependencies** | Added @dnd-kit, @radix-ui/react-dialog, recharts | Enable advanced features |
+| **Version Update** | Updated VERSION_HISTORY.md to v1.7.0 | Document Phase 6 completion |
+
+#### Features Implemented
+
+**Kanban Board (T121-T127):**
+- 3 columns: Todo, In Progress, Done
+- Drag-and-drop with @dnd-kit
+- Task status updates on drop
+- Column task counts
+- Framer Motion animations
+- Responsive design
+
+**Calendar View (T128-T135):**
+- Month/Week/Day view modes
+- Tasks displayed on due dates
+- Priority color coding
+- Keyboard shortcuts (M, W, D, T)
+- Click to view/edit tasks
+- Quick add from calendar
+
+**Projects Dashboard (T136-T141):**
+- Projects list with task counts
+- 12 preset project colors
+- Project CRUD with confirmation
+- Project detail page with filtered tasks
+- Completion rate stats
+
+**Focus Mode (T142-T147):**
+- Distraction-free single task view
+- Integrated Pomodoro timer
+- Escape key to exit
+- Fullscreen support
+- Task details panel
+
+**Pomodoro Timer (T148-T153):**
+- 25min work / 5min break cycles
+- Configurable durations
+- Session logging to backend
+- Daily/weekly stats
+- Browser notifications
+- Sound notifications (optional)
+
+#### Files Created
+
+```
+frontend/src/
+├── app/
+│   ├── kanban/
+│   │   └── page.tsx                    (NEW - Kanban board page)
+│   ├── calendar/
+│   │   └── page.tsx                    (NEW - Calendar page)
+│   ├── projects/
+│   │   ├── page.tsx                    (NEW - Projects list)
+│   │   └── [id]/
+│   │       └── page.tsx                (NEW - Project detail)
+│   └── focus/
+│       └── page.tsx                    (NEW - Focus mode)
+├── components/
+│   ├── kanban/
+│   │   ├── KanbanBoard.tsx             (NEW - Board component)
+│   │   ├── KanbanColumn.tsx            (NEW - Column component)
+│   │   ├── KanbanTaskCard.tsx          (NEW - Task card)
+│   │   └── index.ts                    (NEW - Exports)
+│   ├── calendar/
+│   │   └── Calendar.tsx                (ENHANCED - Added week/day views)
+│   ├── projects/
+│   │   ├── ProjectCard.tsx             (NEW - Project card)
+│   │   ├── ProjectModal.tsx            (NEW - Create/edit modal)
+│   │   └── index.ts                    (NEW - Exports)
+│   ├── pomodoro/
+│   │   ├── PomodoroTimer.tsx           (NEW - Timer component)
+│   │   ├── PomodoroStats.tsx           (NEW - Stats component)
+│   │   └── index.ts                    (NEW - Exports)
+│   └── ui/
+│       ├── dialog.tsx                  (NEW - Dialog component)
+│       └── badge.tsx                   (NEW - Badge component)
+└── hooks/
+    ├── useCalendarShortcuts.ts         (NEW - Keyboard shortcuts)
+    └── usePomodoro.ts                  (NEW - Timer hook)
+
+.specify/specs/
+└── tasks.md                            (UPDATED - Marked T121-T153 complete)
+
+PHASE6-COMPLETION-REPORT.md             (NEW - Phase 6 report)
+```
+
+#### Commands Executed
+
+| # | Command | Purpose | Version Impact |
+|---|---------|---------|----------------|
+| 1 | `task --subagent_type frontend-visionary` | Create Calendar View (T128-T135) | v1.7.0 |
+| 2 | `task --subagent_type frontend-visionary` | Create Projects Dashboard (T136-T141) | v1.7.0 |
+| 3 | `task --subagent_type frontend-visionary` | Create Focus Mode & Pomodoro (T142-T153) | v1.7.0 |
+| 4 | `cd frontend && npm run build` | Verify build (0 errors) | v1.7.0 |
+| 5 | `edit .specify/specs/tasks.md` | Mark T121-T153 complete | v1.7.0 |
+| 6 | `write_file PHASE6-COMPLETION-REPORT.md` | Document Phase 6 completion | v1.7.0 |
+| 7 | `edit VERSION_HISTORY.md` | Update version to 1.7.0 | v1.7.0 |
+
+#### Build Verification
+
+```
+✓ Compiled successfully in 30.6s
+✓ TypeScript compilation passed
+✓ Generating static pages (11/11) in 1382.8ms
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /calendar          ← NEW
+├ ○ /dashboard
+├ ○ /focus             ← NEW
+├ ○ /kanban            ← NEW
+├ ○ /projects          ← NEW
+├ ƒ /projects/[id]     ← NEW
+├ ○ /signin
+├ ○ /signup
+└ ○ /tasks
+```
+
+**Result:** ✅ **BUILD SUCCESSFUL** (0 errors, 0 warnings)
+
+#### Progress Summary
+
+| Phase | Tasks | Status | Version |
+|-------|-------|--------|---------|
+| Phase 1 | Setup & Initialization | ✅ Complete | v1.3.0 |
+| Phase 2 | Database Schema | ✅ Complete | v1.1.0 |
+| Phase 3 | Backend APIs | ✅ Complete | v1.2.0 |
+| Phase 4 | Frontend Auth | ✅ Complete | v1.4.0 |
+| Phase 5 | Task Views & Editor | ✅ Complete | v1.6.0 |
+| **Phase 6** | **Advanced Features** | **✅ Complete** | **v1.7.0** |
+| Phase 7 | Premium UX Polish | ⏳ Pending | - |
+| Phase 8 | Integration & QA | ⏳ Pending | - |
+
+**Overall Progress:** 148/180+ tasks complete (82%+)
+
+---
 
 ### Version 1.0.0 - Initial Constitution (17 Feb 2026)
 

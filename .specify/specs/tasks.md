@@ -290,51 +290,51 @@ Tasks are organized by constitution-mandated categories:
 
 ### Kanban Board View
 
-- [ ] T121 [P] [US-KANBAN] Create Kanban board page in frontend/src/app/kanban/page.tsx
-- [ ] T122 [P] [US-KANBAN] Implement 3 columns: Todo, In Progress, Done in frontend/src/components/kanban/KanbanColumn.tsx
-- [ ] T123 [P] [US-KANBAN] Install and configure @dnd-kit for drag-and-drop
-- [ ] T124 [P] [US-KANBAN] Implement drag-and-drop tasks between columns (update status on drop)
-- [ ] T125 [P] [US-KANBAN] Add column task counts (badge with count per column)
-- [ ] T126 [P] [US-KANBAN] Create smooth Framer Motion animations (drag, drop, reorder)
-- [ ] T127 [P] [US-KANBAN] Implement responsive behavior (mobile: horizontal scroll, touch-friendly)
+- [X] T121 [P] [US-KANBAN] Create Kanban board page in frontend/src/app/kanban/page.tsx
+- [X] T122 [P] [US-KANBAN] Implement 3 columns: Todo, In Progress, Done in frontend/src/components/kanban/KanbanColumn.tsx
+- [X] T123 [P] [US-KANBAN] Install and configure @dnd-kit for drag-and-drop
+- [X] T124 [P] [US-KANBAN] Implement drag-and-drop tasks between columns (update status on drop)
+- [X] T125 [P] [US-KANBAN] Add column task counts (badge with count per column)
+- [X] T126 [P] [US-KANBAN] Create smooth Framer Motion animations (drag, drop, reorder)
+- [X] T127 [P] [US-KANBAN] Implement responsive behavior (mobile: horizontal scroll, touch-friendly)
 
 ### Calendar View
 
-- [ ] T128 [P] [US-CALENDAR] Create calendar page in frontend/src/app/calendar/page.tsx
-- [ ] T129 [P] [US-CALENDAR] Implement monthly view (grid with tasks on due dates)
-- [ ] T130 [P] [US-CALENDAR] Create weekly view (time blocks, 7-day view)
-- [ ] T131 [P] [US-CALENDAR] Implement daily view (hourly schedule, 24-hour or 12-hour)
-- [ ] T132 [P] [US-CALENDAR] Add color coding by priority (Red=Urgent, Orange=High, Blue=Medium, Gray=Low)
-- [ ] T133 [P] [US-CALENDAR] Implement click to view/edit task from calendar (open TaskEditor modal)
-- [ ] T134 [P] [US-CALENDAR] Create quick add from calendar date (click date, quick-add inline)
-- [ ] T135 [P] [US-CALENDAR] Add keyboard shortcuts: M=Month, W=Week, D=Day, T=Today
+- [X] T128 [P] [US-CALENDAR] Create calendar page in frontend/src/app/calendar/page.tsx
+- [X] T129 [P] [US-CALENDAR] Implement monthly view (grid with tasks on due dates)
+- [X] T130 [P] [US-CALENDAR] Create weekly view (time blocks, 7-day view)
+- [X] T131 [P] [US-CALENDAR] Implement daily view (hourly schedule, 24-hour or 12-hour)
+- [X] T132 [P] [US-CALENDAR] Add color coding by priority (Red=Urgent, Orange=High, Blue=Medium, Gray=Low)
+- [X] T133 [P] [US-CALENDAR] Implement click to view/edit task from calendar (open TaskEditor modal)
+- [X] T134 [P] [US-CALENDAR] Create quick add from calendar date (click date, quick-add inline)
+- [X] T135 [P] [US-CALENDAR] Add keyboard shortcuts: M=Month, W=Week, D=Day, T=Today
 
 ### Projects Dashboard
 
-- [ ] T136 [P] [US-PROJECTS] Create projects list page in frontend/src/app/projects/page.tsx
-- [ ] T137 [P] [US-PROJECTS] Implement project card with task counts and color bar
-- [ ] T138 [P] [US-PROJECTS] Create project creation modal (name, color picker from 12 presets, description)
-- [ ] T139 [P] [US-PROJECTS] Implement project stats display (completion rate, total tasks, completed tasks)
-- [ ] T140 [P] [US-PROJECTS] Create project-specific task view (filter tasks by project)
-- [ ] T141 [P] [US-PROJECTS] Add project deletion with confirmation (destructive action)
+- [X] T136 [P] [US-PROJECTS] Create projects list page in frontend/src/app/projects/page.tsx
+- [X] T137 [P] [US-PROJECTS] Implement project card with task counts and color bar
+- [X] T138 [P] [US-PROJECTS] Create project creation modal (name, color picker from 12 presets, description)
+- [X] T139 [P] [US-PROJECTS] Implement project stats display (completion rate, total tasks, completed tasks)
+- [X] T140 [P] [US-PROJECTS] Create project-specific task view (filter tasks by project)
+- [X] T141 [P] [US-PROJECTS] Add project deletion with confirmation (destructive action)
 
 ### Focus Mode
 
-- [ ] T142 [P] [US-FOCUS] Create focus mode page in frontend/src/app/focus/page.tsx
-- [ ] T143 [P] [US-FOCUS] Implement distraction-free single task view (hide sidebar, nav)
-- [ ] T144 [P] [US-FOCUS] Integrate Pomodoro timer in focus mode (start/pause/reset)
-- [ ] T145 [P] [US-FOCUS] Add escape key handler to exit focus mode (return to previous view)
-- [ ] T146 [P] [US-FOCUS] Create minimal UI chrome (task title, timer, complete button only)
-- [ ] T147 [P] [US-FOCUS] Implement focus session tracking (log to backend)
+- [X] T142 [P] [US-FOCUS] Create focus mode page in frontend/src/app/focus/page.tsx
+- [X] T143 [P] [US-FOCUS] Implement distraction-free single task view (hide sidebar, nav)
+- [X] T144 [P] [US-FOCUS] Integrate Pomodoro timer in focus mode (start/pause/reset)
+- [X] T145 [P] [US-FOCUS] Add escape key handler to exit focus mode (return to previous view)
+- [X] T146 [P] [US-FOCUS] Create minimal UI chrome (task title, timer, complete button only)
+- [X] T147 [P] [US-FOCUS] Implement focus session tracking (log to backend)
 
 ### Pomodoro Timer
 
-- [ ] T148 [P] [US-POMODORO] Create Pomodoro timer component in frontend/src/components/pomodoro/PomodoroTimer.tsx
-- [ ] T149 [P] [US-POMODORO] Implement 25min work / 5min break cycles (configurable durations)
-- [ ] T150 [P] [US-POMODORO] Add timer linked to specific task (select task before starting)
-- [ ] T151 [P] [US-POMODORO] Implement session logging to backend (POST /api/pomodoro/sessions)
-- [ ] T152 [P] [US-POMODORO] Create daily/weekly pomodoro stats display
-- [ ] T153 [P] [US-POMODORO] Add timer notifications (browser notifications API, request permission)
+- [X] T148 [P] [US-POMODORO] Create Pomodoro timer component in frontend/src/components/pomodoro/PomodoroTimer.tsx
+- [X] T149 [P] [US-POMODORO] Implement 25min work / 5min break cycles (configurable durations)
+- [X] T150 [P] [US-POMODORO] Add timer linked to specific task (select task before starting)
+- [X] T151 [P] [US-POMODORO] Implement session logging to backend (POST /api/pomodoro/sessions)
+- [X] T152 [P] [US-POMODORO] Create daily/weekly pomodoro stats display
+- [X] T153 [P] [US-POMODORO] Add timer notifications (browser notifications API, request permission)
 
 ---
 

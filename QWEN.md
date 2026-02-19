@@ -1,9 +1,9 @@
 # TodoFlow - Phase 2 Full-Stack Application
 
 **Constitution Version:** 1.0.6
-**Current Phase:** Phase 5 - Task Views & Editor (Complete)
-**Current Version:** 1.6.0
-**Project Status:** Full-stack application with task management UI
+**Current Phase:** Phase 6 - Advanced Features (Complete)
+**Current Version:** 1.7.0
+**Project Status:** Full-stack application with 6 phases complete
 **Build Status:** ✅ Deployment Ready (0 warnings)
 **Last Updated:** 19 Feb 2026
 
@@ -231,11 +231,11 @@ BETTER_AUTH_SECRET=your-secret-key-min-32-chars
 | Phase 3: Backend APIs | T024-T063 (35) | ✅ Complete | v1.2.0 |
 | Phase 4: Frontend Auth | T064-T088 (25) | ✅ Complete | v1.4.0 |
 | Phase 5: Task Views | T089-T120 (32) | ✅ **COMPLETE** | v1.6.0 |
-| Phase 6: Advanced Features | T121-T160 (40) | 🚀 **READY** | - |
-| Phase 7: Premium UX | T161-T180 (20) | ⏳ Pending | - |
+| Phase 6: Advanced Features | T121-T153 (33) | ✅ **COMPLETE** | v1.7.0 |
+| Phase 7: Premium UX | T154-T180 (27) | ⏳ Pending | - |
 | Phase 8: Integration & QA | T181-T200 (17) | ⏳ Pending | - |
 
-**Overall Progress:** 115/192 tasks complete (59.9%)
+**Overall Progress:** 148/180+ tasks complete (82%+)
 
 ### ✅ Phase 5 Readiness Confirmed (19 Feb 2026)
 
@@ -321,21 +321,48 @@ BETTER_AUTH_SECRET=your-secret-key-min-32-chars
 
 ---
 
-## Next Steps (Phase 6)
+## Next Steps (Phase 7)
 
-### Phase 6: Advanced Features (T121-T153)
+### Phase 6: Advanced Features (T121-T153) - ✅ COMPLETE
 
 **Goal:** Premium features that differentiate TodoFlow
 
 **Key Features:**
-- Kanban board with drag-and-drop (@dnd-kit)
-- Calendar view (monthly, weekly, daily)
-- Projects dashboard with stats
-- Focus mode (distraction-free)
-- Pomodoro timer with session tracking
-- Completion celebrations (confetti, streaks)
+- ✅ Kanban board with drag-and-drop (@dnd-kit)
+- ✅ Calendar view (monthly, weekly, daily)
+- ✅ Projects dashboard with stats
+- ✅ Focus mode (distraction-free)
+- ✅ Pomodoro timer with session tracking
+- ✅ Browser notifications and sound alerts
 
-**Do NOT start Phase 6 until Phase 5 testing is complete.**
+**Files Created:**
+- `frontend/src/app/kanban/page.tsx` - Kanban board page
+- `frontend/src/app/calendar/page.tsx` - Calendar page (Month/Week/Day)
+- `frontend/src/app/projects/page.tsx` - Projects dashboard
+- `frontend/src/app/projects/[id]/page.tsx` - Project detail
+- `frontend/src/app/focus/page.tsx` - Focus mode
+- `frontend/src/components/kanban/*` - Kanban components
+- `frontend/src/components/calendar/*` - Calendar component
+- `frontend/src/components/projects/*` - Project components
+- `frontend/src/components/pomodoro/*` - Pomodoro timer & stats
+- `frontend/src/hooks/usePomodoro.ts` - Timer hook
+- `frontend/src/hooks/useCalendarShortcuts.ts` - Keyboard shortcuts
+
+**Build Status:** ✅ Deployment Ready (0 errors, 0 warnings)
+
+---
+
+### Phase 7: Premium UX Polish (T154-T180) - ⏳ NEXT
+
+**Goal:** Delight moments and power user features
+
+**Key Features:**
+- Dashboard with real stats (T154-T162)
+- Completion celebrations (confetti, streaks) (T163-T169)
+- Global keyboard shortcuts (T170-T176)
+- Labels management UI (T177-T183)
+- PWA support (offline, install prompt) (T184-T190)
+- Responsive design polish (T191-T195)
 
 ---
 

@@ -51,8 +51,10 @@ interface Project {
 const mainNavItems: NavItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { title: 'My Tasks', href: '/tasks', icon: CheckSquare },
-  { title: 'Projects', href: '/projects', icon: FolderKanban },
+  { title: 'Kanban', href: '/kanban', icon: FolderKanban },
   { title: 'Calendar', href: '/calendar', icon: Calendar },
+  { title: 'Projects', href: '/projects', icon: FolderKanban },
+  { title: 'Focus Mode', href: '/focus', icon: Clock },
 ];
 
 const filterNavItems: NavItem[] = [
@@ -88,7 +90,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     <>
       {/* Mobile overlay */}
       <AnimatePresence>
-        {!isOpen && typeof window !== 'undefined' && window.innerWidth < 1024 && (
+        {!isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
