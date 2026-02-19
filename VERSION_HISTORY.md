@@ -1908,7 +1908,7 @@ export const viewport: Viewport = {
 
 ---
 
-### Version 1.5.0 - Phase 4 Complete: Authentication & Dashboard Working (18 Feb 2026)
+## Version 1.5.0 - Phase 4 Complete: Authentication & Dashboard Working (18 Feb 2026)
 
 **Type:** MINOR (Breaking authentication fixes)  
 **Date:** 18 Feb 2026  
