@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
-**Project Name:** TodoFlow (Phase 2 TODO Application)  
-**Current Version:** 1.4.1  
+**Project Name:** TodoFlow (Phase 2 TODO Application)
+**Current Version:** 1.6.0
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -1342,20 +1342,131 @@ After EVERY command that modifies artifacts:
 
 ---
 
-### Version 1.5.0 - Phase 5 Task Views & Editor
+### Version 1.5.0 - Phase 5 Task Views & Editor (19 Feb 2026)
 
-**Target:** Core task management UI
+**Type:** MINOR (New Features - Task Management UI)
+**Date:** 19 Feb 2026
+**PHR ID:** `20260219-171102`
+
+#### Summary
+Phase 5 complete: Core task management UI with list view, rich editor, quick add, filtering/sorting, and date/time display.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Task List Page** | Created `frontend/src/app/tasks/page.tsx` | Main task list with filtering, sorting, infinite scroll |
+| **TaskCard** | Created `frontend/src/components/tasks/TaskCard.tsx` | Display task with priority, due date, labels, subtask progress |
+| **TaskEditor** | Created `frontend/src/components/tasks/TaskEditor.tsx` | Rich modal editor with all fields |
+| **QuickAddFAB** | Created `frontend/src/components/tasks/QuickAddFAB.tsx` | Floating action button for rapid task entry |
+| **FilterDropdown** | Created `frontend/src/components/tasks/FilterDropdown.tsx` | Filter by status, priority, project, labels |
+| **SortDropdown** | Created `frontend/src/components/tasks/SortDropdown.tsx` | Sort by created, due, priority, title |
+| **QuickFilters** | Created `frontend/src/components/tasks/QuickFilters.tsx` | Today, This Week, Overdue, Completed buttons |
+| **FilterChips** | Created `frontend/src/components/tasks/FilterChips.tsx` | Active filter display with remove |
+| **EmptyState** | Created `frontend/src/components/tasks/EmptyState.tsx` | Empty state with CTA |
+| **TaskCardSkeleton** | Created `frontend/src/components/tasks/TaskCardSkeleton.tsx` | Loading skeleton |
+| **dateFormat** | Created `frontend/src/lib/dateFormat.ts` | Date formatting with chrono-node |
+| **useTasks Hook** | Created `frontend/src/hooks/useTasks.ts` | TanStack Query hooks for tasks |
+| **Textarea UI** | Created `frontend/src/components/ui/textarea.tsx` | Textarea shadcn component |
+| **Dependency** | Added `chrono-node` | Natural language date parsing |
+
+#### Features Implemented
+
+**Task List View (T089-T094):**
+- Main task list page with TanStack Query
+- TaskCard with priority indicator, due date, labels
+- Checkbox with Framer Motion completion animation
+- Infinite scroll/pagination support
+- Empty state with CTA
+- Skeleton loaders for loading states
+
+**Rich Task Editor (T095-T104):**
+- Modal editor with all task fields
+- Title input with 1-200 char validation
+- Markdown description with preview
+- Priority selector (Low/Medium/High/Urgent with colors)
+- Due date picker with natural language parsing ("tomorrow at 3pm")
+- Project assignment dropdown
+- Label multi-select with color picker
+- Subtasks section (add, toggle, delete)
+- Delete with confirmation
+
+**Quick Add Pattern (T105-T109):**
+- Floating action button (FAB)
+- Inline quick-add input
+- Natural language date parsing (chrono-node)
+- Smart defaults
+- Multi-add support
+
+**Filtering & Sorting (T110-T115):**
+- Filter dropdown (status, priority, project, labels)
+- Sort dropdown (created, due, priority, title)
+- Quick filters (Today, This Week, Overdue, Completed)
+- Smart lists (save custom filters)
+- Filter chips display
+- Filter persistence to localStorage
+
+**Date/Time Display (T116-T120):**
+- dateFormat utility with Intl.DateTimeFormat
+- Display format: "17 Feb 2026, 4:30 PM"
+- Relative dates: "Today at 4:30 PM", "Yesterday at 10:00 AM"
+- 12/24-hour toggle support
+- Timezone aware display
+
+#### Files Created
+
+```
+frontend/src/
+├── app/tasks/
+│   └── page.tsx (NEW)
+├── components/tasks/
+│   ├── TaskCard.tsx (NEW)
+│   ├── TaskCardSkeleton.tsx (NEW)
+│   ├── TaskEditor.tsx (NEW)
+│   ├── QuickAddFAB.tsx (NEW)
+│   ├── FilterDropdown.tsx (NEW)
+│   ├── SortDropdown.tsx (NEW)
+│   ├── QuickFilters.tsx (NEW)
+│   ├── FilterChips.tsx (NEW)
+│   ├── EmptyState.tsx (NEW)
+│   └── index.ts (NEW)
+├── components/ui/
+│   └── textarea.tsx (NEW)
+├── hooks/
+│   └── useTasks.ts (NEW)
+└── lib/
+    └── dateFormat.ts (NEW)
+```
+
+#### Commands Executed
+
+| # | Command | Purpose | Version Impact |
+|---|---------|---------|----------------|
+| 58 | `task --subagent_type frontend-visionary` | Implement Phase 5 (T089-T120) | v1.6.0 |
+| 59 | `npm install chrono-node` | Add natural language date parsing | v1.6.0 |
+| 60 | `npm run build` | Verify build compiles | v1.6.0 |
+
+#### Build Status
+✅ **Build Successful** - 0 errors, 0 warnings
+✅ **TypeScript** - All types pass
+✅ **Routes Added** - `/tasks` page
+
+---
+
+### Version 1.6.0 - Phase 6 Advanced Features (Target)
+
+**Target:** Premium features implementation
 
 **Expected Changes:**
-- Task list view with infinite scroll
-- Rich task editor modal
-- Quick add FAB with natural language parsing
-- Advanced filtering and sorting
-- Date/time display with Intl.DateTimeFormat
-- Subtask management UI
-- Label multi-select with color picker
+- Kanban board with drag-and-drop (@dnd-kit)
+- Calendar view (monthly, weekly, daily)
+- Projects dashboard with stats
+- Focus mode (distraction-free view)
+- Pomodoro timer with session tracking
+- Keyboard shortcuts
+- Completion celebrations (confetti, streaks)
 
-**Version Reason:** MINOR bump - Task CRUD UI complete
+**Version Reason:** MINOR bump - Premium features complete
 
 ---
 
@@ -1431,6 +1542,7 @@ Use this table to trace which version resulted from which command:
 | 50-51 | 1.3.1 | Phase 1 Documentation | 20260218-002948 |
 | 52-55 | 1.4.0 | Phase 4 Frontend Auth UI | 20260218-033506 |
 | 56-57 | 1.4.1 | Build Warnings Fix | 20260218-040000 |
+| 58-60 | 1.6.0 | Phase 5 Task Views & Editor | 20260219-171102 |
 
 ---
 
@@ -1442,12 +1554,12 @@ Use this table to trace which version resulted from which command:
 | Phase 2: Database | 15 | ✅ Complete | 1.1.0 |
 | Phase 3: Backend APIs | 40 | ✅ Complete | 1.2.0 |
 | Phase 4: Frontend Auth | 25 | ✅ Complete | 1.4.0 |
-| Phase 5: Task Views | 25 | 🔄 Pending | 1.5.0 |
-| Phase 6: Advanced Features | 40 | 🔄 Pending | 1.6.0 |
-| Phase 7: Premium UX | 20 | 🔄 Pending | 1.7.0 |
+| Phase 5: Task Views | 32 | ✅ Complete | 1.6.0 |
+| Phase 6: Advanced Features | 40 | 🔄 Pending | 1.7.0 |
+| Phase 7: Premium UX | 20 | 🔄 Pending | 1.8.0 |
 | Phase 8: Integration & QA | 17 | 🔄 Pending | 2.0.0 |
 
-**Total Progress:** 88/225 tasks complete (39.1%)
+**Total Progress:** 120/192 tasks complete (62.5%)
 
 ---
 

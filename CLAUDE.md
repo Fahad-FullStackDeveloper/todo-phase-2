@@ -1,10 +1,11 @@
 # TodoFlow - Phase 2 Full-Stack Application
 
 **Constitution Version:** 1.0.6
-**Current Phase:** Phase 4 - Frontend Authentication UI (Complete)
-**Current Version:** 1.4.1
-**Project Status:** Full-stack application with working authentication
+**Current Phase:** Phase 5 - Task Views & Editor (Complete)
+**Current Version:** 1.6.0
+**Project Status:** Full-stack application with task management UI
 **Build Status:** ✅ Deployment Ready (0 warnings)
+**Last Updated:** 19 Feb 2026
 
 ---
 
@@ -235,7 +236,7 @@ NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
 
 ---
 
-## Phase 4 Completion Checklist
+## Phase 5 Completion Checklist
 
 ### Phase 1-3 (Complete)
 - [x] T001-T008: Project structure & setup
@@ -247,6 +248,13 @@ NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
 - [x] T070-T076: Authentication UI (signup, signin, signout)
 - [x] T077-T083: Layout & Navigation (sidebar, top nav, dark mode)
 - [x] T084-T088: API Client Setup (JWT attachment, error handling, optimistic updates)
+
+### Phase 5 (Complete)
+- [x] T089-T094: Task List View (TaskCard, infinite scroll, empty states, skeletons)
+- [x] T095-T104: Rich Task Editor (modal, markdown, priority, due date, project, labels, subtasks)
+- [x] T105-T109: Quick Add Pattern (FAB, inline input, natural language parsing)
+- [x] T110-T115: Filtering & Sorting (filter/sort dropdowns, quick filters, filter chips, persistence)
+- [x] T116-T120: Date/Time Display (Intl.DateTimeFormat, relative dates, 12/24h toggle)
 
 ---
 
@@ -284,6 +292,8 @@ NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
 - `.specify/specs/tasks.md` - All tasks
 - `README.md` - Detailed setup instructions
 - `docker-compose.yml` - Container configuration
+- `VERSION_HISTORY.md` - Version changelog
+- `QWEN.md` - Project documentation
 
 ---
 

@@ -21,6 +21,8 @@ import type {
   AuthResponse,
   SignupData,
   SigninData,
+  CreateTaskData,
+  UpdateTaskData,
 } from '@/types';
 import { toast } from 'sonner';
 
@@ -334,14 +336,14 @@ export const tasks = {
     });
   },
 
-  create: async (data: Partial<Task>): Promise<Task> => {
+  create: async (data: CreateTaskData): Promise<Task> => {
     return request<Task>('/api/tasks', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
-  update: async (id: string, data: Partial<Task>): Promise<Task> => {
+  update: async (id: string, data: UpdateTaskData): Promise<Task> => {
     return request<Task>(`/api/tasks/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),

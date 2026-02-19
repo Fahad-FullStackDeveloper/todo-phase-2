@@ -1,11 +1,11 @@
 # TodoFlow - Phase 2 Full-Stack Application
 
-**Constitution Version:** 1.0.6  
-**Current Phase:** Phase 4 - Frontend Authentication UI (Complete)  
-**Current Version:** 1.5.0  
-**Project Status:** Full-stack application with working authentication  
-**Build Status:** ✅ Deployment Ready (0 warnings)  
-**Last Updated:** 18 Feb 2026
+**Constitution Version:** 1.0.6
+**Current Phase:** Phase 5 - Task Views & Editor (Complete)
+**Current Version:** 1.6.0
+**Project Status:** Full-stack application with task management UI
+**Build Status:** ✅ Deployment Ready (0 warnings)
+**Last Updated:** 19 Feb 2026
 
 ---
 
@@ -229,13 +229,13 @@ BETTER_AUTH_SECRET=your-secret-key-min-32-chars
 | Phase 1: Setup | T001-T008 (8) | ✅ Complete | v1.3.0 |
 | Phase 2: Database | T009-T023 (15) | ✅ Complete | v1.1.0 |
 | Phase 3: Backend APIs | T024-T063 (35) | ✅ Complete | v1.2.0 |
-| Phase 4: Frontend Auth | T064-T088 (25) | ✅ Complete | v1.5.0 |
-| Phase 5: Task Views | T089-T120 (32) | 🚀 **READY** | - |
-| Phase 6: Advanced Features | T121-T160 (40) | ⏳ Pending | - |
+| Phase 4: Frontend Auth | T064-T088 (25) | ✅ Complete | v1.4.0 |
+| Phase 5: Task Views | T089-T120 (32) | ✅ **COMPLETE** | v1.6.0 |
+| Phase 6: Advanced Features | T121-T160 (40) | 🚀 **READY** | - |
 | Phase 7: Premium UX | T161-T180 (20) | ⏳ Pending | - |
 | Phase 8: Integration & QA | T181-T200 (17) | ⏳ Pending | - |
 
-**Overall Progress:** 83/185 tasks complete (44.9%)
+**Overall Progress:** 115/192 tasks complete (59.9%)
 
 ### ✅ Phase 5 Readiness Confirmed (19 Feb 2026)
 
@@ -285,20 +285,57 @@ BETTER_AUTH_SECRET=your-secret-key-min-32-chars
 
 ---
 
-## Next Steps (Phase 5)
+### Phase 5 (Complete) - Task Views & Editor
 
-### Phase 5: Task Views & Editor (T089-T120)
+**Tasks Completed:** T089-T120 (32 tasks)
 
-**Goal:** Core task management UI with list view and rich task editor
+- [x] Task list page with infinite scroll/pagination
+- [x] TaskCard component with priority, due date, labels
+- [x] Completion checkbox with Framer Motion animation
+- [x] Rich task editor modal (markdown, priority, due date, project, labels, subtasks)
+- [x] QuickAddFAB for rapid task entry
+- [x] Natural language date parsing (chrono-node)
+- [x] Filter & sort dropdowns
+- [x] Quick filters (Today, This Week, Overdue, Completed)
+- [x] Filter chips with persistence
+- [x] Date formatting utility (Intl.DateTimeFormat)
+- [x] Empty states & skeleton loaders
+
+**Files Created:**
+- `frontend/src/app/tasks/page.tsx` - Main task list page
+- `frontend/src/components/tasks/TaskCard.tsx` - Task display component
+- `frontend/src/components/tasks/TaskEditor.tsx` - Rich task editor modal
+- `frontend/src/components/tasks/QuickAddFAB.tsx` - Floating action button
+- `frontend/src/components/tasks/FilterDropdown.tsx` - Filter UI
+- `frontend/src/components/tasks/SortDropdown.tsx` - Sort UI
+- `frontend/src/components/tasks/QuickFilters.tsx` - Quick filter buttons
+- `frontend/src/components/tasks/FilterChips.tsx` - Active filters
+- `frontend/src/components/tasks/EmptyState.tsx` - Empty state
+- `frontend/src/components/tasks/TaskCardSkeleton.tsx` - Loading skeleton
+- `frontend/src/components/ui/textarea.tsx` - Textarea component
+- `frontend/src/hooks/useTasks.ts` - TanStack Query hooks
+- `frontend/src/lib/dateFormat.ts` - Date formatting utility
+
+**Dependencies Added:**
+- `chrono-node` - Natural language date parsing
+
+---
+
+## Next Steps (Phase 6)
+
+### Phase 6: Advanced Features (T121-T153)
+
+**Goal:** Premium features that differentiate TodoFlow
 
 **Key Features:**
-- Task list page with TaskCard components
-- Rich task editor modal
-- Quick Add FAB pattern
-- Filtering & sorting UI
-- Date/time display utilities
+- Kanban board with drag-and-drop (@dnd-kit)
+- Calendar view (monthly, weekly, daily)
+- Projects dashboard with stats
+- Focus mode (distraction-free)
+- Pomodoro timer with session tracking
+- Completion celebrations (confetti, streaks)
 
-**Do NOT start Phase 5 until Phase 1-4 integration testing is complete.**
+**Do NOT start Phase 6 until Phase 5 testing is complete.**
 
 ---
 

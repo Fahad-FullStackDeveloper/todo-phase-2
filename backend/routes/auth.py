@@ -84,8 +84,6 @@ async def signup(
         email=user_data.email,
         name=user_data.name,
         password_hash=hash_password(user_data.password),
-        created_at=datetime.now(timezone.utc),
-        updated_at=datetime.now(timezone.utc),
     )
 
     db.add(user)

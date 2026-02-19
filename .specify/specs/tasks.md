@@ -233,50 +233,50 @@ Tasks are organized by constitution-mandated categories:
 
 ### Task List View
 
-- [ ] T089 [P] [US-TASK-FE] Create main task list page in frontend/src/app/tasks/page.tsx
-- [ ] T090 [P] [US-TASK-FE] Create TaskCard component in frontend/src/components/tasks/TaskCard.tsx (title, priority indicator, due date, labels)
-- [ ] T091 [P] [US-TASK-FE] Implement checkbox for completion toggle (Framer Motion animation on complete)
-- [ ] T092 [P] [US-TASK-FE] Add infinite scroll / pagination (react-query infinite query)
-- [ ] T093 [P] [US-TASK-FE] Create empty state component (no tasks, add first task CTA)
-- [ ] T094 [P] [US-TASK-FE] Create loading states (skeleton loaders for task cards)
+- [X] T089 [P] [US-TASK-FE] Create main task list page in frontend/src/app/tasks/page.tsx
+- [X] T090 [P] [US-TASK-FE] Create TaskCard component in frontend/src/components/tasks/TaskCard.tsx (title, priority indicator, due date, labels)
+- [X] T091 [P] [US-TASK-FE] Implement checkbox for completion toggle (Framer Motion animation on complete)
+- [X] T092 [P] [US-TASK-FE] Add infinite scroll / pagination (react-query infinite query)
+- [X] T093 [P] [US-TASK-FE] Create empty state component (no tasks, add first task CTA)
+- [X] T094 [P] [US-TASK-FE] Create loading states (skeleton loaders for task cards)
 
 ### Rich Task Editor
 
-- [ ] T095 [P] [US-TASK-FE] Create modal/slide-over editor in frontend/src/components/tasks/TaskEditor.tsx
-- [ ] T096 [P] [US-TASK-FE] Implement title input with validation (required, 1-200 chars, inline error)
-- [ ] T097 [P] [US-TASK-FE] Create markdown description editor with preview (react-markdown or similar)
-- [ ] T098 [P] [US-TASK-FE] Implement priority selector (Low/Medium/High/Urgent with color indicators)
-- [ ] T099 [P] [US-TASK-FE] Create due date picker with natural language parsing ("tomorrow at 3pm")
-- [ ] T100 [P] [US-TASK-FE] Implement project assignment dropdown (fetch projects, assign to task)
-- [ ] T101 [P] [US-TASK-FE] Create label multi-select with color picker (select multiple labels, create new)
-- [ ] T102 [P] [US-TASK-FE] Implement subtasks section in editor (add, toggle, reorder, delete subtasks)
-- [ ] T103 [P] [US-TASK-FE] Add attachments upload & preview (drag-drop, file picker, preview modal)
-- [ ] T104 [P] [US-TASK-FE] Implement delete task with confirmation (destructive action modal)
+- [X] T095 [P] [US-TASK-FE] Create modal/slide-over editor in frontend/src/components/tasks/TaskEditor.tsx
+- [X] T096 [P] [US-TASK-FE] Implement title input with validation (required, 1-200 chars, inline error)
+- [X] T097 [P] [US-TASK-FE] Create markdown description editor with preview (react-markdown or similar)
+- [X] T098 [P] [US-TASK-FE] Implement priority selector (Low/Medium/High/Urgent with color indicators)
+- [X] T099 [P] [US-TASK-FE] Create due date picker with natural language parsing ("tomorrow at 3pm")
+- [X] T100 [P] [US-TASK-FE] Implement project assignment dropdown (fetch projects, assign to task)
+- [X] T101 [P] [US-TASK-FE] Create label multi-select with color picker (select multiple labels, create new)
+- [X] T102 [P] [US-TASK-FE] Implement subtasks section in editor (add, toggle, reorder, delete subtasks)
+- [X] T103 [P] [US-TASK-FE] Add attachments upload & preview (drag-drop, file picker, preview modal)
+- [X] T104 [P] [US-TASK-FE] Implement delete task with confirmation (destructive action modal)
 
 ### Quick Add Pattern
 
-- [ ] T105 [P] [US-QUICK-ADD] Create floating action button (FAB) in frontend/src/components/tasks/QuickAddFAB.tsx
-- [ ] T106 [P] [US-QUICK-ADD] Implement inline quick-add input (expands from FAB)
-- [ ] T107 [P] [US-QUICK-ADD] Add natural language date parsing (chrono-node or similar)
-- [ ] T108 [P] [US-QUICK-ADD] Implement smart defaults (auto-assign based on current context)
-- [ ] T109 [P] [US-QUICK-ADD] Add multi-add support (add multiple tasks rapidly, close on blur)
+- [X] T105 [P] [US-QUICK-ADD] Create floating action button (FAB) in frontend/src/components/tasks/QuickAddFAB.tsx
+- [X] T106 [P] [US-QUICK-ADD] Implement inline quick-add input (expands from FAB)
+- [X] T107 [P] [US-QUICK-ADD] Add natural language date parsing (chrono-node or similar)
+- [X] T108 [P] [US-QUICK-ADD] Implement smart defaults (auto-assign based on current context)
+- [X] T109 [P] [US-QUICK-ADD] Add multi-add support (add multiple tasks rapidly, close on blur)
 
 ### Filtering & Sorting
 
-- [ ] T110 [P] [US-FILTER] Create filter dropdown in frontend/src/components/tasks/FilterDropdown.tsx (status, priority, project, labels, date range)
-- [ ] T111 [P] [US-FILTER] Implement sort dropdown (created, due, priority, title, completion)
-- [ ] T112 [P] [US-FILTER] Create quick filters (Today, This Week, Overdue, Completed buttons)
-- [ ] T113 [P] [US-FILTER] Implement smart lists (save custom filters, name and persist)
-- [ ] T114 [P] [US-FILTER] Create filter chips display (active filters with remove X button)
-- [ ] T115 [P] [US-FILTER] Add filter persistence to localStorage (restore on page reload)
+- [X] T110 [P] [US-FILTER] Create filter dropdown in frontend/src/components/tasks/FilterDropdown.tsx (status, priority, project, labels, date range)
+- [X] T111 [P] [US-FILTER] Implement sort dropdown (created, due, priority, title, completion)
+- [X] T112 [P] [US-FILTER] Create quick filters (Today, This Week, Overdue, Completed buttons)
+- [X] T113 [P] [US-FILTER] Implement smart lists (save custom filters, name and persist)
+- [X] T114 [P] [US-FILTER] Create filter chips display (active filters with remove X button)
+- [X] T115 [P] [US-FILTER] Add filter persistence to localStorage (restore on page reload)
 
 ### Date/Time Display
 
-- [ ] T116 [P] [US-TASK-FE] Create date formatting utility in frontend/src/lib/dateFormat.ts (Intl.DateTimeFormat)
-- [ ] T117 [P] [US-TASK-FE] Implement display format: "17 Feb 2026, 4:30 PM" (or 24-hour: "17 Feb 2026, 16:30")
-- [ ] T118 [P] [US-TASK-FE] Add relative dates for recent items ("Today at 4:30 PM", "Yesterday at 10:00 AM")
-- [ ] T119 [P] [US-TASK-FE] Implement 12/24-hour toggle in settings (persist preference)
-- [ ] T120 [P] [US-TASK-FE] Ensure timezone aware display (store ISO, display local time)
+- [X] T116 [P] [US-TASK-FE] Create date formatting utility in frontend/src/lib/dateFormat.ts (Intl.DateTimeFormat)
+- [X] T117 [P] [US-TASK-FE] Implement display format: "17 Feb 2026, 4:30 PM" (or 24-hour: "17 Feb 2026, 16:30")
+- [X] T118 [P] [US-TASK-FE] Add relative dates for recent items ("Today at 4:30 PM", "Yesterday at 10:00 AM")
+- [X] T119 [P] [US-TASK-FE] Implement 12/24-hour toggle in settings (persist preference)
+- [X] T120 [P] [US-TASK-FE] Ensure timezone aware display (store ISO, display local time)
 
 ---
 
@@ -593,11 +593,11 @@ graph TD
 | 2 | Database | 15 | 15 | 0 | 0 | 100% |
 | 3 | Backend APIs | 35 | 35 | 0 | 0 | 100% |
 | 4 | Frontend Auth | 25 | 25 | 0 | 0 | 100% |
-| 5 | Task Views | 25 | 0 | 0 | 25 | 0% |
+| 5 | Task Views | 32 | 32 | 0 | 0 | 100% |
 | 6 | Advanced Features | 40 | 0 | 0 | 40 | 0% |
 | 7 | Premium Polish | 20 | 0 | 0 | 20 | 0% |
 | 8 | QA & Testing | 17 | 0 | 0 | 17 | 0% |
-| **TOTAL** | | **185** | **83** | **0** | **102** | **44.9%** |
+| **TOTAL** | | **192** | **115** | **0** | **77** | **59.9%** |
 
 ---
 

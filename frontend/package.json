@@ -22,6 +22,7 @@
     "@tanstack/react-query": "^5.90.21",
     "better-auth": "^1.4.18",
     "canvas-confetti": "^1.9.4",
+    "chrono-node": "^2.9.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.34.1",
     "js-cookie": "^3.0.5",

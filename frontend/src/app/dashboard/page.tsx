@@ -75,16 +75,18 @@ export default function DashboardPage() {
 
   if (showLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
-        >
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="text-lg font-medium text-foreground">Loading your dashboard...</p>
-          <p className="mt-2 text-sm text-muted-foreground">Just a moment</p>
-        </motion.div>
+      <div className="flex min-h-screen">
+        <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center"
+          >
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+            <p className="text-lg font-medium text-foreground">Loading your dashboard...</p>
+            <p className="mt-2 text-sm text-muted-foreground">Just a moment</p>
+          </motion.div>
+        </div>
       </div>
     );
   }
