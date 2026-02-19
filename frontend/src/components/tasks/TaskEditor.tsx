@@ -624,7 +624,12 @@ export function TaskEditor({
 
                 {/* Labels */}
                 <div>
-                  <Label className="text-sm font-medium">Labels</Label>
+                  <Label className="text-sm font-medium">
+                    <div className="flex items-center justify-between">
+                      <span>Labels</span>
+                      <span className="text-xs text-muted-foreground">(Optional)</span>
+                    </div>
+                  </Label>
                   <div className="mt-1.5 space-y-2">
                     <Button
                       variant="outline"
@@ -635,7 +640,7 @@ export function TaskEditor({
                       <Tags className="h-3.5 w-3.5" aria-hidden="true" />
                       {selectedLabels.length > 0
                         ? `${selectedLabels.length} label${selectedLabels.length > 1 ? 's' : ''} selected`
-                        : 'Select labels'}
+                        : 'Select labels (optional)'}
                     </Button>
 
                     <AnimatePresence>
@@ -648,9 +653,12 @@ export function TaskEditor({
                         >
                           <div className="flex flex-wrap gap-2 rounded-md border bg-card p-3">
                             {labels.length === 0 ? (
-                              <span className="text-sm text-muted-foreground">
-                                No labels available
-                              </span>
+                              <div className="w-full space-y-2">
+                                <p className="text-sm text-muted-foreground">No labels yet</p>
+                                <p className="text-xs text-muted-foreground">
+                                  Labels help you categorize tasks. You can create them from the Labels page.
+                                </p>
+                              </div>
                             ) : (
                               labels.map((label) => (
                                 <Button
@@ -786,17 +794,29 @@ export function TaskEditor({
                 </div>
               </div>
 
-              {/* Attachments (placeholder) */}
+              {/* Attachments (Coming Soon) */}
               <div>
                 <Label className="text-sm font-medium">
                   <div className="flex items-center gap-2">
                     <Paperclip className="h-4 w-4" aria-hidden="true" />
                     Attachments
+                    <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                      Coming Soon
+                    </span>
                   </div>
                 </Label>
-                <div className="mt-1.5 rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground">
-                  <p>Drag and drop files here or click to upload</p>
-                  <p className="mt-1 text-xs">Coming soon</p>
+                <div className="mt-1.5 rounded-md border border-dashed bg-muted/30 p-6 text-center">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="rounded-full bg-muted p-3">
+                      <Paperclip className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">File uploads coming soon</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        You'll be able to attach files, images, and documents to your tasks
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

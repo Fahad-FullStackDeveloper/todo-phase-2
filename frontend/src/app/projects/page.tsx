@@ -53,29 +53,53 @@ export default function ProjectsPage() {
   );
 
   const handleCreateProject = async (data: CreateProjectData) => {
-    await projectsApi.create(data);
-    toast.success('Project created', {
-      description: `"${data.name}" has been added to your projects`,
-    });
-    await refetch();
+    try {
+      await projectsApi.create(data);
+      toast.success('Project created', {
+        description: `"${data.name}" has been added to your projects`,
+      });
+      await refetch();
+    } catch (error) {
+      console.error('Failed to create project:', error);
+      toast.error('Failed to create project', {
+        description: error instanceof Error ? error.message : 'Please try again',
+      });
+      throw error; // Re-throw so the modal knows it failed
+    }
   };
 
   const handleUpdateProject = async (data: CreateProjectData) => {
     if (!editingProject) return;
-    await projectsApi.update(editingProject.id, data);
-    toast.success('Project updated', {
-      description: `"${data.name}" has been updated`,
-    });
-    await refetch();
-    setEditingProject(null);
+    try {
+      await projectsApi.update(editingProject.id, data);
+      toast.success('Project updated', {
+        description: `"${data.name}" has been updated`,
+      });
+      await refetch();
+      setEditingProject(null);
+    } catch (error) {
+      console.error('Failed to update project:', error);
+      toast.error('Failed to update project', {
+        description: error instanceof Error ? error.message : 'Please try again',
+      });
+      throw error;
+    }
   };
 
   const handleDeleteProject = async (project: Project) => {
-    await projectsApi.delete(project.id);
-    toast.success('Project deleted', {
-      description: `"${project.name}" has been removed`,
-    });
-    await refetch();
+    try {
+      await projectsApi.delete(project.id);
+      toast.success('Project deleted', {
+        description: `"${project.name}" has been removed`,
+      });
+      await refetch();
+    } catch (error) {
+      console.error('Failed to delete project:', error);
+      toast.error('Failed to delete project', {
+        description: error instanceof Error ? error.message : 'Please try again',
+      });
+      throw error;
+    }
   };
 
   const openCreateModal = () => {

@@ -168,27 +168,28 @@ function SettingsModal({ open, onClose, settings, updateSettings }: SettingsModa
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
           />
-          
+
           {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-background p-6 shadow-lg"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">Timer Settings</h2>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onClose}
-                className="h-8 w-8"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
+            <div className="relative w-full max-w-md rounded-lg border bg-background p-6 shadow-2xl">
+              <div className="absolute right-4 top-4">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onClose}
+                  className="h-8 w-8"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              <h2 className="mb-6 text-xl font-semibold pr-8">Timer Settings</h2>
             
             <div className="space-y-6">
               {/* Duration Settings */}
@@ -344,9 +345,10 @@ function SettingsModal({ open, onClose, settings, updateSettings }: SettingsModa
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-6 flex justify-end">
               <Button onClick={onClose}>Done</Button>
+            </div>
             </div>
           </motion.div>
         </>

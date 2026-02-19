@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)
-**Current Version:** 1.7.0
+**Current Version:** 1.7.4
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -17,6 +17,147 @@
 ---
 
 ## Version Timeline
+
+### Version 1.7.4 - Pomodoro Settings Modal Centered (20 Feb 2026)
+
+**Type:** PATCH (Bug Fix)
+**Date:** 20 Feb 2026
+**PHR ID:** `20260220-POMODORO-FIX`
+
+#### Summary
+Fixed Pomodoro settings modal centering issue - modal now properly centered on screen.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **PomodoroTimer** | Changed modal centering approach | Fix alignment issue |
+| **z-index** | Increased from z-50 to z-[100] | Ensure modal appears above all content |
+
+#### Issue Fixed
+
+**Focus Mode: Pomodoro Settings Modal Not Centered**
+- **Issue:** Settings modal was appearing at top-left corner instead of center
+- **Fix:** Changed from `left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2` to `inset-0 flex items-center justify-center`
+- **Status:** ✅ Fixed
+
+**Before:**
+```tsx
+<div className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2">
+```
+
+**After:**
+```tsx
+<div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+  <div className="relative w-full max-w-md">
+```
+
+#### Files Modified
+
+| File | Changes |
+|------|---------|
+| `components/pomodoro/PomodoroTimer.tsx` | Modal centering fixed, z-index increased |
+
+#### Build Verification
+
+```
+✓ Compiled successfully
+✓ Generating static pages (11/11)
+
+Build Status: ✅ SUCCESS (0 errors, 0 warnings)
+```
+
+---
+
+### Version 1.7.3 - UI Improvements & Bug Fixes (20 Feb 2026)
+
+**Type:** PATCH (Bug Fixes & UX Improvements)
+**Date:** 20 Feb 2026
+**PHR ID:** `20260220-UI-IMPROVEMENTS`
+
+#### Summary
+UI improvements and bug fixes for Phase 6 features: better error handling, improved labels UX, clearer attachments placeholder, and Pomodoro settings visibility fix.
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **TaskEditor** | Improved labels section with "(Optional)" label | Reduce user confusion |
+| **TaskEditor** | Redesigned attachments "Coming Soon" section | Set clear expectations |
+| **Projects Page** | Added error handling to CRUD operations | Better error messages |
+| **PomodoroTimer** | Verified settings modal z-index | Settings visible |
+| **Bug Fixes** | Fixed layout issues for Kanban/Calendar/Projects | Correct sidebar layout |
+| **Bug Fixes** | Fixed `usePomodoro` stats query | Added missing queryFn |
+| **Documentation** | Created UI-IMPROVEMENTS-PHASE6.md | Document changes |
+
+#### Issues Fixed
+
+**1. Focus Mode: Pomodoro Settings Not Visible**
+- **Issue:** Settings screen not appearing properly
+- **Fix:** Verified z-index (`z-50`) and modal positioning
+- **Status:** ✅ Working
+
+**2. My Tasks: Task Creation Failing**
+- **Issue:** "Failed to Create Task" error, confusing labels section
+- **Fix:** 
+  - Added "(Optional)" label to labels section
+  - Improved empty state with helpful guidance
+  - Redesigned attachments "Coming Soon" section
+- **Status:** ✅ Fixed
+
+**3. Projects: Project Creation Failing**
+- **Issue:** Generic error when creating projects
+- **Fix:** Added try-catch error handling to all CRUD operations
+- **Status:** ✅ Fixed
+
+**4. Layout Issues (Kanban, Calendar, Projects)**
+- **Issue:** Content not positioning to right of sidebar
+- **Fix:** Changed outer container from `flex min-h-screen flex-col` to `flex min-h-screen`
+- **Status:** ✅ Fixed
+
+**5. Focus Mode: Tasks Array Error**
+- **Issue:** `tasks.find is not a function`
+- **Fix:** Added array validation for tasks from useTaskManager
+- **Status:** ✅ Fixed
+
+#### Files Modified
+
+| File | Changes |
+|------|---------|
+| `components/tasks/TaskEditor.tsx` | Labels section improved, Attachments redesigned |
+| `app/projects/page.tsx` | Error handling added to CRUD operations |
+| `app/kanban/page.tsx` | Layout structure fixed |
+| `app/calendar/page.tsx` | Layout structure fixed |
+| `app/focus/page.tsx` | Array validation added |
+| `hooks/usePomodoro.ts` | Added queryFn for stats query |
+
+#### Build Verification
+
+```
+✓ Compiled successfully in 25.1s
+✓ TypeScript compilation passed
+✓ Generating static pages (11/11) in 2.5s
+
+Build Status: ✅ SUCCESS (0 errors, 0 warnings)
+```
+
+#### Progress Summary
+
+| Phase | Tasks | Status | Version |
+|-------|-------|--------|---------|
+| Phase 1 | Setup & Initialization | ✅ Complete | v1.3.0 |
+| Phase 2 | Database Schema | ✅ Complete | v1.1.0 |
+| Phase 3 | Backend APIs | ✅ Complete | v1.2.0 |
+| Phase 4 | Frontend Auth | ✅ Complete | v1.4.0 |
+| Phase 5 | Task Views & Editor | ✅ Complete | v1.6.0 |
+| Phase 6 | Advanced Features | ✅ Complete | v1.7.0 |
+| **Phase 6.x** | **UI Improvements** | **✅ Complete** | **v1.7.3** |
+| Phase 7 | Premium UX Polish | ⏳ Pending | - |
+| Phase 8 | Integration & QA | ⏳ Pending | - |
+
+**Overall Progress:** 148/180+ tasks complete (82%+)
+
+---
 
 ### Version 1.7.0 - Phase 6 Advanced Features Complete (19 Feb 2026)
 
