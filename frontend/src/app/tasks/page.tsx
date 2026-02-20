@@ -29,10 +29,13 @@ import { SortDropdown } from '@/components/tasks/SortDropdown';
 import { QuickFilters } from '@/components/tasks/QuickFilters';
 import { FilterChips } from '@/components/tasks/FilterChips';
 import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
+import { taskQueryKeys } from '@/hooks/useTasks';
 
 export default function TasksPage() {
   // Auth check
   const { user, isLoading: authLoading } = useRequireAuth('/signin');
+  const queryClient = useQueryClient();
 
   // State
   const [filters, setFilters] = useState<FilterConfig>({});
@@ -48,10 +51,10 @@ export default function TasksPage() {
     isFetchingTasks,
     projects: projectsFromHook,
     labels: labelsFromHook,
-    createTask,
-    updateTask,
-    deleteTask,
-    toggleComplete,
+    createTask: createTaskHook,
+    updateTask: updateTaskHook,
+    deleteTask: deleteTaskHook,
+    toggleComplete: toggleCompleteHook,
     refetchTasks,
   } = useTaskManager({ filters, sort });
 
@@ -101,12 +104,12 @@ export default function TasksPage() {
   const handleToggleComplete = useCallback(
     async (task: Task) => {
       try {
-        await toggleComplete(task.id);
+        await toggleCompleteHook(task.id);
       } catch (error) {
         console.error('Failed to toggle task:', error);
       }
     },
-    [toggleComplete]
+    [toggleCompleteHook]
   );
 
   // Handle task edit
@@ -119,12 +122,12 @@ export default function TasksPage() {
   const handleDeleteTask = useCallback(
     async (task: Task) => {
       try {
-        await deleteTask(task.id);
+        await deleteTaskHook(task.id);
       } catch (error) {
         console.error('Failed to delete task:', error);
       }
     },
-    [deleteTask]
+    [deleteTaskHook]
   );
 
   // Handle create new task
@@ -144,36 +147,36 @@ export default function TasksPage() {
         labels?: string[];
       }
     ) => {
-      await createTask({
+      await createTaskHook({
         title,
         ...options,
       });
     },
-    [createTask]
+    [createTaskHook]
   );
 
   // Handle editor save
   const handleEditorSave = useCallback(
     async (data: CreateTaskData & { id?: string }) => {
       if (data.id && selectedTask) {
-        await updateTask(data.id, data);
+        await updateTaskHook(data.id, data);
       } else {
-        await createTask(data);
+        await createTaskHook(data);
       }
       setIsEditorOpen(false);
       setSelectedTask(null);
     },
-    [selectedTask, updateTask, createTask]
+    [selectedTask, updateTaskHook, createTaskHook]
   );
 
   // Handle editor delete
   const handleEditorDelete = useCallback(
     async (taskId: string) => {
-      await deleteTask(taskId);
+      await deleteTaskHook(taskId);
       setIsEditorOpen(false);
       setSelectedTask(null);
     },
-    [deleteTask]
+    [deleteTaskHook]
   );
 
   // Clear filters

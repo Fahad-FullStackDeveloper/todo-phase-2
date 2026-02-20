@@ -1,7 +1,7 @@
 # TodoFlow - Version History
 
 **Project Name:** TodoFlow (Phase 2 TODO Application)
-**Current Version:** 1.7.5
+**Current Version:** 1.7.6
 **Repository:** `hackathon2_5-phases_TODO-Application/phase-2`
 
 ---
@@ -17,6 +17,60 @@
 ---
 
 ## Version Timeline
+
+### Version 1.7.6 - Projects & Tasks Display Fixed (20 Feb 2026)
+
+**Type:** PATCH (Bug Fix)
+**Date:** 20 Feb 2026
+**PHR ID:** `20260220-DISPLAY-FIX`
+
+#### Summary
+Fixed projects and tasks not displaying after creation. Improved cache management with TanStack Query.
+
+#### Issues Fixed
+
+**1. Projects Created But Not Showing**
+- **Issue:** `refetch()` was not updating the UI immediately
+- **Fix:** Use `queryClient.setQueryData()` to update cache directly
+- **Result:** Projects appear immediately after creation
+
+**2. Tasks Created But Not Showing**  
+- **Issue:** Same cache invalidation problem
+- **Fix:** Using optimistic updates from useTaskManager (already working)
+- **Added:** Query client for manual cache updates if needed
+
+**3. Improved Error Messages**
+- **Issue:** "Unable to connect" shown for 401 errors
+- **Fix:** Better error handling - "Authentication Required" for 401
+
+#### Changes Introduced
+
+| Component | Change | Reason |
+|-----------|--------|--------|
+| **Projects Page** | Use `queryClient.setQueryData()` | Immediate UI update |
+| **Projects Page** | Removed `refetch()` calls | Faster response |
+| **Tasks Page** | Added query client import | For manual updates |
+| **API Error Handler** | Better 401 error message | Clear user feedback |
+
+#### Files Modified
+
+| File | Changes |
+|------|---------|
+| `frontend/src/app/projects/page.tsx` | Cache updates instead of refetch |
+| `frontend/src/app/tasks/page.tsx` | Added query client |
+| `frontend/src/lib/api.ts` | Better error messages (v1.7.6) |
+
+#### Build Verification
+
+```
+✓ Compiled successfully
+✓ TypeScript compilation passed
+✓ Generating static pages (11/11)
+
+Build Status: ✅ SUCCESS (0 errors, 0 warnings)
+```
+
+---
 
 ### Version 1.7.5 - Backend-Frontend Integration Fixed (20 Feb 2026)
 

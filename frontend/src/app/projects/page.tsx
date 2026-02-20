@@ -27,9 +27,12 @@ import { projects as projectsApi } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { motionConfig } from '@/lib/motion';
 import type { Project, CreateProjectData } from '@/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { taskQueryKeys } from '@/hooks/useTasks';
 
 export default function ProjectsPage() {
   const { user, isLoading } = useRequireAuth('/signin');
+  const queryClient = useQueryClient();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -54,28 +57,38 @@ export default function ProjectsPage() {
 
   const handleCreateProject = async (data: CreateProjectData) => {
     try {
-      await projectsApi.create(data);
+      const newProject = await projectsApi.create(data);
       toast.success('Project created', {
         description: `"${data.name}" has been added to your projects`,
       });
-      await refetch();
+      
+      // Update cache directly instead of refetch
+      queryClient.setQueryData<Project[]>(
+        taskQueryKeys.projects,
+        (old) => [...(old || []), newProject]
+      );
     } catch (error) {
       console.error('Failed to create project:', error);
       toast.error('Failed to create project', {
         description: error instanceof Error ? error.message : 'Please try again',
       });
-      throw error; // Re-throw so the modal knows it failed
+      throw error;
     }
   };
 
   const handleUpdateProject = async (data: CreateProjectData) => {
     if (!editingProject) return;
     try {
-      await projectsApi.update(editingProject.id, data);
+      const updatedProject = await projectsApi.update(editingProject.id, data);
       toast.success('Project updated', {
         description: `"${data.name}" has been updated`,
       });
-      await refetch();
+      
+      // Update cache directly
+      queryClient.setQueryData<Project[]>(
+        taskQueryKeys.projects,
+        (old) => (old || []).map((p) => (p.id === editingProject.id ? updatedProject : p))
+      );
       setEditingProject(null);
     } catch (error) {
       console.error('Failed to update project:', error);
@@ -92,7 +105,12 @@ export default function ProjectsPage() {
       toast.success('Project deleted', {
         description: `"${project.name}" has been removed`,
       });
-      await refetch();
+      
+      // Update cache directly
+      queryClient.setQueryData<Project[]>(
+        taskQueryKeys.projects,
+        (old) => (old || []).filter((p) => p.id !== project.id)
+      );
     } catch (error) {
       console.error('Failed to delete project:', error);
       toast.error('Failed to delete project', {

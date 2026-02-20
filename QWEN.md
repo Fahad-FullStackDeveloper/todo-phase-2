@@ -2,8 +2,8 @@
 
 **Constitution Version:** 1.0.6
 **Current Phase:** Phase 6 - Advanced Features (Complete)
-**Current Version:** 1.7.5
-**Project Status:** Full-stack application with backend-frontend integration fixed
+**Current Version:** 1.7.6
+**Project Status:** Full-stack application with projects & tasks display fixed
 **Build Status:** ✅ Deployment Ready (0 warnings)
 **Last Updated:** 20 Feb 2026
 

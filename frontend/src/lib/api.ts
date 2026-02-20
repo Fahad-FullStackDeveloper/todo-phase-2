@@ -116,11 +116,17 @@ function handleApiError(error: unknown, endpoint: string, showToast = true) {
 
   if (error instanceof Error) {
     if (error.message === 'Unauthorized') {
-      // 401 errors are handled by redirect
+      // 401 errors - user is not authenticated
+      if (showToast) {
+        toast.error('Authentication Required', {
+          description: 'Please sign in to access this resource.',
+        });
+      }
       return;
     }
 
-    if (error.message.includes('Network') || error.message.includes('fetch')) {
+    if (error.message.includes('Network') || error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+      // Actual network error - server is down or unreachable
       if (showToast) {
         toast.error('Connection Error', {
           description: 'Unable to connect to the server. Please check your connection.',
@@ -129,6 +135,7 @@ function handleApiError(error: unknown, endpoint: string, showToast = true) {
       return;
     }
 
+    // Other errors - show the actual error message
     if (showToast) {
       toast.error('Error', {
         description: error.message,
@@ -447,16 +454,30 @@ export const projects = {
   },
 
   create: async (data: Partial<Project>): Promise<Project> => {
+    // Add default position if not provided
+    const backendData: Record<string, any> = {
+      name: data.name,
+      description: data.description,
+      color: data.color || '#3B82F6', // Default blue
+      position: 0, // Default position
+    };
+    
     return request<Project>('/api/projects', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(backendData),
     });
   },
 
   update: async (id: string, data: Partial<Project>): Promise<Project> => {
+    const backendData: Record<string, any> = {};
+    
+    if (data.name !== undefined) backendData.name = data.name;
+    if (data.description !== undefined) backendData.description = data.description;
+    if (data.color !== undefined) backendData.color = data.color;
+    
     return request<Project>(`/api/projects/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(data),
+      body: JSON.stringify(backendData),
     });
   },
 
