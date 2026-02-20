@@ -447,11 +447,11 @@ Tasks are organized by constitution-mandated categories:
 
 ### Documentation
 
-- [ ] T216 [P] Update README.md with setup instructions (prerequisites, installation, running both services)
-- [ ] T217 [P] Generate API documentation (OpenAPI/Swagger with FastAPI docs)
-- [ ] T218 [P] Document environment variables (.env.example with comments for all vars)
-- [ ] T219 [P] Create deployment guide (Vercel for frontend, Railway/Render for backend, Neon for DB)
-- [ ] T220 [P] Write user guide (features walkthrough, keyboard shortcuts, tips & tricks)
+- [X] T216 [P] Update README.md with setup instructions (prerequisites, installation, running both services)
+- [X] T217 [P] Generate API documentation (OpenAPI/Swagger with FastAPI docs)
+- [X] T218 [P] Document environment variables (.env.example with comments for all vars)
+- [X] T219 [P] Create deployment guide (Vercel for frontend, Railway/Render for backend, Neon for DB)
+- [X] T220 [P] Write user guide (features walkthrough, keyboard shortcuts, tips & tricks)
 
 ### Performance Optimization
 
