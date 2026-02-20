@@ -88,15 +88,16 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile overlay - show when sidebar is open on mobile */}
       <AnimatePresence>
-        {!isOpen && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-black/50 lg:hidden"
             onClick={onClose}
+            aria-hidden="true"
           />
         )}
       </AnimatePresence>
@@ -106,13 +107,14 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         initial={false}
         animate={{
           x: isOpen ? 0 : -280,
-          width: isOpen ? 280 : 0,
         }}
         transition={motionConfig.transition}
         className={cn(
-          'fixed left-0 top-0 z-50 h-full border-r bg-background lg:static lg:z-auto',
-          !isOpen && 'lg:hidden'
+          'fixed left-0 top-0 z-50 h-full w-[280px] border-r bg-background lg:static lg:z-auto lg:w-[280px]',
+          !isOpen && '-translate-x-full lg:hidden'
         )}
+        role="navigation"
+        aria-label="Main navigation"
       >
         <div className="flex h-full flex-col overflow-hidden">
           {/* Logo */}
@@ -142,7 +144,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                   <motion.button
                     whileHover={{ x: 4 }}
                     className={cn(
-                      'flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                      'flex w-full min-h-[44px] items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors touch-target',
                       isActive(item.href)
                         ? 'bg-primary/10 text-primary'
                         : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'

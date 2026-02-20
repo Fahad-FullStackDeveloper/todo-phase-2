@@ -348,63 +348,63 @@ Tasks are organized by constitution-mandated categories:
 
 ### Dashboard with Stats
 
-- [ ] T154 [P] [US-DASHBOARD] Create dashboard page in frontend/src/app/dashboard/page.tsx
-- [ ] T155 [P] [US-DASHBOARD] Implement total tasks count card
-- [ ] T156 [P] [US-DASHBOARD] Create completed today count card
-- [ ] T157 [P] [US-DASHBOARD] Implement completion rate percentage (gauge or progress bar)
-- [ ] T158 [P] [US-DASHBOARD] Create current streak display (days with completions, flame icon)
-- [ ] T159 [P] [US-DASHBOARD] Implement longest streak record display
-- [ ] T160 [P] [US-DASHBOARD] Create tasks by priority chart (pie or bar chart with recharts)
-- [ ] T161 [P] [US-DASHBOARD] Implement tasks by project chart (horizontal bar chart)
-- [ ] T162 [P] [US-DASHBOARD] Create weekly activity graph (last 7 days, line or bar chart)
+- [X] T154 [P] [US-DASHBOARD] Create dashboard page in frontend/src/app/dashboard/page.tsx
+- [X] T155 [P] [US-DASHBOARD] Implement total tasks count card
+- [X] T156 [P] [US-DASHBOARD] Create completed today count card
+- [X] T157 [P] [US-DASHBOARD] Implement completion rate percentage (gauge or progress bar)
+- [X] T158 [P] [US-DASHBOARD] Create current streak display (days with completions, flame icon)
+- [X] T159 [P] [US-DASHBOARD] Implement longest streak record display
+- [X] T160 [P] [US-DASHBOARD] Create tasks by priority chart (pie or bar chart with recharts)
+- [X] T161 [P] [US-DASHBOARD] Implement tasks by project chart (horizontal bar chart)
+- [X] T162 [P] [US-DASHBOARD] Create weekly activity graph (last 7 days, line or bar chart)
 
 ### Completion Celebrations
 
-- [ ] T163 [P] [US-CELEBRATIONS] Install canvas-confetti package
-- [ ] T164 [P] [US-CELEBRATIONS] Implement confetti animation on task complete (trigger on checkbox toggle)
-- [ ] T165 [P] [US-CELEBRATIONS] Create streak milestone celebrations (7, 30, 100 days, modal with badge)
-- [ ] T166 [P] [US-CELEBRATIONS] Implement progress bar fills with animation (Framer Motion layout animations)
-- [ ] T167 [P] [US-CELEBRATIONS] Add optional sound effects (toggle in settings, muted by default)
-- [ ] T168 [P] [US-CELEBRATIONS] Create achievement badges foundation (badge component, unlock logic)
-- [ ] T169 [P] [US-CELEBRATIONS] Implement celebration frequency capping (avoid overuse, cooldown period)
+- [X] T163 [P] [US-CELEBRATIONS] Install canvas-confetti package
+- [X] T164 [P] [US-CELEBRATIONS] Implement confetti animation on task complete (trigger on checkbox toggle)
+- [X] T165 [P] [US-CELEBRATIONS] Create streak milestone celebrations (7, 30, 100 days, modal with badge)
+- [X] T166 [P] [US-CELEBRATIONS] Implement progress bar fills with animation (Framer Motion layout animations)
+- [X] T167 [P] [US-CELEBRATIONS] Add optional sound effects (toggle in settings, muted by default)
+- [X] T168 [P] [US-CELEBRATIONS] Create achievement badges foundation (badge component, unlock logic)
+- [X] T169 [P] [US-CELEBRATIONS] Implement celebration frequency capping (avoid overuse, cooldown period)
 
 ### Keyboard Shortcuts
 
-- [ ] T170 [P] [US-SHORTCUTS] Create keyboard shortcuts hook in frontend/src/hooks/useKeyboardShortcuts.ts
-- [ ] T171 [P] [US-SHORTCUTS] Implement global shortcuts: N=new task, /=search, T=toggle theme, ?=help
-- [ ] T172 [P] [US-SHORTCUTS] Add task list shortcuts: Enter=edit, Delete=remove, Space=toggle complete
-- [ ] T173 [P] [US-SHORTCUTS] Implement navigation shortcuts: G+T=tasks, G+C=calendar, G+P=projects
-- [ ] T174 [P] [US-SHORTCUTS] Create shortcut help modal (list all shortcuts, searchable)
-- [ ] T175 [P] [US-SHORTCUTS] Add customizable shortcuts foundation (settings page to remap)
-- [ ] T176 [P] [US-SHORTCUTS] Implement keyboard focus management (focus trap in modals, restore focus)
+- [X] T170 [P] [US-SHORTCUTS] Create keyboard shortcuts hook in frontend/src/hooks/useKeyboardShortcuts.ts
+- [X] T171 [P] [US-SHORTCUTS] Implement global shortcuts: N=new task, /=search, T=toggle theme, ?=help
+- [X] T172 [P] [US-SHORTCUTS] Add task list shortcuts: Enter=edit, Delete=remove, Space=toggle complete
+- [X] T173 [P] [US-SHORTCUTS] Implement navigation shortcuts: G+T=tasks, G+C=calendar, G+P=projects
+- [X] T174 [P] [US-SHORTCUTS] Create shortcut help modal (list all shortcuts, searchable)
+- [X] T175 [P] [US-SHORTCUTS] Add customizable shortcuts foundation (settings page to remap)
+- [X] T176 [P] [US-SHORTCUTS] Implement keyboard focus management (focus trap in modals, restore focus)
 
 ### Labels Management UI
 
-- [ ] T177 [P] [US-LABELS-FE] Create labels list page in frontend/src/app/labels/page.tsx
-- [ ] T178 [P] [US-LABELS-FE] Implement label card with color preview and task count
-- [ ] T179 [P] [US-LABELS-FE] Create label creation modal with color picker (hex validation, preview)
-- [ ] T180 [P] [US-LABELS-FE] Implement label editing (inline edit or modal)
-- [ ] T181 [P] [US-LABELS-FE] Add label deletion with confirmation
-- [ ] T182 [P] [US-LABELS-FE] Implement label suggestions based on usage (autocomplete in task editor)
-- [ ] T183 [P] [US-LABELS-FE] Create smart label filtering (click label in sidebar, filter tasks)
+- [X] T177 [P] [US-LABELS-FE] Create labels list page in frontend/src/app/labels/page.tsx
+- [X] T178 [P] [US-LABELS-FE] Implement label card with color preview and task count
+- [X] T179 [P] [US-LABELS-FE] Create label creation modal with color picker (hex validation, preview)
+- [X] T180 [P] [US-LABELS-FE] Implement label editing (inline edit or modal)
+- [X] T181 [P] [US-LABELS-FE] Add label deletion with confirmation
+- [X] T182 [P] [US-LABELS-FE] Implement label suggestions based on usage (autocomplete in task editor)
+- [X] T183 [P] [US-LABELS-FE] Create smart label filtering (click label in sidebar, filter tasks)
 
 ### PWA Support
 
-- [ ] T184 [P] [US-PWA] Configure next-pwa plugin
-- [ ] T185 [P] [US-PWA] Create app manifest in frontend/public/manifest.json (icons, theme colors, display mode)
-- [ ] T186 [P] [US-PWA] Implement install prompt on supported devices (beforeinstallprompt event)
-- [ ] T187 [P] [US-PWA] Add offline task viewing (cache recent tasks with service worker)
-- [ ] T188 [P] [US-PWA] Implement optimistic UI updates (update UI immediately, sync on reconnect)
-- [ ] T189 [P] [US-PWA] Create sync on reconnect logic (background sync API)
-- [ ] T190 [P] [US-PWA] Configure service worker caching strategies (stale-while-revalidate for API, cache-first for assets)
+- [X] T184 [P] [US-PWA] Configure next-pwa plugin
+- [X] T185 [P] [US-PWA] Create app manifest in frontend/public/manifest.json (icons, theme colors, display mode)
+- [X] T186 [P] [US-PWA] Implement install prompt on supported devices (beforeinstallprompt event)
+- [X] T187 [P] [US-PWA] Add offline task viewing (cache recent tasks with service worker)
+- [X] T188 [P] [US-PWA] Implement optimistic UI updates (update UI immediately, sync on reconnect)
+- [X] T189 [P] [US-PWA] Create sync on reconnect logic (background sync API)
+- [X] T190 [P] [US-PWA] Configure service worker caching strategies (stale-while-revalidate for API, cache-first for assets)
 
 ### Responsive Design
 
-- [ ] T191 [P] [US-RESPONSIVE] Implement mobile-first breakpoints (sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px)
-- [ ] T192 [P] [US-RESPONSIVE] Ensure touch-friendly targets (min 44px touch targets)
-- [ ] T193 [P] [US-RESPONSIVE] Create adaptive layouts (sidebar collapses to drawer on mobile)
-- [ ] T194 [P] [US-RESPONSIVE] Test and fix horizontal scroll issues (no horizontal scroll on any viewport)
-- [ ] T195 [P] [US-RESPONSIVE] Optimize mobile menus (hamburger menu, slide-out drawer)
+- [X] T191 [P] [US-RESPONSIVE] Implement mobile-first breakpoints (sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px)
+- [X] T192 [P] [US-RESPONSIVE] Ensure touch-friendly targets (min 44px touch targets)
+- [X] T193 [P] [US-RESPONSIVE] Create adaptive layouts (sidebar collapses to drawer on mobile)
+- [X] T194 [P] [US-RESPONSIVE] Test and fix horizontal scroll issues (no horizontal scroll on any viewport)
+- [X] T195 [P] [US-RESPONSIVE] Optimize mobile menus (hamburger menu, slide-out drawer)
 
 ---
 

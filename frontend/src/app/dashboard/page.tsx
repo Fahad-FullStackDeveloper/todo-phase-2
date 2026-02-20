@@ -1,27 +1,28 @@
 'use client';
 
 /**
- * Dashboard Page
+ * Dashboard Page - Phase 7 Implementation
  *
  * Main dashboard view with:
- * - Welcome message
- * - Task statistics
- * - Quick task input
- * - Today's tasks
- * - Recent activity
- * - Productivity metrics
+ * - Welcome message with user personalization
+ * - Task statistics with real-time data
+ * - Quick task input with keyboard shortcut
+ * - Weekly activity chart
+ * - Tasks by priority distribution
+ * - Tasks by project breakdown
+ * - Period selector for time range
+ * - Loading and empty states
  */
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   CheckSquare,
-  Clock,
-  TrendingUp,
   Target,
+  TrendingUp,
+  Flame,
   Plus,
   Calendar as CalendarIcon,
-  AlertCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -30,50 +31,31 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { TopNav } from '@/components/layout/TopNav';
-import { useAuth } from '@/hooks/useAuth';
 import { useRequireAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 import { motionConfig } from '@/lib/motion';
-
-// Sample stats data (will be replaced with API data)
-const sampleStats = {
-  totalTasks: 42,
-  completedToday: 5,
-  completionRate: 78,
-  currentStreak: 7,
-  tasksByPriority: {
-    low: 12,
-    medium: 18,
-    high: 8,
-    urgent: 4,
-  },
-};
-
-// Sample today's tasks
-const sampleTodayTasks = [
-  { id: '1', title: 'Review Q4 planning document', priority: 'high', completed: false },
-  { id: '2', title: 'Team standup meeting', priority: 'medium', completed: true },
-  { id: '3', title: 'Update project documentation', priority: 'low', completed: false },
-  { id: '4', title: 'Code review for PR #123', priority: 'high', completed: false },
-  { id: '5', title: 'Prepare presentation slides', priority: 'urgent', completed: false },
-];
+import { useDashboard, formatNumber, getCompletionRateColor } from '@/hooks/useDashboard';
+import {
+  StatCard,
+  WeeklyActivityChart,
+  TasksByPriorityChart,
+  TasksByProjectChart,
+  PeriodSelector,
+  DashboardSkeleton,
+} from '@/components/dashboard';
+import type { DashboardPeriod } from '@/hooks/useDashboard';
 
 export default function DashboardPage() {
-  const { user, isLoading, isAuthenticated } = useRequireAuth('/signin');
+  const { user, isLoading: authLoading } = useRequireAuth('/signin');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [period, setPeriod] = useState<DashboardPeriod>('7d');
 
-  // Also check for token directly to avoid being stuck in loading state
-  const hasToken = typeof window !== 'undefined' 
-    ? (localStorage.getItem('jwt_token') || document.cookie.includes('jwt_token='))
-    : false;
+  // Fetch dashboard data
+  const { stats, activity, streak, isLoading } = useDashboard({ period });
 
-  // Show loading only if:
-  // 1. Still loading AND no token found
-  // 2. Timeout for max 2 seconds
-  const showLoading = isLoading && !hasToken;
-
-  if (showLoading) {
+  // Show loading only during initial auth check
+  if (authLoading) {
     return (
       <div className="flex min-h-screen">
         <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
@@ -84,22 +66,11 @@ export default function DashboardPage() {
           >
             <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
             <p className="text-lg font-medium text-foreground">Loading your dashboard...</p>
-            <p className="mt-2 text-sm text-muted-foreground">Just a moment</p>
           </motion.div>
         </div>
       </div>
     );
   }
-
-  // Safety check - if not authenticated after loading, don't render
-  // (useRequireAuth should have redirected already)
-  const actuallyAuthenticated = isAuthenticated || hasToken;
-  if (!actuallyAuthenticated) {
-    return null;
-  }
-
-  // Use user from auth state or fallback to null (will use guest name)
-  const displayUser = user;
 
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,17 +82,11 @@ export default function DashboardPage() {
     setNewTaskTitle('');
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'urgent':
-        return 'text-error-600 bg-error/10';
-      case 'high':
-        return 'text-warning-600 bg-warning/10';
-      case 'medium':
-        return 'text-primary bg-primary/10';
-      default:
-        return 'text-muted-foreground bg-muted';
-    }
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
   };
 
   return (
@@ -135,8 +100,8 @@ export default function DashboardPage() {
         <TopNav onMenuToggle={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-          <div className="mx-auto max-w-6xl space-y-8">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar-thin">
+          <div className="mx-auto max-w-7xl space-y-8">
             {/* Welcome Section */}
             <motion.div
               initial="hidden"
@@ -146,14 +111,19 @@ export default function DashboardPage() {
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold">
-                    Good morning, {user?.name?.split(' ')[0] || 'User'}! 👋
+                  <h1 className="text-2xl font-bold sm:text-3xl">
+                    {getGreeting()}, {user?.name?.split(' ')[0] || 'User'}! 👋
                   </h1>
                   <p className="mt-1 text-muted-foreground">
                     Here&apos;s what&apos;s happening with your tasks today.
                   </p>
                 </div>
-                <Button onClick={() => toast.info('Quick Add', { description: 'Press "N" to create a task' })}>
+                <Button 
+                  onClick={() => {
+                    const input = document.querySelector('input[placeholder*="Add a new task"]') as HTMLInputElement;
+                    input?.focus();
+                  }}
+                >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Task
                 </Button>
@@ -180,197 +150,126 @@ export default function DashboardPage() {
               </Button>
             </motion.form>
 
-            {/* Statistics Cards */}
+            {/* Period Selector */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              className="flex items-center justify-between"
             >
-              <StatCard
-                title="Total Tasks"
-                value={sampleStats.totalTasks}
-                icon={CheckSquare}
-                trend="+12% from last week"
-                trendUp={true}
-              />
-              <StatCard
-                title="Completed Today"
-                value={sampleStats.completedToday}
-                icon={Target}
-                trend="Great job!"
-                trendUp={true}
-              />
-              <StatCard
-                title="Completion Rate"
-                value={`${sampleStats.completionRate}%`}
-                icon={TrendingUp}
-                trend="+5% from last week"
-                trendUp={true}
-              />
-              <StatCard
-                title="Current Streak"
-                value={`${sampleStats.currentStreak} days`}
-                icon={Clock}
-                trend="Keep it up!"
-                trendUp={true}
-              />
+              <h2 className="text-lg font-semibold">Overview</h2>
+              <PeriodSelector value={period} onChange={setPeriod} />
             </motion.div>
 
-            {/* Today's Tasks */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="flex items-center gap-2">
-                        <CalendarIcon className="h-5 w-5" />
-                        Today&apos;s Tasks
-                      </CardTitle>
-                      <CardDescription>
-                        You have {sampleTodayTasks.filter(t => !t.completed).length} pending tasks today
-                      </CardDescription>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      View All
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {sampleTodayTasks.map((task, index) => (
-                      <motion.div
-                        key={task.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.25 + index * 0.05 }}
-                        className={cn(
-                          'flex items-center gap-3 rounded-lg border p-3 transition-colors',
-                          task.completed
-                            ? 'bg-muted/50'
-                            : 'hover:bg-accent/50'
-                        )}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={task.completed}
-                          onChange={() => {
-                            toast.success(
-                              task.completed ? 'Task marked as incomplete' : 'Task completed!',
-                              { description: task.title }
-                            );
-                          }}
-                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                        />
-                        <span
-                          className={cn(
-                            'flex-1 text-sm',
-                            task.completed && 'text-muted-foreground line-through'
-                          )}
-                        >
-                          {task.title}
-                        </span>
-                        <span
-                          className={cn(
-                            'rounded-full px-2 py-0.5 text-xs font-medium',
-                            getPriorityColor(task.priority)
-                          )}
-                        >
-                          {task.priority}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Priority Breakdown */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-            >
-              {Object.entries(sampleStats.tasksByPriority).map(([priority, count], index) => (
-                <motion.div
-                  key={priority}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.35 + index * 0.05 }}
-                >
-                  <Card className={cn(
-                    'border-l-4',
-                    priority === 'urgent' && 'border-l-error-600',
-                    priority === 'high' && 'border-l-warning-600',
-                    priority === 'medium' && 'border-l-primary',
-                    priority === 'low' && 'border-l-muted-foreground'
-                  )}>
-                    <CardContent className="pt-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-muted-foreground capitalize">
-                            {priority}
-                          </p>
-                          <p className="text-2xl font-bold">{count}</p>
+            {/* Statistics Cards */}
+            {isLoading ? (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <Card key={i}>
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-2">
+                          <div className="h-4 w-24 animate-pulse rounded bg-muted" />
+                          <div className="h-8 w-16 animate-pulse rounded bg-muted" />
                         </div>
-                        <AlertCircle className={cn(
-                          'h-8 w-8',
-                          priority === 'urgent' && 'text-error-600',
-                          priority === 'high' && 'text-warning-600',
-                          priority === 'medium' && 'text-primary',
-                          priority === 'low' && 'text-muted-foreground'
-                        )} />
+                        <div className="h-12 w-12 animate-pulse rounded-full bg-muted" />
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+                ))}
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              >
+                <StatCard
+                  title="Total Tasks"
+                  value={formatNumber(stats?.data?.totalTasks || 0)}
+                  icon={CheckSquare}
+                  trend="All your tasks"
+                  color="primary"
+                  delay={0}
+                />
+                <StatCard
+                  title="Completed Today"
+                  value={stats?.data?.completedToday || 0}
+                  icon={Target}
+                  trend={stats?.data?.completedToday && stats.data.completedToday > 0 ? 'Great job!' : 'Get started'}
+                  color="success"
+                  delay={0.1}
+                />
+                <StatCard
+                  title="Completion Rate"
+                  value={`${stats?.data?.completionRate || 0}%`}
+                  icon={TrendingUp}
+                  progress={stats?.data?.completionRate || 0}
+                  color="primary"
+                  delay={0.2}
+                />
+                <StatCard
+                  title="Current Streak"
+                  value={`${streak?.data?.currentStreak || 0}d`}
+                  icon={Flame}
+                  trend={streak?.data?.currentStreak && streak.data.currentStreak > 0 ? 'Keep it up!' : 'Start your streak'}
+                  color="warning"
+                  delay={0.3}
+                  customIcon={(
+                    <Flame className={cn('h-6 w-6', (streak?.data?.currentStreak || 0) > 0 ? 'animate-pulse text-orange-500' : '')} />
+                  )}
+                />
+              </motion.div>
+            )}
+
+            {/* Weekly Activity Chart */}
+            <WeeklyActivityChart 
+              data={activity.data || undefined} 
+              isLoading={isLoading}
+              className="w-full"
+            />
+
+            {/* Priority & Project Charts */}
+            <div className="grid gap-4 lg:grid-cols-2">
+              <TasksByPriorityChart 
+                stats={stats.data || undefined} 
+                isLoading={isLoading}
+              />
+              <TasksByProjectChart 
+                stats={stats.data || undefined} 
+                isLoading={isLoading}
+              />
+            </div>
+
+            {/* Longest Streak Info */}
+            {!isLoading && streak?.data?.longestStreak && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">Longest Streak</p>
+                        <p className="text-2xl font-bold">{streak.data.longestStreak} days</p>
+                        {streak.data.lastCompletedDate && (
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            Last completed: {new Date(streak.data.lastCompletedDate).toLocaleDateString()}
+                          </p>
+                        )}
+                      </div>
+                      <Flame className="h-12 w-12 text-orange-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
           </div>
         </main>
       </div>
     </div>
-  );
-}
-
-// Stat Card Component
-function StatCard({
-  title,
-  value,
-  icon: Icon,
-  trend,
-  trendUp,
-}: {
-  title: string;
-  value: number | string;
-  icon: React.ComponentType<{ className?: string }>;
-  trend: string;
-  trendUp: boolean;
-}) {
-  return (
-    <Card>
-      <CardContent className="pt-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold">{value}</p>
-            <p className={cn(
-              'mt-1 text-xs',
-              trendUp ? 'text-success-600' : 'text-destructive'
-            )}>
-              {trend}
-            </p>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <Icon className="h-6 w-6 text-primary" />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
   );
 }
