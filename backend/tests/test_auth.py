@@ -13,8 +13,8 @@ Tests cover:
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.middleware.auth import hash_password
-from backend.models.user import User
+from middleware.auth import hash_password
+from models.user import User
 
 
 class TestSignup:
@@ -94,7 +94,7 @@ class TestSignin:
             "/api/auth/signin",
             json={
                 "email": test_user.email,
-                "password": "TestPassword123",
+                "password": "TestPass123",
             },
         )
         assert response.status_code == 200
@@ -109,7 +109,7 @@ class TestSignin:
             "/api/auth/signin",
             json={
                 "email": test_user.email,
-                "password": "TestPassword123",
+                "password": "TestPass123",
                 "remember_me": True,
             },
         )
@@ -121,7 +121,7 @@ class TestSignin:
             "/api/auth/signin",
             json={
                 "email": "nonexistent@example.com",
-                "password": "WrongPassword123",
+                "password": "WrongPass123",
             },
         )
         assert response.status_code == 401
@@ -132,7 +132,7 @@ class TestSignin:
             "/api/auth/signin",
             json={
                 "email": test_user.email,
-                "password": "WrongPassword123",
+                "password": "WrongPass123",
             },
         )
         assert response.status_code == 401
@@ -191,7 +191,7 @@ class TestRefreshToken:
             "/api/auth/signin",
             json={
                 "email": test_user.email,
-                "password": "TestPassword123",
+                "password": "TestPass123",
             },
         )
         refresh_token = signin_response.json()["token"]["refresh_token"]
@@ -240,7 +240,7 @@ class TestUserIsolation:
             "/api/auth/signin",
             json={
                 "email": test_user.email,
-                "password": "TestPassword123",
+                "password": "TestPass123",
             },
         )
         token1 = token1_response.json()["token"]["access_token"]
@@ -250,7 +250,7 @@ class TestUserIsolation:
             "/api/auth/signin",
             json={
                 "email": test_user_2.email,
-                "password": "TestPassword456",
+                "password": "TestPass456",
             },
         )
         token2 = token2_response.json()["token"]["access_token"]

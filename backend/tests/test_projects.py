@@ -15,9 +15,9 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session
 
-from backend.models.project import Project
-from backend.models.task import Task
-from backend.models.user import User
+from models.project import Project
+from models.task import Task
+from models.user import User
 
 
 class TestListProjects:

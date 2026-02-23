@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.models.user import User
+from models.user import User
 
 
 class TestCompleteAuthFlow:
@@ -109,7 +109,7 @@ class TestCompleteAuthFlow:
         # Signin to get tokens
         signin_response = client.post(
             "/api/auth/signin",
-            json={"email": test_user.email, "password": "TestPassword123"},
+            json={"email": test_user.email, "password": "TestPass123"},
         )
         assert signin_response.status_code == 200
         tokens = signin_response.json()["token"]
@@ -206,7 +206,7 @@ class TestErrorHandling:
         # Get valid token first
         signin_response = client.post(
             "/api/auth/signin",
-            json={"email": test_user.email, "password": "TestPassword123"},
+            json={"email": test_user.email, "password": "TestPass123"},
         )
         token = signin_response.json()["token"]["access_token"]
 
@@ -230,7 +230,7 @@ class TestErrorHandling:
         """Test that Bearer prefix is required."""
         signin_response = client.post(
             "/api/auth/signin",
-            json={"email": test_user.email, "password": "TestPassword123"},
+            json={"email": test_user.email, "password": "TestPass123"},
         )
         token = signin_response.json()["token"]["access_token"]
 

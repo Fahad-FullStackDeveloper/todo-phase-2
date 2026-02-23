@@ -13,8 +13,8 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session
 
-from backend.models.label import Label
-from backend.models.user import User
+from models.label import Label
+from models.user import User
 
 
 class TestListLabels:
@@ -315,7 +315,7 @@ class TestUserIsolation:
             "/api/auth/signin",
             json={
                 "email": test_user_2.email,
-                "password": "TestPassword456",
+                "password": "TestPass456",
             },
         )
         token = signin_response.json()["token"]["access_token"]

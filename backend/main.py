@@ -24,7 +24,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables from .env file
-load_dotenv()
+# Skip in test mode to allow test fixtures to override environment variables
+if os.getenv("TEST_MODE") != "true":
+    load_dotenv()
 
 from db import engine, create_db_and_tables
 from routes.auth import router as auth_router

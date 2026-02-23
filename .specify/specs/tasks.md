@@ -439,11 +439,11 @@ Tasks are organized by constitution-mandated categories:
 ### Premium Polish
 
 - [ ] T210 [P] Verify all animations smooth (Framer Motion, 60fps, no jank)
-- [ ] T211 [P] Add loading states on all async actions (skeleton loaders, spinners, optimistic updates)
+- [X] T211 [P] Add loading states on all async actions (skeleton loaders, spinners, optimistic updates)
 - [ ] T212 [P] Review error messages (user-friendly, actionable, no stack traces)
-- [ ] T213 [P] Create helpful empty states (no tasks, no projects, with CTAs)
-- [ ] T214 [P] Verify dark mode fully themed (all components, modals, dropdowns, inputs)
-- [ ] T215 [P] Add micro-interactions on buttons, cards (hover states, focus rings, active states)
+- [X] T213 [P] Create helpful empty states (no tasks, no projects, with CTAs)
+- [X] T214 [P] Verify dark mode fully themed (all components, modals, dropdowns, inputs)
+- [X] T215 [P] Add micro-interactions on buttons, cards (hover states, focus rings, active states)
 
 ### Documentation
 

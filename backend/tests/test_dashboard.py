@@ -16,9 +16,9 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session
 
-from backend.models.pomodoro_session import PomodoroSession
-from backend.models.task import Task
-from backend.models.user import User
+from models.pomodoro_session import PomodoroSession
+from models.task import Task
+from models.user import User
 
 
 class TestDashboardStats:

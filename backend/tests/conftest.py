@@ -9,65 +9,69 @@ Provides fixtures for:
 """
 
 import os
+import sys
+
+# Set test environment variables BEFORE any other imports
+# This must be at the very top of the file before any imports
+os.environ["TEST_MODE"] = "true"
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+os.environ["BETTER_AUTH_SECRET"] = "test-secret-key-for-testing-only-min-32-chars"
+os.environ["FRONTEND_URL"] = "http://localhost:3000"
+os.environ["SQL_ECHO"] = "false"
+
+# Now import pytest and other dependencies
 import uuid
 from datetime import datetime, timezone
 from typing import Generator
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 from sqlmodel import Session, SQLModel
 
-# Set test environment variables before importing app
-os.environ["DATABASE_URL"] = "postgresql://postgres:postgres@localhost:5432/todoflow_test"
-os.environ["BETTER_AUTH_SECRET"] = "test-secret-key-for-testing-only-min-32-chars"
-os.environ["FRONTEND_URL"] = "http://localhost:3000"
-os.environ["SQL_ECHO"] = "false"
+# Import app and dependencies (models are imported by db.py internally)
+# Do NOT import models directly here to avoid duplicate metadata registration
+from db import get_db, engine as app_engine  # noqa: F401
+from main import app  # noqa: F401
+from middleware.auth import create_access_token, create_refresh_token, hash_password  # noqa: F401
 
-from backend.db import get_db
-from backend.main import app
-from backend.middleware.auth import create_access_token, create_refresh_token, hash_password
-from backend.models.user import User
-from backend.models.task import Task
-from backend.models.project import Project
-from backend.models.label import Label
+# Import models AFTER app is loaded to avoid duplicate registration
+# Use relative imports consistent with rest of codebase
+from models.user import User  # noqa: F401
+from models.task import Task  # noqa: F401
+from models.project import Project  # noqa: F401
+from models.label import Label  # noqa: F401
 
 
 # =============================================================================
 # Test Database Setup
 # =============================================================================
 
-@pytest.fixture(scope="session")
-def test_engine():
-    """Create test database engine."""
-    engine = create_engine(
-        os.environ["DATABASE_URL"],
-        pool_pre_ping=True,
-        echo=False,
-    )
-    return engine
-
-
 @pytest.fixture(scope="function")
-def test_db(test_engine) -> Generator[Session, None, None]:
+def test_db() -> Generator[Session, None, None]:
     """
     Create a test database session.
 
-    Creates all tables before tests and drops them after.
-    Each test gets a fresh session with rollback.
+    Creates all tables before each test.
+    Each test gets a fresh session with clean database.
+    Uses the app's engine which is configured for SQLite in-memory in test mode.
     """
-    # Create all tables
-    SQLModel.metadata.create_all(test_engine)
+    # Drop all tables first to ensure clean state (in case engine is reused)
+    SQLModel.metadata.drop_all(app_engine)
+    
+    # Create all tables on the app's engine
+    SQLModel.metadata.create_all(app_engine)
 
-    session = Session(test_engine)
+    session = Session(app_engine)
 
     try:
         yield session
     finally:
-        session.rollback()
-        session.close()
-        # Drop all tables after test
-        SQLModel.metadata.drop_all(test_engine)
+        # Close session, ignoring errors if engine is already disposed
+        try:
+            session.close()
+        except Exception:
+            pass  # Engine may already be disposed by TestClient teardown
 
 
 # =============================================================================
@@ -107,7 +111,7 @@ def test_user(test_db) -> User:
         id=str(uuid.uuid4()),
         email="test@example.com",
         name="Test User",
-        password_hash=hash_password("TestPassword123"),
+        password_hash=hash_password("TestPass123"),
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
     )
@@ -124,7 +128,7 @@ def test_user_2(test_db) -> User:
         id=str(uuid.uuid4()),
         email="test2@example.com",
         name="Test User 2",
-        password_hash=hash_password("TestPassword456"),
+        password_hash=hash_password("TestPass456"),
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
     )
@@ -219,7 +223,7 @@ def create_test_user(
     test_db: Session,
     email: str = "test@example.com",
     name: str = "Test User",
-    password: str = "TestPassword123",
+    password: str = "TestPass123",
 ) -> User:
     """Helper to create a test user."""
     user = User(

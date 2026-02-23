@@ -19,10 +19,10 @@ from datetime import datetime, timezone
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.models.user import User
-from backend.models.task import Task
-from backend.models.project import Project
-from backend.models.label import Label
+from models.user import User
+from models.task import Task
+from models.project import Project
+from models.label import Label
 
 
 class TestTaskIsolation:

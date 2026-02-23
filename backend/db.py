@@ -27,9 +27,14 @@ from sqlmodel import Session, SQLModel
 # Look for .env in the backend directory (where this file is located)
 backend_dir = Path(__file__).parent
 env_path = backend_dir / ".env"
-load_dotenv(dotenv_path=env_path)
+
+# Only load .env if not in test mode (TEST_MODE env var set)
+# This allows tests to override DATABASE_URL without .env interfering
+if os.getenv("TEST_MODE") != "true":
+    load_dotenv(dotenv_path=env_path)
 
 # Import all models to ensure they are registered with SQLModel metadata
+# This import is idempotent - models are only registered once even if imported multiple times
 from models import (  # noqa: F401
     User,
     Task,
@@ -44,41 +49,58 @@ from models import (  # noqa: F401
 def get_database_url() -> str:
     """
     Get the database URL from environment variables.
-    
+
     Returns:
         str: Database connection URL
-        
+
     Raises:
         ValueError: If DATABASE_URL is not set
     """
     database_url = os.getenv("DATABASE_URL")
-    
+
     if not database_url:
         raise ValueError(
             "DATABASE_URL environment variable is required. "
             "Example: postgresql://user:password@ep-xxx.us-east-2.aws.neon.tech/dbname"
         )
-    
+
     # Ensure SSL mode is set for Neon connections
     if "neon.tech" in database_url and "sslmode" not in database_url:
         # Add sslmode=require for Neon connections
         separator = "&" if "?" in database_url else "?"
         database_url = f"{database_url}{separator}sslmode=require"
-    
+
     return database_url
 
 
-# Create engine with Neon-optimized configuration
-engine = create_engine(
-    get_database_url(),
-    # Connection pooling configuration
-    pool_size=5,           # Number of connections to keep in pool
-    max_overflow=10,       # Additional connections allowed beyond pool_size
-    pool_pre_ping=True,    # Verify connections before use (handles Neon idle timeouts)
-    pool_recycle=300,      # Recycle connections after 5 minutes
-    # Echo SQL for debugging (disable in production)
-    echo=os.getenv("SQL_ECHO", "false").lower() == "true",
-)
+def is_sqlite_database(url: str) -> bool:
+    """Check if the database URL is for SQLite."""
+    return url.startswith("sqlite")
+
+
+# Create engine with appropriate configuration for database type
+database_url = get_database_url()
+
+if is_sqlite_database(database_url):
+    # SQLite configuration (used for testing)
+    # SQLite doesn't support connection pooling parameters
+    engine = create_engine(
+        database_url,
+        connect_args={"check_same_thread": False},
+        echo=os.getenv("SQL_ECHO", "false").lower() == "true",
+    )
+else:
+    # PostgreSQL/Neon configuration with connection pooling
+    engine = create_engine(
+        database_url,
+        # Connection pooling configuration
+        pool_size=5,           # Number of connections to keep in pool
+        max_overflow=10,       # Additional connections allowed beyond pool_size
+        pool_pre_ping=True,    # Verify connections before use (handles Neon idle timeouts)
+        pool_recycle=300,      # Recycle connections after 5 minutes
+        # Echo SQL for debugging (disable in production)
+        echo=os.getenv("SQL_ECHO", "false").lower() == "true",
+    )
 
 
 def create_db_and_tables() -> None:

@@ -294,9 +294,7 @@ async def get_current_user_optional(
 # Password Hashing Utilities
 # =============================================================================
 
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
 
 
 def hash_password(password: str) -> str:
@@ -308,8 +306,18 @@ def hash_password(password: str) -> str:
 
     Returns:
         Hashed password string
+
+    Note:
+        bcrypt has a 72-byte limit. Passwords are truncated if longer.
     """
-    return pwd_context.hash(password, rounds=12)
+    # bcrypt has a 72-byte limit - truncate if needed
+    if len(password) > 72:
+        password = password[:72]
+    # Encode password to bytes, hash with bcrypt, decode back to string
+    password_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt(rounds=10)
+    hashed = bcrypt.hashpw(password_bytes, salt)
+    return hashed.decode('utf-8')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -323,5 +331,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns:
         True if password matches, False otherwise
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    password_bytes = plain_password.encode('utf-8')
+    hashed_bytes = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, hashed_bytes)
 
